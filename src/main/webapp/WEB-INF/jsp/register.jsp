@@ -11,7 +11,7 @@
             </head>
 
             <body>
-
+ 
                 <h1>Register</h1>
                 <form action="<%=request.getContextPath()%>/register" method="post">
                     <label for="pseudo">Pseudo : </label>
