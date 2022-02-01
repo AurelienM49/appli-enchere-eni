@@ -14,7 +14,11 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		   + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 	private static final String SELECT_BY_LOGIN = "SELECT [dbo].[UTILISATEURS] ([pseudo],[nom],[prenom],[email],[telephone],[rue],[code_postal],[ville],[mot_de_passe],[credit] "
 			+ "FROM [dbo].[UTILISATEURS] WHERE email = ? or pseudo = ? and mot_de_passe = ?;";
-
+	private static final String SELECT_BY_PSEUDO ="SELECT [dbo].[UTILISATEURS] ([pseudo],[nom],[prenom],[email],[telephone],[rue],[code_postal],[ville],[mot_de_passe],[credit]) "
+			+ "FROM [dbo].[UTILISATEURS] WHERE pseudo = ?";
+	private static final String SELECT_BY_EMAIL ="SELECT [dbo].[UTILISATEURS] ([pseudo],[nom],[prenom],[email],[telephone],[rue],[code_postal],[ville],[mot_de_passe],[credit] "
+			+ "FROM [dbo].[UTILISATEURS] WHERE email = ?";
+	
 	
 	@Override
 	public void insertUtilisateur(Utilisateur utilisateur) {
@@ -55,6 +59,57 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			pstmt.setString(1,utilisateur.getEmail() );
 			pstmt.setString(2, utilisateur.getPseudo());
 			pstmt.setString(3, utilisateur.getMot_de_passe());
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				return true;
+			}
+			
+			} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionProvider.closeConnection(cnx, pstmt);
+		}
+		return false;
+	}
+	
+
+	@Override
+	public boolean selectByPseudo(Utilisateur utilisateur) {
+		Connection cnx = null;
+		PreparedStatement pstmt=null;
+		ResultSet rs =null;
+		
+		try {
+			cnx = ConnectionProvider.getConnection();
+			pstmt = cnx.prepareStatement(SELECT_BY_LOGIN);
+			
+			pstmt.setString(1, utilisateur.getPseudo());
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				return true;
+			}
+			
+			} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionProvider.closeConnection(cnx, pstmt);
+		}
+		return false;
+	}
+
+	@Override
+	public boolean selectByEmail(Utilisateur utilisateur) {
+		Connection cnx = null;
+		PreparedStatement pstmt=null;
+		ResultSet rs =null;
+		
+		try {
+			cnx = ConnectionProvider.getConnection();
+			pstmt = cnx.prepareStatement(SELECT_BY_LOGIN);
+			
+			pstmt.setString(1, utilisateur.getEmail());
 			rs = pstmt.executeQuery();
 			
 			if (rs.next()) {
