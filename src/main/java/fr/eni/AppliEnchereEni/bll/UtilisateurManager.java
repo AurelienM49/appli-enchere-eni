@@ -33,14 +33,10 @@ public class UtilisateurManager {
 	}
 	
 	
-	public boolean loginUtilisateur(String pseudo, String email, String mot_de_passe) {
+	public boolean loginUtilisateur(Utilisateur utilisateur) {
 		
-		Utilisateur user1 = new Utilisateur();
-		user1.setPseudo(pseudo);
-		user1.setEmail(email);
-		user1.setMot_de_passe(mot_de_passe);
 		UtilisateurDAO user = DAOFactory.createUtilisateurDAOJdbcImpl();
-		return user.selectByLogin(user1);
+		return user.selectByLogin(utilisateur);
 		
 	}
 	
