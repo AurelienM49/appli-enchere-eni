@@ -1,6 +1,9 @@
 package fr.eni.AppliEnchereEni.servlets;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,7 +38,9 @@ public class registerServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		UtilisateurManager um = UtilisateurManager.getInstance();
-		Utilisateur user = new Utilisateur ();
+		Utilisateur user = new Utilisateur ();	
+		
+				
 		user.setPseudo(request.getParameter("pseudo"));
 		user.setNom(request.getParameter("nom"));
 		user.setPrenom(request.getParameter("prenom"));
@@ -46,7 +51,13 @@ public class registerServlet extends HttpServlet {
 		user.setVille(request.getParameter("ville"));
 		user.setMot_de_passe(request.getParameter("mdp"));
 		user.setMot_de_passe_cofirm(request.getParameter("mdp-confirm"));
+
 		
+		
+		
+		
+		
+		response.setCharacterEncoding("UTF-8");
 		um.ajouterUtilisateur(user);
 		
 

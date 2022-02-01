@@ -8,5 +8,6 @@ public interface UtilisateurDAO {
 
 	void insertUtilisateur(Utilisateur utilisateur);
 	boolean selectByLogin (Utilisateur utilisateur);
-	
+	boolean selectByEmail(Utilisateur utilisateur);
+	boolean selectByPseudo(Utilisateur utilisateur);
 }

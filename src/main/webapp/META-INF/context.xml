@@ -9,8 +9,8 @@
             password="Pa$$w0rd"
             
             driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-            
-            url="jdbc:sqlserver://177SE44-F0JBC5J;databasename=BDDGestionEncheres"
+            URIEncoding="UTF-8"
+            url="jdbc:sqlserver://177SE44-F0JBC5J;databasename=BDDGestionEncheres;"
             maxTotal="100"
             maxIdle="10"
             maxWaitMillis="10000"
