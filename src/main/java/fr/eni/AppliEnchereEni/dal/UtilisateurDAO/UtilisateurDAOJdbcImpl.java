@@ -12,6 +12,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	private static final String INSERT_UTILISATEUR = "INSERT INTO [dbo].[UTILISATEURS] ([pseudo],[nom],[prenom],[email],[telephone],[rue],[code_postal],[ville],[mot_de_passe],[credit])"
 		   + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+<<<<<<< HEAD
 	private static final String SELECT_BY_LOGIN = "SELECT [dbo].[UTILISATEURS] ([pseudo],[nom],[prenom],[email],[telephone],[rue],[code_postal],[ville],[mot_de_passe],[credit] "
 			+ "FROM [dbo].[UTILISATEURS] WHERE email = ? or pseudo = ? and mot_de_passe = ?;";
 	private static final String SELECT_BY_PSEUDO ="SELECT [dbo].[UTILISATEURS] ([pseudo],[nom],[prenom],[email],[telephone],[rue],[code_postal],[ville],[mot_de_passe],[credit]) "
@@ -19,6 +20,10 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String SELECT_BY_EMAIL ="SELECT [dbo].[UTILISATEURS] ([pseudo],[nom],[prenom],[email],[telephone],[rue],[code_postal],[ville],[mot_de_passe],[credit] "
 			+ "FROM [dbo].[UTILISATEURS] WHERE email = ?";
 	
+=======
+	private static final String SELECT_BY_LOGIN = "SELECT * FROM [dbo].[UTILISATEURS] WHERE email = ? or pseudo = ? and mot_de_passe = ?;";
+//([pseudo],[nom],[prenom],[email],[telephone],[rue],[code_postal],[ville],[mot_de_passe],[credit])
+>>>>>>> branch 'main' of https://github.com/AurelienM49/appli-enchere-eni.git
 	
 	@Override
 	public void insertUtilisateur(Utilisateur utilisateur) {
