@@ -16,8 +16,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			+ "FROM Utilisateurs WHERE pseudo = ?";
 	private static final String SELECT_BY_EMAIL ="SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit "
 			+ "FROM Utilisateurs WHERE email = ?";
-	private static final String SELECT_BY_LOGIN = "SELECT pseudo, email, mot_de_passe FROM Utilisateurs WHERE email = ? or pseudo = ? and mot_de_passe = ?;";
-	private static final String UPDATE_UTILISATEUR ="UPDATE UTILISATEURS SET pseudo=?, nom=?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=?, mot_de_passe=? WHERE no_utilisateur=?;";
+	private static final String SELECT_BY_LOGIN = "SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit FROM Utilisateurs WHERE email = ? or pseudo = ? and mot_de_passe = ?;";
+	private static final String UPDATE_UTILISATEUR ="UPDATE UTILISATEURS SET pseudo=?, nom=?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=?, mot_de_passe=? WHERE pseudo=?;";
 	
 	
 
@@ -49,11 +49,11 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	}
 
 	@Override
-	public boolean selectByLogin(Utilisateur utilisateur) {
+	public Utilisateur selectByLogin(Utilisateur utilisateur) {
 		Connection cnx = null;
 		PreparedStatement pstmt=null;
 		ResultSet rs =null;
-		
+		Utilisateur user = null;
 		try {
 			cnx = ConnectionProvider.getConnection();
 			pstmt = cnx.prepareStatement(SELECT_BY_LOGIN);
@@ -64,7 +64,15 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			rs = pstmt.executeQuery();
 			
 			if (rs.next()) {
-				return true;
+				user = new Utilisateur();
+				user.setPseudo(rs.getString("pseudo"));
+				user.setNom(rs.getString("nom"));
+				user.setPrenom(rs.getString("prenom"));
+				user.setEmail(rs.getString("email"));
+				user.setTelephone(rs.getString("telephone"));
+				user.setRue(rs.getString("rue"));
+				user.setCode_postal(rs.getString("code_postal"));
+				user.setVille(rs.getString("ville"));
 			}
 			
 			} catch (SQLException e) {
@@ -72,7 +80,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		} finally {
 			ConnectionProvider.closeConnection(cnx, pstmt);
 		}
-		return false;
+		return utilisateur;
 	}
 	
 
@@ -152,6 +160,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		}
 
 	}
+	
 
+	
 
 }

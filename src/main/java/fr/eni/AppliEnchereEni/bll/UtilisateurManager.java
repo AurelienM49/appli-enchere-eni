@@ -38,9 +38,8 @@ public class UtilisateurManager {
 	}
 	
 	
-	public boolean loginUtilisateur(Utilisateur utilisateur) {
-		
-		UtilisateurDAO user = DAOFactory.createUtilisateurDAOJdbcImpl();
+	public Utilisateur loginUtilisateur(Utilisateur utilisateur) {		
+		UtilisateurDAO user = DAOFactory.createUtilisateurDAOJdbcImpl();		
 		return user.selectByLogin(utilisateur);
 		
 	}

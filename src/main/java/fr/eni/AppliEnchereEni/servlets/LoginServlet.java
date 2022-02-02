@@ -43,7 +43,7 @@ public class LoginServlet extends HttpServlet {
 		//d'un Email / si indexof() retourne -1 c'est qu'il n'y pas d'@ dans l'identitifiant donc 
 		// il s'agit d'un pseudo
 		int index = identifiant.indexOf('@');
-		if(index == -1) {
+		if (index == -1) {
 			utilisateur.setPseudo(identifiant);
 		} else {
 			utilisateur.setEmail(identifiant);
@@ -52,11 +52,13 @@ public class LoginServlet extends HttpServlet {
 	
 		
 		UtilisateurManager um = UtilisateurManager.getInstance();
-		if(um.loginUtilisateur(utilisateur)) {
+		if(um.loginUtilisateur(utilisateur)!=null) {
 			HttpSession session = request.getSession();
 			utilisateur.setMot_de_passe(null);
 			session.setAttribute("utilisateur", utilisateur);
-			response.sendRedirect(request.getContextPath()+"/Home");
+			System.out.println(session.getAttribute("utilisateur"));
+			request.getRequestDispatcher("/Home").forward(request, response);
+			
 		}else {
 			request.setAttribute("error", "identifiant ou mot de pas incorrect");
 			request.getRequestDispatcher("/WEB-INF/jsp/erreurLogin.jsp").forward(request, response);
