@@ -26,8 +26,8 @@
                     <input type="text" name="cpo" id="cpo" class="form-item">
                     <label for="ville">Ville : </label>
                     <input type="text" name="ville" id="ville" class="form-item">
-                    <label for="mdpAcutuel">Mot de passe actuel: </label>
-                    <input type="password" name="mdpAcutuel" id="mdpAcutuel" class="form-item">
+                    <label for="mdpActuel">Mot de passe actuel: </label>
+                    <input type="password" name="mdpActuel" id="mdpActuel" class="form-item">
                     <label for="nouveauMdp">Nouveau mot de passe : </label>
                     <input type="password" name="NouveauMdp" id="NouveauMdp" class="form-item">
 					<label for="confirmation">Confirmation : </label>
