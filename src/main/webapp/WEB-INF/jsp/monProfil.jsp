@@ -9,7 +9,7 @@
 <body>
 <h1>Mon Profil</h1>
 
-                <form action="<%=request.getContextPath()%>/monProfilServlet" method="post">
+                <form action="<%=request.getContextPath()%>/monProfil" method="post">
                     <label for="pseudo">Pseudo : </label>
                     <input type="text" name="pseudo" id="pseudo" class="form-item">
                     <label for="nom">Nom : </label>

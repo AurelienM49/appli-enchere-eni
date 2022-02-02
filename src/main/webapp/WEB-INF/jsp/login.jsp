@@ -21,7 +21,7 @@
 <label for="seSouvenir">Se souvenir de moi</label>
 <input type="checkbox" name="seSouvenir" id="seSouvenir" class="form-item">
 
-<a href="<%=request.getContextPath()%>/html/motDePasseOublie.html">Mot de passe oublié</a>
+<a href="<%=request.getContextPath()%>/motDePasseOublie">Mot de passe oublié</a>
 
 
 
