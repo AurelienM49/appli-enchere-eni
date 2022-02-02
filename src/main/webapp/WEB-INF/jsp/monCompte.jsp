@@ -19,6 +19,8 @@
             <li>Code postal : ${utilisateur.code_postal}</li>
             <li>Ville : ${utilisateur.ville}</li>
         </ul>
+        
+
     </body>
 
     </html>
