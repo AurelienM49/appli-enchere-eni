@@ -79,7 +79,8 @@ public class UtilisateurManager {
 			listeErreurs.put("existEmail", "L'email existe déjà ");
 		} else if (utilisateur.getMot_de_passe()!= utilisateur.getMot_de_passe_cofirm()) {
 			listeErreurs.put("mdpDifferents", "Les mots de passes sont différents");
-
+		} else {
+			return listeErreurs;
 		}
 
 
@@ -87,7 +88,7 @@ public class UtilisateurManager {
 		
 		
 		
-		return null;
+		return listeErreurs;
 		
 	}
 

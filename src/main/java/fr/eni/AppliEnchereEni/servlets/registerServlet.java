@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.AppliEnchereEni.bll.UtilisateurManager;
 import fr.eni.AppliEnchereEni.bo.Utilisateur;
+import fr.eni.AppliEnchereEni.helpers.HashPassword;
 
 /**
  * Servlet implementation class registerServlet
@@ -49,12 +50,12 @@ public class registerServlet extends HttpServlet {
 		user.setRue(request.getParameter("rue"));
 		user.setCode_postal(request.getParameter("cpo"));
 		user.setVille(request.getParameter("ville"));
-		user.setMot_de_passe(request.getParameter("mdp"));
-		user.setMot_de_passe_cofirm(request.getParameter("mdp-confirm"));
+		user.setMot_de_passe(HashPassword.hashpassword(request.getParameter("mdp")));
+		user.setMot_de_passe_cofirm(HashPassword.hashpassword(request.getParameter("mdp-confirm")));
 
 		
 		
-		
+
 		
 		
 		response.setCharacterEncoding("UTF-8");
