@@ -1,8 +1,6 @@
 package fr.eni.AppliEnchereEni.bll;
 
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -110,5 +108,12 @@ public class UtilisateurManager {
             return false;
         }
       
+	}
+	
+	public void majUtilisateur(Utilisateur utilisateur) {
+		
+		UtilisateurDAO user = DAOFactory.createUtilisateurDAOJdbcImpl();
+		user.updateUtilisateur(utilisateur);
+		
 	}
 }
