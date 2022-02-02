@@ -37,7 +37,7 @@
                     <input type="password" name="mdp-confirm" id="mdp-confirm" class="form-item" required>
 
                     <button type="submit">Créer</button>
-                    <button type="reset">Annuler</button>
+                    <button type="button"><a href="<%=request.getContextPath()%>/">Annuler</a></button>
                 </form>
 
 
