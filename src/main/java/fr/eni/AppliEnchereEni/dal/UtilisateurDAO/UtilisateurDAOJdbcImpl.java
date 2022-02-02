@@ -80,7 +80,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		
 		try {
 			cnx = ConnectionProvider.getConnection();
-			pstmt = cnx.prepareStatement(SELECT_BY_LOGIN);
+			pstmt = cnx.prepareStatement(SELECT_BY_PSEUDO);
 			
 			pstmt.setString(1, utilisateur.getPseudo());
 			rs = pstmt.executeQuery();
@@ -105,7 +105,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		
 		try {
 			cnx = ConnectionProvider.getConnection();
-			pstmt = cnx.prepareStatement(SELECT_BY_LOGIN);
+			pstmt = cnx.prepareStatement(SELECT_BY_EMAIL);
 			
 			pstmt.setString(1, utilisateur.getEmail());
 			rs = pstmt.executeQuery();

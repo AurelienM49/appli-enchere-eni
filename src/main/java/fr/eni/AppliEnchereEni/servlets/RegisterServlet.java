@@ -20,13 +20,13 @@ import fr.eni.AppliEnchereEni.helpers.HashPassword;
  * Servlet implementation class registerServlet
  */
 @WebServlet("/register")
-public class registerServlet extends HttpServlet {
+public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public registerServlet() {
+    public RegisterServlet() {
     }
 
 	/**
@@ -44,7 +44,8 @@ public class registerServlet extends HttpServlet {
 		Utilisateur user = new Utilisateur ();	
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
-				
+		
+			
 		user.setPseudo(request.getParameter("pseudo"));
 		user.setNom(request.getParameter("nom"));
 		user.setPrenom(request.getParameter("prenom"));
@@ -60,9 +61,8 @@ public class registerServlet extends HttpServlet {
 		HashMap<String, String> listeErreurs = um.validationUser(user);
 		
 		if(listeErreurs.isEmpty()) {
-			HttpSession session = request.getSession();
 			um.ajouterUtilisateur(user);
-			request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
+			request.getRequestDispatcher("/").forward(request, response);
 		}else {
 			request.setAttribute("listeErreurs", listeErreurs);
 			request.getRequestDispatcher("/WEB-INF/jsp/register.jsp").forward(request, response);

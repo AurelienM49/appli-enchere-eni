@@ -51,15 +51,15 @@ public class UtilisateurManager {
 		HashMap<String, String> listeErreurs = new HashMap<String, String>();
 		UtilisateurDAO user = DAOFactory.createUtilisateurDAOJdbcImpl();
 		if(utilisateur.getPseudo().isEmpty()) {
-			listeErreurs.put("emptyPseudo", "Pseudo obligatoire");
+			listeErreurs.put("emptyPseudo", "Le pseudo obligatoire");
 		} if (utilisateur.getNom().isEmpty()){
-			listeErreurs.put("emptyNom", "Nom obligatoire");
+			listeErreurs.put("emptyNom", "Le nom obligatoire");
 		} if (utilisateur.getPrenom().isEmpty()) {
-			listeErreurs.put("emptyPrenom", "Prenom obligatoire");
+			listeErreurs.put("emptyPrenom", "Le prenom obligatoire");
 		} if (utilisateur.getEmail().isEmpty()){
-			listeErreurs.put("emptyEmail", "Email obligatoire");
+			listeErreurs.put("emptyEmail", "l'email obligatoire");
 		} if (utilisateur.getTelephone().isEmpty()) {
-			listeErreurs.put("emptyTel", "Télephone obligatoire");
+			listeErreurs.put("emptyTel", "le télephone obligatoire");
 		} if (utilisateur.getRue().isEmpty()){
 			listeErreurs.put("emptyRue", "Le nom de rue est obligatoire");
 		} if (utilisateur.getCode_postal().isEmpty()){
@@ -78,18 +78,17 @@ public class UtilisateurManager {
 			listeErreurs.put("existPseudo", "Le pseudo existe déjà ");
 		} if (user.selectByEmail(utilisateur)) {
 			listeErreurs.put("existEmail", "L'email existe déjà ");
-		} if (utilisateur.getMot_de_passe()!= utilisateur.getMot_de_passe_cofirm()) {
+		} if (!utilisateur.getMot_de_passe().equals(utilisateur.getMot_de_passe_cofirm())) {
 			listeErreurs.put("mdpDifferents", "Les mots de passes sont différents");
-		} 
+		} if(utilisateur.getCode_postal().length()>5) {
+			listeErreurs.put("cpoIconnu", "La code postal n'est pas reconnu");
+		} if(!verifCpo(utilisateur.getCode_postal())) {
+			listeErreurs.put("cpoIconnu", "La code postal n'est pas reconnu");
+		}
+
+			
+			
 			return listeErreurs;
-		
-
-
-		
-		
-		
-		
-		
 	}
 
 	public boolean alphaNumVerif(String pseudo) {
@@ -101,4 +100,15 @@ public class UtilisateurManager {
         boolean b = m.matches ();
         return b;
     }
+	
+	public boolean verifCpo(String cpo) {
+        boolean b = true;
+        try {
+            Float f = Float.parseFloat(cpo);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+      
+	}
 }
