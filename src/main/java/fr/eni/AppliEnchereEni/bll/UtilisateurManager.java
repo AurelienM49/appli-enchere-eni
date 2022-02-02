@@ -46,37 +46,40 @@ public class UtilisateurManager {
 		
 	}
 	
-	public HashMap<Integer, String> validationUser(Utilisateur utilisateur) {
-		HashMap<Integer, String> listeErreurs = null;
+	public HashMap<String, String> validationUser(Utilisateur utilisateur) {
+		HashMap<String, String> listeErreurs = null;
 		UtilisateurDAO user = DAOFactory.createUtilisateurDAOJdbcImpl();
 		if(utilisateur.getPseudo().isEmpty()) {
-			listeErreurs.put(1, "Pseudo obligatoire");
+			listeErreurs.put("emptyPseudo", "Pseudo obligatoire");
 		} else if (utilisateur.getNom().isEmpty()){
-			listeErreurs.put(2, "Nom obligatoire");
+			listeErreurs.put("emptyNom", "Nom obligatoire");
 		} else if (utilisateur.getPrenom().isEmpty()) {
-			listeErreurs.put(3, "Prenom obligatoire");
+			listeErreurs.put("emptyPrenom", "Prenom obligatoire");
 		} else if (utilisateur.getEmail().isEmpty()){
-			listeErreurs.put(4, "Email obligatoire");
+			listeErreurs.put("emptyEmail", "Email obligatoire");
 		} else if (utilisateur.getTelephone().isEmpty()) {
-			listeErreurs.put(5, "Télephone obligatoire");
+			listeErreurs.put("emptyTel", "Télephone obligatoire");
 		} else if (utilisateur.getRue().isEmpty()){
-			listeErreurs.put(6, "Le nom de rue est obligatoire");
+			listeErreurs.put("emptyRue", "Le nom de rue est obligatoire");
 		} else if (utilisateur.getCode_postal().isEmpty()){
-			listeErreurs.put(7, "Le code postal est obligatoire");
+			listeErreurs.put("emptyCpo", "Le code postal est obligatoire");
 		} else if (utilisateur.getRue().isEmpty()){
-			listeErreurs.put(6, "Le nom de rue est obligatoire");
+			listeErreurs.put("emptyRue", "Le nom de rue est obligatoire");
 		} else if (utilisateur.getVille().isEmpty()){
-			listeErreurs.put(7, "La ville est obligatoire");
+			listeErreurs.put("emptyVille", "La ville est obligatoire");
 		} else if (utilisateur.getMot_de_passe().isEmpty()){
-			listeErreurs.put(7, "Le mot de passe est obligatoire");
+			listeErreurs.put("emptyMdp", "Le mot de passe est obligatoire");
 		} else if (utilisateur.getMot_de_passe_cofirm().isEmpty()){
-			listeErreurs.put(7, "Le mot de passe de confirmation est obligatoire");
+			listeErreurs.put("emptyMdpConfirm", "Le mot de passe de confirmation est obligatoire");
 		} else if (!alphaNumVerif(utilisateur.getPseudo())) {
-			listeErreurs.put(7, "Le pseudo ne doit pas comporter de caratères spéciaux");
-		} else if (!alphaNumVerif(utilisateur.getPseudo())) {
-			listeErreurs.put(7, "Le pseudo ne doit pas comporter de caratères spéciaux");
+			listeErreurs.put("pseudoCarSpeciaux", "Le pseudo ne doit pas comporter de caratères spéciaux");
 		} else if(user.selectByPseudo(utilisateur)) {
-			listeErreurs.put(8, "Le pseudo existe déjà ");
+			listeErreurs.put("existPseudo", "Le pseudo existe déjà ");
+		} else if (user.selectByEmail(utilisateur)) {
+			listeErreurs.put("existEmail", "L'email existe déjà ");
+		} else if (utilisateur.getMot_de_passe()!= utilisateur.getMot_de_passe_cofirm()) {
+			listeErreurs.put("mdpDifferents", "Les mots de passes sont différents");
+
 		}
 
 
