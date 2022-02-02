@@ -17,8 +17,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String SELECT_BY_EMAIL ="SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit "
 			+ "FROM Utilisateurs WHERE email = ?";
 	private static final String SELECT_BY_LOGIN = "SELECT pseudo, email, mot_de_passe FROM Utilisateurs WHERE email = ? or pseudo = ? and mot_de_passe = ?;";
-
-
 	
 	@Override
 	public void insertUtilisateur(Utilisateur utilisateur) {
