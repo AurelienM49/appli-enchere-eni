@@ -14,7 +14,7 @@
             <body>
  
                 <h1>Register</h1>
-                <form action="${pageContext.request.contextPath }/register" method="post">
+                <form action="${pageContext.request.contextPath}/register" method="post">
                     <label for="pseudo">Pseudo : </label>
                     <input type="text" name="pseudo" id="pseudo" class="form-item" required>
                     <span class="erreur">${listeErreurs['emptyPseudo']}</span>
