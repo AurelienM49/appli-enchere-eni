@@ -16,7 +16,7 @@
     <div >
         <nav class="menuNavDeconnecte">
 
-            <a href="#">S'inscrire - Se connecter</a>
+            <a href="<%=request.getContextPath()%>/login">S'inscrire - Se connecter</a>
 
          </nav>
     </div>

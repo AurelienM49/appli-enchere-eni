@@ -56,7 +56,7 @@ public class LoginServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			utilisateur.setMot_de_passe(null);
 			session.setAttribute("utilisateur", utilisateur);
-			response.sendRedirect(request.getContextPath()+"/monCompte");
+			response.sendRedirect(request.getContextPath()+"/Home");
 		}else {
 			request.setAttribute("error", "identifiant ou mot de pas incorrect");
 			request.getRequestDispatcher("/WEB-INF/jsp/erreurLogin.jsp").forward(request, response);
