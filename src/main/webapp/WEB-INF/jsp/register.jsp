@@ -16,6 +16,7 @@
                 <form action="<%=request.getContextPath()%>/register" method="post">
                     <label for="pseudo">Pseudo : </label>
                     <input type="text" name="pseudo" id="pseudo" class="form-item" required>
+                    <span class="erreur">${listeErreurs }</span>
                     <label for="nom">Nom : </label>
                     <input type="text" name="nom" id="nom" class="form-item" required>
                     <label for="prenom">Prenom : </label>

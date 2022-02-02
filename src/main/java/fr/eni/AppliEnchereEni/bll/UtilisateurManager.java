@@ -2,6 +2,7 @@ package fr.eni.AppliEnchereEni.bll;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -47,48 +48,47 @@ public class UtilisateurManager {
 	}
 	
 	public HashMap<String, String> validationUser(Utilisateur utilisateur) {
-		HashMap<String, String> listeErreurs = null;
+		HashMap<String, String> listeErreurs = new HashMap<String, String>();
 		UtilisateurDAO user = DAOFactory.createUtilisateurDAOJdbcImpl();
 		if(utilisateur.getPseudo().isEmpty()) {
 			listeErreurs.put("emptyPseudo", "Pseudo obligatoire");
-		} else if (utilisateur.getNom().isEmpty()){
+		} if (utilisateur.getNom().isEmpty()){
 			listeErreurs.put("emptyNom", "Nom obligatoire");
-		} else if (utilisateur.getPrenom().isEmpty()) {
+		} if (utilisateur.getPrenom().isEmpty()) {
 			listeErreurs.put("emptyPrenom", "Prenom obligatoire");
-		} else if (utilisateur.getEmail().isEmpty()){
+		} if (utilisateur.getEmail().isEmpty()){
 			listeErreurs.put("emptyEmail", "Email obligatoire");
-		} else if (utilisateur.getTelephone().isEmpty()) {
+		} if (utilisateur.getTelephone().isEmpty()) {
 			listeErreurs.put("emptyTel", "Télephone obligatoire");
-		} else if (utilisateur.getRue().isEmpty()){
+		} if (utilisateur.getRue().isEmpty()){
 			listeErreurs.put("emptyRue", "Le nom de rue est obligatoire");
-		} else if (utilisateur.getCode_postal().isEmpty()){
+		} if (utilisateur.getCode_postal().isEmpty()){
 			listeErreurs.put("emptyCpo", "Le code postal est obligatoire");
-		} else if (utilisateur.getRue().isEmpty()){
+		} if (utilisateur.getRue().isEmpty()){
 			listeErreurs.put("emptyRue", "Le nom de rue est obligatoire");
-		} else if (utilisateur.getVille().isEmpty()){
+		} if (utilisateur.getVille().isEmpty()){
 			listeErreurs.put("emptyVille", "La ville est obligatoire");
-		} else if (utilisateur.getMot_de_passe().isEmpty()){
+		} if (utilisateur.getMot_de_passe().isEmpty()){
 			listeErreurs.put("emptyMdp", "Le mot de passe est obligatoire");
-		} else if (utilisateur.getMot_de_passe_cofirm().isEmpty()){
+		} if (utilisateur.getMot_de_passe_cofirm().isEmpty()){
 			listeErreurs.put("emptyMdpConfirm", "Le mot de passe de confirmation est obligatoire");
-		} else if (!alphaNumVerif(utilisateur.getPseudo())) {
+		} if (!alphaNumVerif(utilisateur.getPseudo())) {
 			listeErreurs.put("pseudoCarSpeciaux", "Le pseudo ne doit pas comporter de caratères spéciaux");
-		} else if(user.selectByPseudo(utilisateur)) {
+		} if(user.selectByPseudo(utilisateur)) {
 			listeErreurs.put("existPseudo", "Le pseudo existe déjà ");
-		} else if (user.selectByEmail(utilisateur)) {
+		} if (user.selectByEmail(utilisateur)) {
 			listeErreurs.put("existEmail", "L'email existe déjà ");
-		} else if (utilisateur.getMot_de_passe()!= utilisateur.getMot_de_passe_cofirm()) {
+		} if (utilisateur.getMot_de_passe()!= utilisateur.getMot_de_passe_cofirm()) {
 			listeErreurs.put("mdpDifferents", "Les mots de passes sont différents");
-		} else {
+		} 
 			return listeErreurs;
-		}
+		
 
 
 		
 		
 		
 		
-		return listeErreurs;
 		
 	}
 

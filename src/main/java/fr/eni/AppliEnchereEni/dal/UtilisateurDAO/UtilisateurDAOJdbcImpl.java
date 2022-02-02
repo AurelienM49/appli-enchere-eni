@@ -10,18 +10,14 @@ import fr.eni.AppliEnchereEni.dal.bddTools.ConnectionProvider;
 
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
-	private static final String INSERT_UTILISATEUR = "INSERT INTO [dbo].[UTILISATEURS] ([pseudo],[nom],[prenom],[email],[telephone],[rue],[code_postal],[ville],[mot_de_passe],[credit])"
+	private static final String INSERT_UTILISATEUR = "INSERT INTO Utilisateurs (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit)"
 		   + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-//	private static final String SELECT_BY_LOGIN = "SELECT [dbo].[UTILISATEURS] ([pseudo],[nom],[prenom],[email],[telephone],[rue],[code_postal],[ville],[mot_de_passe],[credit] "
-//			+ "FROM [dbo].[UTILISATEURS] WHERE email = ? or pseudo = ? and mot_de_passe = ?;";
-	private static final String SELECT_BY_PSEUDO ="SELECT [dbo].[UTILISATEURS] ([pseudo],[nom],[prenom],[email],[telephone],[rue],[code_postal],[ville],[mot_de_passe],[credit]) "
-			+ "FROM [dbo].[UTILISATEURS] WHERE pseudo = ?";
-	private static final String SELECT_BY_EMAIL ="SELECT [dbo].[UTILISATEURS] ([pseudo],[nom],[prenom],[email],[telephone],[rue],[code_postal],[ville],[mot_de_passe],[credit] "
-			+ "FROM [dbo].[UTILISATEURS] WHERE email = ?";
-	
+	private static final String SELECT_BY_PSEUDO ="SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit "
+			+ "FROM Utilisateurs WHERE pseudo = ?";
+	private static final String SELECT_BY_EMAIL ="SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit "
+			+ "FROM Utilisateurs WHERE email = ?";
+	private static final String SELECT_BY_LOGIN = "SELECT pseudo, email, password FROM Utilisateurs WHERE email = ? or pseudo = ? and mot_de_passe = ?;";
 
-	private static final String SELECT_BY_LOGIN = "SELECT * FROM [dbo].[UTILISATEURS] WHERE email = ? or pseudo = ? and mot_de_passe = ?;";
-//([pseudo],[nom],[prenom],[email],[telephone],[rue],[code_postal],[ville],[mot_de_passe],[credit])
 
 	
 	@Override

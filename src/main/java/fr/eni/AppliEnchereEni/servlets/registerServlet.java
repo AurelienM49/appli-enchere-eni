@@ -1,6 +1,7 @@
 package fr.eni.AppliEnchereEni.servlets;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -9,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.AppliEnchereEni.bll.UtilisateurManager;
 import fr.eni.AppliEnchereEni.bo.Utilisateur;
@@ -40,7 +42,8 @@ public class registerServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		UtilisateurManager um = UtilisateurManager.getInstance();
 		Utilisateur user = new Utilisateur ();	
-		
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 				
 		user.setPseudo(request.getParameter("pseudo"));
 		user.setNom(request.getParameter("nom"));
@@ -54,12 +57,17 @@ public class registerServlet extends HttpServlet {
 		user.setMot_de_passe_cofirm(HashPassword.hashpassword(request.getParameter("mdp-confirm")));
 
 		
+		HashMap<String, String> listeErreurs = um.validationUser(user);
 		
-
+		if(listeErreurs.isEmpty()) {
+			HttpSession session = request.getSession();
+			um.ajouterUtilisateur(user);
+			request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
+		}else {
+			request.setAttribute("listeErreurs", listeErreurs);
+			request.getRequestDispatcher("/WEB-INF/jsp/register.jsp").forward(request, response);
+		}
 		
-		
-		response.setCharacterEncoding("UTF-8");
-		um.ajouterUtilisateur(user);
 		
 
 
