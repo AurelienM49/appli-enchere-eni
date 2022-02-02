@@ -24,6 +24,7 @@ public class MonCompteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		Utilisateur user = (Utilisateur) session.getAttribute("utilisateur");
+		System.out.println("VERIF MMonCompteServlet "+user.getNom());
 		request.setAttribute("utilisateur", user);
 		request.getRequestDispatcher("/WEB-INF/jsp/monCompte.jsp").forward(request, response);
 	}

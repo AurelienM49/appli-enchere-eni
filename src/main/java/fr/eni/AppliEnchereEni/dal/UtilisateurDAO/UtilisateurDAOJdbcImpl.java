@@ -74,13 +74,12 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				user.setCode_postal(rs.getString("code_postal"));
 				user.setVille(rs.getString("ville"));
 			}
-			
 			} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			ConnectionProvider.closeConnection(cnx, pstmt);
 		}
-		return utilisateur;
+		return user;
 	}
 	
 

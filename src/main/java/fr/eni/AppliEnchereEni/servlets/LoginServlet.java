@@ -54,9 +54,10 @@ public class LoginServlet extends HttpServlet {
 		UtilisateurManager um = UtilisateurManager.getInstance();
 		if(um.loginUtilisateur(utilisateur)!=null) {
 			HttpSession session = request.getSession();
+			utilisateur = um.loginUtilisateur(utilisateur);
 			utilisateur.setMot_de_passe(null);
+			System.out.println("VERIF LOGINSERVLET : "+utilisateur.getNom());
 			session.setAttribute("utilisateur", utilisateur);
-			System.out.println(session.getAttribute("utilisateur"));
 			request.getRequestDispatcher("/Home").forward(request, response);
 			
 		}else {
