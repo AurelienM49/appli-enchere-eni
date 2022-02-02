@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import fr.eni.AppliEnchereEni.bll.UtilisateurManager;
 import fr.eni.AppliEnchereEni.bo.Utilisateur;
+import fr.eni.AppliEnchereEni.helpers.HashPassword;
 
 /**
  * Servlet implementation class LoginServlet
@@ -47,16 +48,18 @@ public class LoginServlet extends HttpServlet {
 		} else {
 			utilisateur.setEmail(identifiant);
 		}
-		utilisateur.setMot_de_passe(mdp);
+		utilisateur.setMot_de_passe(HashPassword.hashpassword(mdp));
+	
 		
 		UtilisateurManager um = UtilisateurManager.getInstance();
 		if(um.loginUtilisateur(utilisateur)) {
 			HttpSession session = request.getSession();
+			utilisateur.setMot_de_passe(null);
 			session.setAttribute("utilisateur", utilisateur);
 			response.sendRedirect(request.getContextPath()+"/monCompte");
 		}else {
 			request.setAttribute("error", "identifiant ou mot de pas incorrect");
-			request.getRequestDispatcher("/WEB-INF/jsp/erreurLogin.jsp").forward(request, response);;
+			request.getRequestDispatcher("/WEB-INF/jsp/erreurLogin.jsp").forward(request, response);
 		}
 		
 	}
