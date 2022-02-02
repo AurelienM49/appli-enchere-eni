@@ -14,7 +14,7 @@
             <body>
  
                 <h1>Register</h1>
-                <form action="<%=request.getContextPath()%>/register" method="post">
+                <form action="${pageContext.request.contextPath }/register" method="post">
                     <label for="pseudo">Pseudo : </label>
                     <input type="text" name="pseudo" id="pseudo" class="form-item" required>
                     <span class="erreur">${listeErreurs['emptyPseudo']}</span>
@@ -63,7 +63,7 @@
 
 
                     <button type="submit">Créer</button>
-                    <button type="button"><a href="<%=request.getContextPath()%>/">Annuler</a></button>
+                    <a href="${pageContext.request.contextPath }/"><button type="button">Annuler</button></a>
                 </form>
 
 
