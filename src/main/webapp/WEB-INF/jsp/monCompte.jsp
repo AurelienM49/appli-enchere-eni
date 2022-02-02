@@ -7,6 +7,8 @@
 <title>MonCompte</title>
 </head>
 <body>
-<h1>Bonjour ${pseudo}</h1>
+<h1>Bonjour ${utilisateur.pseudo}</h1>
+
+
 </body>
 </html>
