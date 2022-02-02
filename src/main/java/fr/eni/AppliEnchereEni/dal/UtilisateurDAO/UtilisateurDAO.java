@@ -11,4 +11,5 @@ public interface UtilisateurDAO {
 	boolean selectByEmail(Utilisateur utilisateur);
 	boolean selectByPseudo(Utilisateur utilisateur);
 	void updateUtilisateur(Utilisateur utilisateur);
+	public Utilisateur selectByIdentifiant(Utilisateur utilisateur);
 }

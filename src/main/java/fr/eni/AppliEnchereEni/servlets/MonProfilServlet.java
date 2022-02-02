@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import fr.eni.AppliEnchereEni.bll.UtilisateurManager;
 import fr.eni.AppliEnchereEni.bo.Utilisateur;
+import fr.eni.AppliEnchereEni.helpers.HashPassword;
 
 /**
  * Servlet implementation class MonProfilServlet
@@ -67,9 +68,23 @@ public class MonProfilServlet extends HttpServlet {
 			user.setVille(request.getParameter("ville"));
 		}
 		
-//		if(request.getParameter("mdpActuel")!=null){
-//			user.setMot_de_passe(request.getParameter("mdpActuel"));
-//		}
+		Utilisateur user1 = (Utilisateur)um.identifiantUtilisateur(user);
+
+		System.out.println(user1.getMot_de_passe());
+		if(HashPassword.hashpassword(request.getParameter("mdpActuel"))!=null 
+				&& HashPassword.hashpassword(request.getParameter("mdpActuel")).equals(HashPassword.hashpassword(user1.getMot_de_passe()))){
+			if(HashPassword.hashpassword(request.getParameter("nouveauMdp"))!=null) {
+				if(HashPassword.hashpassword(request.getParameter("mdpActuel"))!= HashPassword.hashpassword(request.getParameter("nouveauMdp"))) {
+					if(HashPassword.hashpassword(request.getParameter("confirmation"))!=null) {
+						if(HashPassword.hashpassword(request.getParameter("nouveauMdp")).equals(HashPassword.hashpassword(request.getParameter("confirmation")))) {
+							user.setMot_de_passe(HashPassword.hashpassword(request.getParameter("nouveauMdp")));
+						}
+						
+					}
+				}
+			}
+		}
+		
 		um.majUtilisateur(user);
 	}
 

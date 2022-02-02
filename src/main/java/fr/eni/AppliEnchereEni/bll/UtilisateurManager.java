@@ -40,10 +40,15 @@ public class UtilisateurManager {
 	
 	public Utilisateur loginUtilisateur(Utilisateur utilisateur) {		
 		UtilisateurDAO user = DAOFactory.createUtilisateurDAOJdbcImpl();	
-		
-		Utilisateur user2 = user.selectByLogin(utilisateur);
-		System.out.println("VERIF MANAGER : "+ user2.getNom());
+
 		return user.selectByLogin(utilisateur);
+		
+	}
+	
+	public Utilisateur identifiantUtilisateur(Utilisateur utilisateur) {		
+		UtilisateurDAO user = DAOFactory.createUtilisateurDAOJdbcImpl();	
+
+		return user.selectByIdentifiant(utilisateur);
 		
 	}
 	

@@ -29,7 +29,7 @@
                     <label for="mdpActuel">Mot de passe actuel: </label>
                     <input type="password" name="mdpActuel" id="mdpActuel" class="form-item">
                     <label for="nouveauMdp">Nouveau mot de passe : </label>
-                    <input type="password" name="NouveauMdp" id="NouveauMdp" class="form-item">
+                    <input type="password" name="nouveauMdp" id="nouveauMdp" class="form-item">
 					<label for="confirmation">Confirmation : </label>
                     <input type="password" name="confirmation" id="confirmation" class="form-item">
                     

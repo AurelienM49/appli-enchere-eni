@@ -18,7 +18,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			+ "FROM Utilisateurs WHERE email = ?";
 	private static final String SELECT_BY_LOGIN = "SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit FROM Utilisateurs WHERE email = ? or pseudo = ? and mot_de_passe = ?;";
 	private static final String UPDATE_UTILISATEUR ="UPDATE UTILISATEURS SET pseudo=?, nom=?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=?, mot_de_passe=? WHERE pseudo=?;";
-	
+	private static final String SELECT_BY_IDENTIFIANT = "SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit FROM Utilisateurs WHERE email = ? or pseudo = ?;"; 
 	
 
 	
@@ -46,6 +46,39 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			ConnectionProvider.closeConnection(cnx, pstmt);
 		}
 		
+	}
+	
+	@Override
+	public Utilisateur selectByIdentifiant(Utilisateur utilisateur) {
+		Connection cnx = null;
+		PreparedStatement pstmt=null;
+		ResultSet rs =null;
+		Utilisateur user = null;
+		try {
+			cnx = ConnectionProvider.getConnection();
+			pstmt = cnx.prepareStatement(SELECT_BY_IDENTIFIANT);
+			
+			pstmt.setString(1,utilisateur.getEmail() );
+			pstmt.setString(2, utilisateur.getPseudo());
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				user = new Utilisateur();
+				user.setPseudo(rs.getString("pseudo"));
+				user.setNom(rs.getString("nom"));
+				user.setPrenom(rs.getString("prenom"));
+				user.setEmail(rs.getString("email"));
+				user.setTelephone(rs.getString("telephone"));
+				user.setRue(rs.getString("rue"));
+				user.setCode_postal(rs.getString("code_postal"));
+				user.setVille(rs.getString("ville"));
+			}
+			} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionProvider.closeConnection(cnx, pstmt);
+		}
+		return user;
 	}
 
 	@Override
