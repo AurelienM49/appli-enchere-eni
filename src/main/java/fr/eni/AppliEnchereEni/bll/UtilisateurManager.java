@@ -83,9 +83,7 @@ public class UtilisateurManager {
 		} if(!verifCpo(utilisateur.getCode_postal())) {
 			listeErreurs.put("cpoIconnu", "La code postal n'est pas reconnu");
 		}
-
-			
-			
+	
 			return listeErreurs;
 	}
 
