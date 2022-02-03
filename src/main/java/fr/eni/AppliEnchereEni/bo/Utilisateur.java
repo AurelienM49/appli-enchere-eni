@@ -61,7 +61,11 @@ public class Utilisateur {
 	public int getNo_utilisateur() {
 		return no_utilisateur;
 	}
-
+	
+	public void setNo_utilisateur(int no_utilisateur) {
+		this.no_utilisateur = no_utilisateur;
+	}
+	
 	public String getPseudo() {
 		return pseudo;
 	}

@@ -56,7 +56,6 @@ public class LoginServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			utilisateur = um.loginUtilisateur(utilisateur);
 			utilisateur.setMot_de_passe(null);
-			System.out.println("VERIF LOGINSERVLET : "+utilisateur.getNom());
 			session.setAttribute("utilisateur", utilisateur);
 			request.getRequestDispatcher("/Home").forward(request, response);
 			
