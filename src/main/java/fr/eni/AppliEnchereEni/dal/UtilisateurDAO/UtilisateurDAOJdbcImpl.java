@@ -124,7 +124,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	
 
 	@Override
-	public boolean selectByPseudo(Utilisateur utilisateur) {
+	public boolean selectByPseudo(String pseudo) {
 		Connection cnx = null;
 		PreparedStatement pstmt=null;
 		ResultSet rs =null;
@@ -133,7 +133,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			cnx = ConnectionProvider.getConnection();
 			pstmt = cnx.prepareStatement(SELECT_BY_PSEUDO);
 			
-			pstmt.setString(1, utilisateur.getPseudo());
+			pstmt.setString(1, pseudo);
 			rs = pstmt.executeQuery();
 			
 			if (rs.next()) {
@@ -149,7 +149,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	}
 
 	@Override
-	public boolean selectByEmail(Utilisateur utilisateur) {
+	public boolean selectByEmail(String email) {
 		Connection cnx = null;
 		PreparedStatement pstmt=null;
 		ResultSet rs =null;
@@ -158,7 +158,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			cnx = ConnectionProvider.getConnection();
 			pstmt = cnx.prepareStatement(SELECT_BY_EMAIL);
 			
-			pstmt.setString(1, utilisateur.getEmail());
+			pstmt.setString(1, email);
 			rs = pstmt.executeQuery();
 			
 			if (rs.next()) {

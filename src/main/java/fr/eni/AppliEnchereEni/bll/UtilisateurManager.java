@@ -51,14 +51,14 @@ public class UtilisateurManager {
 
 	}
 	
-	public boolean verifPseudo(Utilisateur utilisateur) {
+	public boolean verifPseudo(String pseudo) {
 		UtilisateurDAO user = DAOFactory.createUtilisateurDAOJdbcImpl();
-		return user.selectByPseudo(utilisateur);
+		return user.selectByPseudo(pseudo);
 	}
 	
-	public boolean verifEmail(Utilisateur utilisateur) {
+	public boolean verifEmail(String email) {
 		UtilisateurDAO user = DAOFactory.createUtilisateurDAOJdbcImpl();
-		return user.selectByEmail(utilisateur);
+		return user.selectByEmail(email);
 	}
 
 
@@ -101,10 +101,10 @@ public class UtilisateurManager {
 		if (!alphaNumVerif(utilisateur.getPseudo())) {
 			listeErreurs.put("pseudoCarSpeciaux", "Le pseudo ne doit pas comporter de caratères spéciaux");
 		}
-		if (user.selectByPseudo(utilisateur)) {
+		if (user.selectByPseudo(utilisateur.getPseudo())) {
 			listeErreurs.put("existPseudo", "Le pseudo existe déjà ");
 		}
-		if (user.selectByEmail(utilisateur)) {
+		if (user.selectByEmail(utilisateur.getEmail())) {
 			listeErreurs.put("existEmail", "L'email existe déjà ");
 		}
 		if (!utilisateur.getMot_de_passe().equals(utilisateur.getMot_de_passe_cofirm())) {
@@ -123,16 +123,14 @@ public class UtilisateurManager {
 	
 	public boolean alphaNumVerif(String pseudo) {
 		String regExpression = "[a-zA-Z_0-9]*";
-		String sample = "abcde";
 
 		Pattern p = Pattern.compile(regExpression);
-		Matcher m = p.matcher(sample);
+		Matcher m = p.matcher(pseudo);
 		boolean b = m.matches();
 		return b;
 	}
 
 	public boolean verifCpo(String cpo) {
-		boolean b = true;
 		try {
 			Float f = Float.parseFloat(cpo);
 			return true;

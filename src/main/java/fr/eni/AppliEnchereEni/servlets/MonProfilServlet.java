@@ -8,7 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import fr.eni.AppliEnchereEni.bll.UtilisateurManager;
 import fr.eni.AppliEnchereEni.bo.Utilisateur;
@@ -27,6 +26,8 @@ public class MonProfilServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		Utilisateur user = (Utilisateur) request.getSession().getAttribute("utilisateur");
+		request.setAttribute("user", user);
 		request.getRequestDispatcher("/WEB-INF/jsp/monProfil.jsp").forward(request, response);
 	}
 
@@ -36,80 +37,121 @@ public class MonProfilServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		if (request.getSession().getAttribute("utilisateur")==null) {
-			//delegue à la page login
+		if (request.getSession().getAttribute("utilisateur") == null) {
+			// delegue à la page login
 		}
-		
-		HttpSession session = request.getSession();
-		Utilisateur user = (Utilisateur) session.getAttribute("utilisateur");
+
+		//on récupère l'utlisateur qui est en session
+		Utilisateur user = (Utilisateur) request.getSession().getAttribute("utilisateur");
 		UtilisateurManager um = UtilisateurManager.getInstance();
-		String ancienPseudo = user.getPseudo();
-		String ancienEmail = user.getEmail();
+		
+		//on stocke le pseudo et l'email pour vérifier sur la BDD
+		//puisqu'on risque des les écraser par la suite
+		String currentPseudo = user.getPseudo();
+		String currentEmail = user.getEmail();
+		
+		//on créer une HashMap pour rentrer les erreurs
 		HashMap<String, String> listeErreurs = new HashMap<String, String>();
 
-		if (request.getParameter("pseudo") != null && !request.getParameter("pseudo").isEmpty()) {
-			if (!um.alphaNumVerif(request.getParameter("pseudo"))) {
-				listeErreurs.put("pseudoCarSpeciaux", "Le pseudo ne doit pas comporter de caratères spéciaux");
-			}
-			System.out.println(ancienPseudo);
-			if (!ancienPseudo.equals(request.getParameter("pseudo"))) {
-				if (um.verifPseudo(user)) {
-					listeErreurs.put("existPseudo", "Le pseudo existe déjà ");
+		
+		//on vérifie si le pseudo est vide
+		if (request.getParameter("pseudo") == null || request.getParameter("pseudo").isEmpty()) {
+			listeErreurs.put("emptyPseudo", "Le pseudo est vide");
+		}else {
+			// on vérifie si le pseudo est différent du pseudo actuel
+			if (!request.getParameter("pseudo").equals(currentPseudo)) {
+				
+				//si il est différent on vérifie si le nouveau pseudo ne contient pas caract spéciaux
+				if (!um.alphaNumVerif(request.getParameter("pseudo"))) {				
+					listeErreurs.put("pseudoCarSpeciaux", "Le pseudo ne doit pas comporter de caratères spéciaux");
 				}
-			} else {
-				user.setPseudo(request.getParameter("pseudo"));
 
-			}
+				//on vérifie si le nouveau est déjà existant
+				if (um.verifPseudo(request.getParameter("pseudo"))) {
+					listeErreurs.put("existPseudo", "Le pseudo existe déjà ");
+				} else {
+					user.setPseudo(request.getParameter("pseudo"));
+				}
+				
+				//si le champ pseudo n'a pas été modifié, alors il prendre la value par défaut
+			} 
 		}
-
-		if (request.getParameter("nom") != null && !request.getParameter("nom").isEmpty()) {
-			user.setNom(request.getParameter("nom"));
-		}
-
-		if (request.getParameter("prenom") != null && !request.getParameter("prenom").isEmpty()) {
-			user.setPrenom(request.getParameter("prenom"));
-		}
-
-		if (request.getParameter("email") != null && !request.getParameter("email").isEmpty()) {
-
-			if (!ancienEmail.equals(request.getParameter("email"))) {
-				if (um.verifEmail(user)) {
-					listeErreurs.put("existEmail", "L'email existe déjà ");
+		
+		if (request.getParameter("email") == null || request.getParameter("email").isEmpty()) {
+			listeErreurs.put("emptyemail", "Le email est vide");
+		}else {
+			// on vérifie si le mail est différent du pseudo actuel
+			if (!request.getParameter("email").equals(currentEmail)) {
+				
+				
+				//on vérifie si le nouveau est déjà existant
+				if (um.verifEmail(request.getParameter("email"))) {
+					listeErreurs.put("existEmail", "Le email existe déjà ");
+					
+					//sinon on l'ajoute dans 
 				} else {
 					user.setEmail(request.getParameter("email"));
 				}
-			}
-
+				
+				//si le champ mail n'a pas été modifié, alors il prendre la value par défaut
+			} 
 		}
 
-		if (request.getParameter("tel") != null && !request.getParameter("tel").isEmpty()) {
+		
+		
+		//on vérifie les attributs ont changés --> si non on change pas / si oui alors on le remplace
+		if (request.getParameter("nom")==null || request.getParameter("nom").isEmpty()) {
+			listeErreurs.put("emptyNom", "Le nom est vide");
+		
+		} else {
+			user.setNom(request.getParameter("nom"));
+		}
+
+		if (request.getParameter("prenom")==null || request.getParameter("prenom").isEmpty()) {
+			listeErreurs.put("emptyPrenom", "Le prénom est vide");
+		
+		} else {
+			user.setPrenom(request.getParameter("prenom"));
+		}
+		
+		if (request.getParameter("tel")==null || request.getParameter("tel").isEmpty()) {
+			listeErreurs.put("emptyTel", "Le téléphone est vide");
+		
+		}else {
 			user.setTelephone(request.getParameter("tel"));
 		}
-
-		if (request.getParameter("rue") != null && !request.getParameter("rue").isEmpty()) {
+		
+		if (request.getParameter("rue")==null || request.getParameter("rue").isEmpty()) {
+			listeErreurs.put("emptyRue", "Le rue est vide");
+		
+		} else {
 			user.setRue(request.getParameter("rue"));
 		}
-
-		if (request.getParameter("cpo") != null && !request.getParameter("cpo").isEmpty()) {
+		
+		if (request.getParameter("cpo")==null || request.getParameter("cpo").isEmpty()) {
+			listeErreurs.put("cpoInconnu", "Le cpo est vide");
+		
+		} else {
 			if (request.getParameter("cpo").length() > 5) {
-				listeErreurs.put("cpoIconnu", "Le code postal n'est pas reconnu");
-			}
-			if (!um.verifCpo(request.getParameter("cpo"))) {
-				listeErreurs.put("cpoIconnu", "Le code postal n'est pas reconnu");
-			} else {
-				user.setCode_postal(request.getParameter("cpo"));
-			}
+				listeErreurs.put("cpoInconnu", "Le code postal n'est pas reconnu");
+			}else {
+				user.setRue(request.getParameter("cpo"));
+			}		
 		}
 
-		if (request.getParameter("ville") != null && !request.getParameter("ville").isEmpty()) {
-			user.setVille(request.getParameter("ville"));
+		if (request.getParameter("ville")==null || request.getParameter("ville").isEmpty()) {
+			listeErreurs.put("emptyVille", "La ville est vide");
+		
+		} else {
+			user.setRue(request.getParameter("ville"));
 		}
+		
 
+		//on vient récupèrer le user dans la BDD pour récupérer le mot de passe afin de vérifier 
+		//avec le mot de passe rentrer dans l'input : "mot de passe actuel"
 		Utilisateur user1 = (Utilisateur) um.identifiantUtilisateur(user);
 
-		if (request.getParameter("pseudo") == null) {
-			user.setPseudo(ancienPseudo);
-		}
+		
 		if (HashPassword.hashpassword(request.getParameter("mdpActuel")) != null
 				|| HashPassword.hashpassword(request.getParameter("mdpActuel"))
 						.equals(HashPassword.hashpassword(user1.getMot_de_passe()))) {
@@ -125,12 +167,15 @@ public class MonProfilServlet extends HttpServlet {
 					}
 				}
 			}
-		} 
+		} else {
+			listeErreurs.put("mdpActuelFalse", "Le mot de passe actuel n'est pas le bon");
+		}
 
 		if (listeErreurs.isEmpty()) {
 			um.majUtilisateur(user);
 			request.getRequestDispatcher("/monCompte").forward(request, response);
 		} else {
+			request.setAttribute("user", user);
 			request.setAttribute("listeErreurs", listeErreurs);
 			request.getRequestDispatcher("/WEB-INF/jsp/monProfil.jsp").forward(request, response);
 		}
