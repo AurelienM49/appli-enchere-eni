@@ -45,6 +45,7 @@ public class LoginServlet extends HttpServlet {
 		int index = identifiant.indexOf('@');
 		if (index == -1) {
 			utilisateur.setPseudo(identifiant);
+			System.out.println(utilisateur.getPseudo());
 		} else {
 			utilisateur.setEmail(identifiant);
 		}

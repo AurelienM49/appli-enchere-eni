@@ -36,7 +36,13 @@ public class MonCompteServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		HttpSession session = request.getSession();
+		Utilisateur user = (Utilisateur) session.getAttribute("utilisateur");				
+		request.setAttribute("utilisateur", user);
+		boolean verifCnx = true;
+		request.setAttribute("verifCnx", verifCnx);
+		request.getRequestDispatcher("/WEB-INF/jsp/monCompte.jsp").forward(request, response);
+
 	}
 
 }
