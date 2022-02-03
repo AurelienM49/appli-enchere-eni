@@ -83,7 +83,7 @@
                             <a href="#">Lien de redirection vers annonce de l'enchere</a>
                             <p>Prix :</p>
                             <p>Fin de l'enchère :</p>
-                            <p>Vendeur :</p>
+                            <p>Vendeur : <a href="${pageContext.request.contextPath}/profil?name">AaronSymon</a></p>
                         </div>
 
                     </li>

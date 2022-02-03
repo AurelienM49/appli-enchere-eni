@@ -57,9 +57,11 @@ public class RegisterServlet extends HttpServlet {
 		user.setMot_de_passe(HashPassword.hashpassword(request.getParameter("mdp")));
 		user.setMot_de_passe_cofirm(HashPassword.hashpassword(request.getParameter("mdp-confirm")));
 
-		
+		//Appel à la méthode validationUser qui retourne une liste d'erreurs
 		HashMap<String, String> listeErreurs = um.validationUser(user);
 		
+		//si la liste est vide alors on ajoute l'utilisateur sinon on retourne la map 
+		//qui contient les erreurs
 		if(listeErreurs.isEmpty()) {
 			um.ajouterUtilisateur(user);
 			request.getRequestDispatcher("/").forward(request, response);
