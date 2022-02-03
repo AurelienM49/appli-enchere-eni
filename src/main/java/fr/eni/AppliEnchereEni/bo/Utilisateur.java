@@ -147,6 +147,17 @@ public class Utilisateur {
 		this.mot_de_passe_cofirm = mot_de_passe_cofirm;
 	}
 
+
+
+	@Override
+	public String toString() {
+		return "Utilisateur [no_utilisateur=" + no_utilisateur + ", pseudo=" + pseudo + ", nom=" + nom + ", prenom="
+				+ prenom + ", email=" + email + ", telephone=" + telephone + ", rue=" + rue + ", code_postal="
+				+ code_postal + ", ville=" + ville + ", mot_de_passe=" + mot_de_passe + ", mot_de_passe_cofirm="
+				+ mot_de_passe_cofirm + ", credit=" + credit + ", administrateur=" + administrateur + ", listeArticles="
+				+ listeArticles + ", listeEncheres=" + listeEncheres + "]";
+	}
+
 	
 	
 	

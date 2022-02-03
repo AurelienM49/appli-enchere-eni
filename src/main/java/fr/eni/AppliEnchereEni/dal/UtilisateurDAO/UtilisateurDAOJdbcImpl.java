@@ -58,6 +58,8 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			cnx = ConnectionProvider.getConnection();
 			pstmt = cnx.prepareStatement(SELECT_BY_IDENTIFIANT);
 			
+			System.out.println(utilisateur.getPseudo());
+			
 			pstmt.setString(1,utilisateur.getEmail() );
 			pstmt.setString(2, utilisateur.getPseudo());
 			rs = pstmt.executeQuery();
@@ -72,7 +74,10 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				user.setRue(rs.getString("rue"));
 				user.setCode_postal(rs.getString("code_postal"));
 				user.setVille(rs.getString("ville"));
+				user.setMot_de_passe(rs.getString("mot_de_passe"));
 			}
+			
+			System.out.println(user.getPseudo());
 			} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -106,6 +111,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				user.setRue(rs.getString("rue"));
 				user.setCode_postal(rs.getString("code_postal"));
 				user.setVille(rs.getString("ville"));
+				user.setCredit(rs.getInt("credit"));
 			}
 			} catch (SQLException e) {
 			e.printStackTrace();
@@ -183,7 +189,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			pstmt.setString(7, utilisateur.getCode_postal());
 			pstmt.setString(8, utilisateur.getVille());
 			pstmt.setString(9, utilisateur.getMot_de_passe());
-			pstmt.setInt(10, utilisateur.getNo_utilisateur());
+			pstmt.setString(10, utilisateur.getPseudo());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
