@@ -21,6 +21,7 @@
         </ul>
         
 
+<a href="${pageContext.request.contextPath}/monProfil"><button type="button">Mon profil</button></a>
     </body>
 
     </html>
