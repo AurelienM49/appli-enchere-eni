@@ -10,8 +10,8 @@ import fr.eni.AppliEnchereEni.dal.bddTools.ConnectionProvider;
 
 public class ArticleDAOJdbcImpl implements ArticleDAO {
 
-	private static final String INSERT_Article ="INSERT INTO [dbo].[ARTICLES_VENDUS] (nom_article ,description ,date_debut_encheres ,date_fin_encheres ,prix_initial ,prix_vente ,no_utilisateur ,no_categorie) ."
-			+ "VALUES (?,?,?,?,?,?,? ,?);";
+	private static final String INSERT_Article ="INSERT INTO [dbo].[ARTICLES_VENDUS] (nom_article ,description ,date_debut_encheres ,date_fin_encheres ,prix_initial ,no_utilisateur ,no_categorie) ."
+			+ "VALUES (?,?,?,?,?,? ,?);";
 
 	@Override
 	public void insertArticle(ArticleVendu articleVendu) {
@@ -27,9 +27,9 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			pstmt.setDate(3, Date.valueOf(articleVendu.getDate_debut_encheres()));
 			pstmt.setDate(4, Date.valueOf(articleVendu.getDate_fin_encheres()));
 			pstmt.setInt(5, articleVendu.getPrix_initial());
-			pstmt.setInt(6, articleVendu.getPrix_vente());
-			pstmt.setInt(7, articleVendu.getUtilisateur().getNo_utilisateur());
-			pstmt.setInt(8, articleVendu.getCategorie().getNo_categorie());
+//			pstmt.setInt(6, articleVendu.getPrix_vente());
+			pstmt.setInt(6, articleVendu.getUtilisateur().getNo_utilisateur());
+			pstmt.setInt(7, articleVendu.getCategorie().getNo_categorie());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
