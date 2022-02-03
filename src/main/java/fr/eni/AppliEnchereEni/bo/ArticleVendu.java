@@ -11,7 +11,7 @@ public class ArticleVendu {
 	private int prix_initial, prix_vente, no_categorie;
 	private Categorie categorie;
 	private Utilisateur utilisateur;
-	//private Retrait retrait;
+	private Retrait retrait;
 	
 
 
@@ -45,6 +45,10 @@ public class ArticleVendu {
 	
 	public int getNo_article() {
 		return no_article;
+	}
+	
+	public void setNo_article(int No_article ) {
+		this.no_article = No_article;
 	}
 
 	public String getNom_article() {
@@ -105,12 +109,12 @@ public class ArticleVendu {
 		this.utilisateur = utilisateur;
 	}
 
-//	public Retrait getRetrait() {
-//		return retrait;
-//	}
-//
-//	public void setRetrait(Retrait retrait) {
-//		this.retrait = retrait;
-//	}
+	public Retrait getRetrait() {
+		return retrait;
+	}
+
+	public void setRetrait(Retrait retrait) {
+		this.retrait = retrait;
+	}
 	
 }
