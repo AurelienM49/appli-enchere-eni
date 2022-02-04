@@ -37,8 +37,11 @@ public class MonProfilServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		
+		//vérifier si l'utilisateur 
 		if (request.getSession().getAttribute("utilisateur") == null) {
-			// delegue à la page login
+			request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
 		}
 
 		//on récupère l'utlisateur qui est en session

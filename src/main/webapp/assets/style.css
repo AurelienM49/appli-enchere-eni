@@ -5,23 +5,23 @@ body{
 	margin : 0;
 	padding : 0;
 	font-family: 'Roboto', sans-serif;
-	background-color: #7fffd447;
+	background-color: #FAFAFF;
 }
 
 h1{
-	color: #008080;
+	color: #1C1C1C;
 	margin-top: 30px;
 	text-align: center;
 }
 
 .center{
-	background-color: #57c19594;
+	background-color: #F7B267;
 	width: 80%;
     height: 60%;
     margin: auto;
     display: grid;
     border-radius: 10px;
-    box-shadow: 1px 2px 20px;
+    box-shadow: 6px 6px 2px 1px rgba(71, 71, 248, 0.2);
 }
 
 .both{
@@ -85,6 +85,33 @@ button{
   margin: 10px;
 } 
 
+/**style login**/
+
+.form-login{
+	border: 1px solid black;
+	height: 70vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content : center;
+}
+
+.btn-connexion{
+	width: 100px;
+	align-items: center;
+	justify-content : center;
+}
+
+.big-container-login{
+		align-items: center;
+	justify-content : center;
+
+	border: 1px solid black;
+}
+
+.form-box{
+	border: 1px solid black;
+}
 
 
 
