@@ -17,8 +17,6 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	private static final String INSERT_Article ="INSERT INTO ARTICLES_VENDUS (nom_article ,description ,date_debut_encheres ,date_fin_encheres ,prix_initial ,no_utilisateur ,no_categorie)"
 			+ "VALUES (?,?,?,?,?,?,?);";
 	
-	private static final String INSERT_Retrait = "INSERT INTO RETRAITS(no_article,rue,code_postal,ville)VALUES (?,?,?,?);";
-
 	@Override
 	public void insertArticle(ArticleVendu articleVendu) {
 		
@@ -49,14 +47,6 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 //					articleVendu.setNo_article(rs.getInt("no_article"));
 //					
 //				}
-//				
-				//Appliquer insert retrait avec numero article
-				
-//				pstmt = cnx.prepareStatement(INSERT_Retrait);
-//				pstmt.setInt(1, articleVendu.getNo_article() );
-//				pstmt.setString(2, articleVendu.getUtilisateur().getRue());
-				
-				//Creer retrait DAOJdbcImpl
 				
 				
 				
