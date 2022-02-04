@@ -39,6 +39,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			pstmt.setInt(7, articleVendu.getCategorie().getNo_categorie());
 			int rowsNumber = pstmt.executeUpdate();
 			
+			
 			//Recuperer la generated key
 			if (rowsNumber == 1) {
 				ResultSet rs = pstmt.getGeneratedKeys();
