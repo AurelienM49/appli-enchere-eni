@@ -22,21 +22,17 @@ import fr.eni.AppliEnchereEni.helpers.HashPassword;
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public RegisterServlet() {
-    }
 
-	/**
+
+	/**Methode doGet permettant de deleguer la requête à la jsp
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getRequestDispatcher("/WEB-INF/jsp/register.jsp").forward(request, response);
 	}
 
-	/**
+	/**Methode dopost permettant de recuperer les informations saisies dans le formulaire, de faire appel à la bll,
+	 * et de traiter les éventuelles erreurs de saisie.
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -45,7 +41,7 @@ public class RegisterServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		
-		//on récupère toutes les infos que l'utilisateur rentre lors de l'inscription	
+		//on récupère toutes les infos que l'utilisateur rentrées lors de l'inscription	
 		user.setPseudo(request.getParameter("pseudo"));
 		user.setNom(request.getParameter("nom"));
 		user.setPrenom(request.getParameter("prenom"));
