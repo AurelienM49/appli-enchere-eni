@@ -30,6 +30,11 @@ public class UtilisateurManager {
 
 	// fin Singleton
 
+	
+	/**
+	 * Méthode pour ajouter un utilisateur qui s'inscrit sur le site
+	 * @param utilisateur
+	 */
 	public void ajouterUtilisateur(Utilisateur utilisateur) {
 
 		UtilisateurDAO user = DAOFactory.createUtilisateurDAOJdbcImpl();
@@ -37,6 +42,11 @@ public class UtilisateurManager {
 		user.insertUtilisateur(utilisateur);
 	}
 
+	/**
+	 * Méthode pour vérifier si l'utilisateur qui veut loger existe bien en BDD
+	 * @param utilisateur
+	 * @return utilisateur (cet utilisateur sera ensuite monté en session)
+	 */
 	public Utilisateur loginUtilisateur(Utilisateur utilisateur) {
 		UtilisateurDAO user = DAOFactory.createUtilisateurDAOJdbcImpl();
 
@@ -44,6 +54,11 @@ public class UtilisateurManager {
 
 	}
 
+	/**
+	 * Méthode pour vérifier si les identifiants existe en BDD
+	 * @param utilisateur
+	 * @return Utilisateur 
+	 */
 	public Utilisateur identifiantUtilisateur(Utilisateur utilisateur) {
 		UtilisateurDAO user = DAOFactory.createUtilisateurDAOJdbcImpl();
 
@@ -56,12 +71,24 @@ public class UtilisateurManager {
 		return user.selectByPseudo(pseudo);
 	}
 	
+	
+	/**
+	 * Methode pour véirifier si l'adresse mail existe en BDD
+	 * @param email
+	 * @return boolean
+	 */
 	public boolean verifEmail(String email) {
 		UtilisateurDAO user = DAOFactory.createUtilisateurDAOJdbcImpl();
 		return user.selectByEmail(email);
 	}
 
 
+	/**
+	 * Méthode pour vérifier les attributs rentrer par un utilisateur lorsqu'il s'enrengistre
+	 * et renvoyer une liste d'erreurs
+	 * @param utilisateur
+	 * @return HashMap<String, String>
+	 */
 	public HashMap<String, String> validationUser(Utilisateur utilisateur) {
 		HashMap<String, String> listeErreurs = new HashMap<String, String>();
 		UtilisateurDAO user = DAOFactory.createUtilisateurDAOJdbcImpl();
@@ -120,7 +147,11 @@ public class UtilisateurManager {
 		return listeErreurs;
 	}
 
-	
+	/**
+	 * Méthode pour vérifier qu'une chaine ne comporte pas de caractères spéciaux
+	 * @param pseudo
+	 * @return boolean
+	 */
 	public boolean alphaNumVerif(String pseudo) {
 		String regExpression = "[a-zA-Z_0-9]*";
 
@@ -130,6 +161,13 @@ public class UtilisateurManager {
 		return b;
 	}
 
+	
+	
+	/**
+	 * Methode pour vérifier qu'une chaine ne contient que des chiffres
+	 * @param cpo
+	 * @return boolean
+	 */
 	public boolean verifCpo(String cpo) {
 		try {
 			Float f = Float.parseFloat(cpo);

@@ -42,12 +42,14 @@ public class LoginServlet extends HttpServlet {
 		//on utilise la methode indexOf() si un @ est présent dans l'identifiant ==> il s'agit 
 		//d'un Email / si indexof() retourne -1 c'est qu'il n'y pas d'@ dans l'identitifiant donc 
 		// il s'agit d'un pseudo
+		String logErr = null;
 		int index = identifiant.indexOf('@');
 		if (index == -1) {
 			utilisateur.setPseudo(identifiant);
-			System.out.println(utilisateur.getPseudo());
+			logErr = utilisateur.getPseudo();
 		} else {
 			utilisateur.setEmail(identifiant);
+			logErr = utilisateur.getEmail();
 		}
 		utilisateur.setMot_de_passe(HashPassword.hashpassword(mdp));
 	
@@ -61,8 +63,10 @@ public class LoginServlet extends HttpServlet {
 			request.getRequestDispatcher("/Home").forward(request, response);
 			
 		}else {
+			
+			request.setAttribute("loginError", logErr);
 			request.setAttribute("error", "identifiant ou mot de pas incorrect");
-			request.getRequestDispatcher("/WEB-INF/jsp/erreurLogin.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
 		}
 		
 	}
