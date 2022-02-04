@@ -14,8 +14,8 @@ import fr.eni.AppliEnchereEni.dal.bddTools.ConnectionProvider;
 
 public class ArticleDAOJdbcImpl implements ArticleDAO {
 
-	private static final String INSERT_Article ="INSERT INTO ARTICLES_VENDUS (nom_article ,description ,date_debut_encheres ,date_fin_encheres ,prix_initial ,no_utilisateur ,no_categorie) ."
-			+ "VALUES (?,?,?,?,?,? ,?);";
+	private static final String INSERT_Article ="INSERT INTO ARTICLES_VENDUS (nom_article ,description ,date_debut_encheres ,date_fin_encheres ,prix_initial ,no_utilisateur ,no_categorie)"
+			+ "VALUES (?,?,?,?,?,?,?);";
 	
 	private static final String INSERT_Retrait = "INSERT INTO RETRAITS(no_article,rue,code_postal,ville)VALUES (?,?,?,?);";
 
@@ -36,31 +36,31 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			pstmt.setInt(5, articleVendu.getPrix_initial());
 //			pstmt.setInt(6, articleVendu.getPrix_vente());
 			pstmt.setInt(6, articleVendu.getUtilisateur().getNo_utilisateur());
-			pstmt.setInt(7, articleVendu.getCategorie().getNo_categorie());
+			pstmt.setInt(7, articleVendu.getNo_categorie());
 			int rowsNumber = pstmt.executeUpdate();
 			
 			
 			//Recuperer la generated key
-			if (rowsNumber == 1) {
-				ResultSet rs = pstmt.getGeneratedKeys();
-				
-				if (rs.next()) {
-			
-					articleVendu.setNo_article(rs.getInt("no_article"));
-					
-				}
-				
+//			if (rowsNumber == 1) {
+//				ResultSet rs = pstmt.getGeneratedKeys();
+//				
+//				if (rs.next()) {
+//			
+//					articleVendu.setNo_article(rs.getInt("no_article"));
+//					
+//				}
+//				
 				//Appliquer insert retrait avec numero article
 				
-				pstmt = cnx.prepareStatement(INSERT_Retrait);
-				pstmt.setInt(1, articleVendu.getNo_article() );
-				pstmt.setString(2, articleVendu.getUtilisateur().getRue());
+//				pstmt = cnx.prepareStatement(INSERT_Retrait);
+//				pstmt.setInt(1, articleVendu.getNo_article() );
+//				pstmt.setString(2, articleVendu.getUtilisateur().getRue());
 				
 				//Creer retrait DAOJdbcImpl
 				
 				
 				
-			}
+//			}
 
 
 		} catch (SQLException e) {
