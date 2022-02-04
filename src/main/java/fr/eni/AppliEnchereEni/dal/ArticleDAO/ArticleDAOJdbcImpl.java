@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 import fr.eni.AppliEnchereEni.bo.ArticleVendu;
 import fr.eni.AppliEnchereEni.dal.bddTools.ConnectionProvider;
@@ -16,6 +17,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 	private static final String INSERT_Article ="INSERT INTO ARTICLES_VENDUS (nom_article ,description ,date_debut_encheres ,date_fin_encheres ,prix_initial ,no_utilisateur ,no_categorie)"
 			+ "VALUES (?,?,?,?,?,?,?);";
+	
 	
 	@Override
 	public void insertArticle(ArticleVendu articleVendu) {
@@ -59,6 +61,27 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			ConnectionProvider.closeConnection(cnx, pstmt);
 		}
 		
+	}
+
+
+	@Override
+	public ArticleVendu SelectArticleVenduByID(ArticleVendu articleVendu) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public List<ArticleVendu> selectAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public List<ArticleVendu> selectByCategorie() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	
