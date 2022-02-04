@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Categorie {
 
+	
 	//Attributes
 	private int no_categorie;
 	private String libelle;
