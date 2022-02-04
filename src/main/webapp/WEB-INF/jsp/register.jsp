@@ -23,72 +23,73 @@
 	                            
 	                            <div class="champ">
 	                            	<label for="pseudo">Pseudo :</label>
-	                            	<input type="text" name="pseudo" id="pseudo" class="form-item">
+	                            	<input type="text" name="pseudo" id="pseudo" value="${userError.pseudo}" class="form-item">
+								</div>
 	                            	<span class="erreur">${listeErreurs['emptyPseudo']}</span>
 	                            	<span class="erreur">${listeErreurs['pseudoCarSpeciaux']}</span>
 	                            	<span class="erreur">${listeErreurs['existPseudo']}</span>
-								</div>
 	                            
 	                            <div class="champ">
 		                            <label for="prenom">Prenom :</label>
-		                            <input type="text" name="prenom" id="prenom" class="form-item">
-		                            <span class="erreur">${listeErreurs['emptyPrenom']}</span>
+		                            <input type="text" name="prenom" id="prenom" value="${userError.prenom}" class="form-item">
+		                            
 								</div>
+		                            <span class="erreur">${listeErreurs['emptyPrenom']}</span>
 								
 								<div class="champ">
 		                            <label for="tel">Telephone :</label>
-		                            <input type="tel" name="tel" id="tel" class="form-item">
-		                            <span class="erreur">${listeErreurs['emptyTel']}</span>
+		                            <input type="tel" name="tel" id="tel" value="${userError.telephone}" class="form-item">
 								</div>
+		                            <span class="erreur">${listeErreurs['emptyTel']}</span>
 								
 								<div class="champ">
 		                            <label for="cpo">Code Postal :</label>
-		                            <input type="text" name="cpo" id="cpo" class="form-item">
-		                            <span class="erreur">${listeErreurs['emptyCpo']}</span>
+		                            <input type="text" name="cpo" id="cpo" value="${userError.code_postal}" class="form-item">
 								</div>
+		                            <span class="erreur">${listeErreurs['emptyCpo']}</span>
 								
 								<div class="champ">
 		                            <label for="mdp">Mot de passe :</label>
-		                            <input type="password" name="mdp" id="mdp" class="form-item">
-		                            <span class="erreur">${listeErreurs['emptyMdp']}</span>
+		                            <input type="password" name="mdp" id="mdp"  class="form-item">
 	                            </div>
+		                            <span class="erreur">${listeErreurs['emptyMdp']}</span>
 	                        </div>
 	
 	
 	                        <div class="rightForm">
 	                            <div class="champ">
 	                            	<label for="nom">Nom :</label>
-	                            	<input type="text" name="nom" id="nom" class="form-item">
-	                            	<span class="erreur">${listeErreurs['emptyNom']}</span>
+	                            	<input type="text" name="nom" id="nom" value="${userError.nom}" class="form-item">
 	                            </div>
+	                            	<span class="erreur">${listeErreurs['emptyNom']}</span>
 	                            
 	                            <div class="champ">
 	                            	<label for="email">Email :</label>
-	                            	<input type="email" name="email" id="email" class="form-item">
+	                            	<input type="email" name="email" id="email" value="${userError.email}" class="form-item">
+								</div>
 	                            	<span class="erreur">${listeErreurs['emptyEmail']}</span>
 	                            	<span class="erreur">${listeErreurs['existEmail']}</span>
-								</div>
 								
 								<div class="champ">
 		                            <label for="rue">Rue :</label>
-		                            <input type="text" name="rue" id="rue" class="form-item">
-		                            <span class="erreur">${listeErreurs['emptyRue']}</span>
+		                            <input type="text" name="rue" id="rue" value="${userError.rue}" class="form-item">
 								</div>
+		                            <span class="erreur">${listeErreurs['emptyRue']}</span>
 								
 								<div class="champ">
 		                            <label for="ville">Ville :</label>
-		                            <input type="text" name="ville" id="ville" class="form-item">
-		                            <span class="erreur">${listeErreurs['emptyVille']}</span>
+		                            <input type="text" name="ville" id="ville" value="${userError.ville}" class="form-item">
 								</div>
+		                            <span class="erreur">${listeErreurs['emptyVille']}</span>
 								
 								<div class="champ">
 		                            <label for="mdp-confirm">Confirmation :</label>
 		                            <input type="password" name="mdp-confirm" id="mdp-confirm" class="form-item">
+	                        	</div>
 		                            <span class="erreur">${listeErreurs['emptyMdpConfirm']}</span>
 		                            <span class="erreur">${listeErreurs['mdpDifferents']}</span>
-	                        	</div>
 	                        </div>
-	                        
+	                </div>        
                 </div>
 
                 <div class="buttons">

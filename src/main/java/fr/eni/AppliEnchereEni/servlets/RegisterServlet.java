@@ -45,7 +45,7 @@ public class RegisterServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		
-			
+		//on récupère toutes les infos que l'utilisateur rentre lors de l'inscription	
 		user.setPseudo(request.getParameter("pseudo"));
 		user.setNom(request.getParameter("nom"));
 		user.setPrenom(request.getParameter("prenom"));
@@ -66,6 +66,7 @@ public class RegisterServlet extends HttpServlet {
 			um.ajouterUtilisateur(user);
 			request.getRequestDispatcher("/").forward(request, response);
 		}else {
+			request.setAttribute("userError", user);
 			request.setAttribute("listeErreurs", listeErreurs);
 			request.getRequestDispatcher("/WEB-INF/jsp/register.jsp").forward(request, response);
 		}

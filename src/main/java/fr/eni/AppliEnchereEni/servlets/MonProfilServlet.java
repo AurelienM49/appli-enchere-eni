@@ -151,7 +151,7 @@ public class MonProfilServlet extends HttpServlet {
 		//avec le mot de passe rentrer dans l'input : "mot de passe actuel"
 		Utilisateur user1 = (Utilisateur) um.identifiantUtilisateur(user);
 
-		
+		//condition (un peu longue :D) pour vérifier les mots de passe
 		if (HashPassword.hashpassword(request.getParameter("mdpActuel")) != null
 				|| HashPassword.hashpassword(request.getParameter("mdpActuel"))
 						.equals(HashPassword.hashpassword(user1.getMot_de_passe()))) {
@@ -171,6 +171,9 @@ public class MonProfilServlet extends HttpServlet {
 			listeErreurs.put("mdpActuelFalse", "Le mot de passe actuel n'est pas le bon");
 		}
 
+		
+		//si la liste d'erreurs est nul, on ajoute les modifications en abse de données
+		//sinon on revient sur la page de modification avec les erreurs
 		if (listeErreurs.isEmpty()) {
 			um.majUtilisateur(user);
 			request.getRequestDispatcher("/monCompte").forward(request, response);

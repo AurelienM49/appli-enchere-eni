@@ -5,18 +5,23 @@ body{
 	margin : 0;
 	padding : 0;
 	font-family: 'Roboto', sans-serif;
+	background-color: #7fffd447;
 }
 
 h1{
+	color: #008080;
+	margin-top: 30px;
 	text-align: center;
 }
 
 .center{
 	background-color: #57c19594;
 	width: 80%;
-    height: 70%;
+    height: 60%;
     margin: auto;
-    display: flex;
+    display: grid;
+    border-radius: 10px;
+    box-shadow: 1px 2px 20px;
 }
 
 .both{
@@ -27,6 +32,7 @@ h1{
 
 label{
 	display: inline-block;
+	text-align: initial;
 	width: 50%;
 }
 
@@ -38,24 +44,46 @@ input {
  .leftForm{
  	display: flex;
     flex-direction: column;
-    width: 40%;
+    width: 50%;
+    text-align: center;
  }
  
  .rightForm{
  	display: flex;
     flex-direction: column;
-    width: 40%;
+    width: 50%;
+    text-align: center;
  }
  
 .champ{
-	border: 1px solid;
-	margin: 2px;
+	
+	margin: 5px;
 }
 
 .erreur{
 	color:red;
 }
+
+.buttons{
+	text-align: center;
+}
  
+button{
+  background-color: #008080;
+  border: none;
+  font-size: 15px;
+  color: #FFFFFF;
+  padding: 15px;
+  width: 80px;
+  text-align: center;
+  transition-duration: 0.4s;
+  text-decoration: none;
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: 10px;
+  box-shadow: 0px 3px 5px black;
+  margin: 10px;
+} 
 
 
 
