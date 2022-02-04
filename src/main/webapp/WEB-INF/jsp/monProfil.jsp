@@ -1,10 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE>
 <html>
 <head>
 <link href="./assets/style.css" rel="stylesheet">
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
 <title>Mon Profil</title>
 </head>
 <body>
@@ -82,7 +82,7 @@
                     <span class="erreur">${listeErreurs['mdpDifferents']}</span>
                     
                     
-                    <p>Cr�dit : ${utilisateur.credit}</p>
+                    <p>Crédit : ${utilisateur.credit}</p>
 					
                     <button type="submit">Enregistrer</button>
                     <button type="reset">Supprimer mon compte</button>

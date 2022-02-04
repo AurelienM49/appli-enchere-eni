@@ -73,6 +73,8 @@
             <!--Liste encheres en cours-->
             <div>
                 <ul class="listeEnchereEnCours">
+                    
+                    
                     <li class="annonceEnchereEnCours">
 
                         <!--image de l'annonce-->
@@ -80,13 +82,15 @@
                             <img src="/temporaire/imgEnchereEnCours.png" alt="Image de l'enchere en cours">
                         </div>
                         <div>
-                            <a href="#">Lien de redirection vers annonce de l'enchere</a>
-                            <p>Prix :</p>
-                            <p>Fin de l'enchère :</p>
-                            <p>Vendeur : <a href="${pageContext.request.contextPath}/profil?name">AaronSymon</a></p>
+                            <a href="${pageContext.request.contextPath}/DetailVente">${articleVendu.nom}</a>
+                            <p>Prix : ${articleVendu.prix}</p>
+                            <p>Fin de l'enchère : ${articleVendu.dateFinEnchere}</p>
+                            <p>Vendeur : <a href="${pageContext.request.contextPath}/profil">AaronSymon</a></p>
                         </div>
-
+                        
+						
                     </li>
+                    
                     <li class="annonceEnchereEnCours">
 
                         <!--image de l'annonce-->
