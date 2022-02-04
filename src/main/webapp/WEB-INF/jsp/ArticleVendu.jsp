@@ -44,11 +44,11 @@
 
                 <!--Input pour selectionner la date du debut de l'enchère-->
                 <label for="dateDebutEnchere">L'enchère commencera le :</label>
-                <input type="date" id="dateDebutEnchere" name="dateDebutEnchere">
+                <input type="date" id="dateDebutEnchere" name="dateDebutEnchere" min="2022-02-04" >
 
                 <!--Input pour selectionner la date de fin de l'enchere-->
                 <label for="dateFinEnchere">L'enchère se terminera le :</label>
-                <input type="date" id="dateFinEnchere" name="dateFinEnchere">
+                <input type="date" id="dateFinEnchere" name="dateFinEnchere" max="2099-12-31">
 
                 <!--Bouton submit pour confirmer la mise en vente-->
                 <button type="submit">Mettre en vente</button>

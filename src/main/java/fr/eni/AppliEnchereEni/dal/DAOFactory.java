@@ -4,6 +4,8 @@ import fr.eni.AppliEnchereEni.dal.ArticleDAO.ArticleDAO;
 import fr.eni.AppliEnchereEni.dal.ArticleDAO.ArticleDAOJdbcImpl;
 import fr.eni.AppliEnchereEni.dal.UtilisateurDAO.UtilisateurDAO;
 import fr.eni.AppliEnchereEni.dal.UtilisateurDAO.UtilisateurDAOJdbcImpl;
+import fr.eni.AppliEnchereEni.dal.retraitDAO.RetraitDAO;
+import fr.eni.AppliEnchereEni.dal.retraitDAO.RetraitDAOJdbcImpl;
 
 public class DAOFactory {
 	
@@ -18,6 +20,12 @@ public class DAOFactory {
 		ArticleDAO articleDAO = new ArticleDAOJdbcImpl();
 		
 		return articleDAO;
+	}
+	
+	public static RetraitDAO createRetraitDaoJdbcImpl() {
+		RetraitDAO retraitDAO = new RetraitDAOJdbcImpl();
+		
+		return retraitDAO;
 	}
 	
 }
