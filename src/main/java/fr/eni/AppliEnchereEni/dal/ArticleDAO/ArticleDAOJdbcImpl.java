@@ -20,7 +20,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	
 	
 	@Override
-	public void insertArticle(ArticleVendu articleVendu) {
+	public ArticleVendu insertArticle(ArticleVendu articleVendu) {
 		
 		Connection cnx = null;
 		PreparedStatement pstmt=null;
@@ -34,32 +34,29 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			pstmt.setDate(3, Date.valueOf(articleVendu.getDate_debut_encheres()));
 			pstmt.setDate(4, Date.valueOf(articleVendu.getDate_fin_encheres()));
 			pstmt.setInt(5, articleVendu.getPrix_initial());
-//			pstmt.setInt(6, articleVendu.getPrix_vente());
 			pstmt.setInt(6, articleVendu.getUtilisateur().getNo_utilisateur());
 			pstmt.setInt(7, articleVendu.getNo_categorie());
 			int rowsNumber = pstmt.executeUpdate();
 			
 			
 			//Recuperer la generated key
-//			if (rowsNumber == 1) {
-//				ResultSet rs = pstmt.getGeneratedKeys();
-//				
-//				if (rs.next()) {
-//			
-//					articleVendu.setNo_article(rs.getInt("no_article"));
-//					
-//				}
+			if (rowsNumber == 1) {
+				ResultSet rs = pstmt.getGeneratedKeys();
 				
-				
-				
-//			}
-
+				if (rs.next()) {
+			
+					articleVendu.setNo_article(rs.getInt(1));
+					
+				}
+	
+		}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			ConnectionProvider.closeConnection(cnx, pstmt);
 		}
+		return articleVendu;
 		
 	}
 
