@@ -17,7 +17,7 @@
     <div>
         <nav class="menuNavConnecte">
 
-            <a href="#">Enchères</a>
+            <a href="${pageContext.request.contextPath}/Enchere">Enchères</a>
             <a href="${pageContext.request.contextPath}/ArticleVendu">Vendre un article</a>
             <a href="${pageContext.request.contextPath}/monCompte">Mon profil</a>
             <a href="${pageContext.request.contextPath}/LogOut">Déconnexion</a>
