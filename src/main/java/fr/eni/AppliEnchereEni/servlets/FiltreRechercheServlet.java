@@ -1,16 +1,22 @@
 package fr.eni.AppliEnchereEni.servlets;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.AppliEnchereEni.bll.ArticleManager;
+import fr.eni.AppliEnchereEni.bo.ArticleVendu;
+import fr.eni.AppliEnchereEni.bo.Utilisateur;
+
 /**
  * Servlet implementation class FiltreRechercheServlet
  */
-@WebServlet("/FiltreRechercheServlet")
+@WebServlet("/filtre")
 public class FiltreRechercheServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -27,18 +33,21 @@ public class FiltreRechercheServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		
-		String categorieFiltre = request.getParameter("categorie");
 		String rechercheMotArt = request.getParameter("rechercheMotArt");
-		String checkBoxFilter = "";
+		String categorie = request.getParameter("categorie");
+		String choixRadio = request.getParameter("choixRadio");
+		String checkbox1 = request.getParameter("checkBoxFiltre1");
+		String checkbox2 = request.getParameter("checkBoxFiltre2");
+		String checkbox3 = request.getParameter("checkBoxFiltre3");
+		String checkbox4 = request.getParameter("checkBoxFiltre4");
+		String checkbox5 = request.getParameter("checkBoxFiltre5");
+		String checkbox6 = request.getParameter("checkBoxFiltre6");
+		Utilisateur user = (Utilisateur) request.getSession().getAttribute("utilisateur");		
 		
-		if(request.getParameter("filtreSelectionne").equals("Achats")) {
-			if(request.getParameter("checkBoxFilter1") != null) {
-				
-			}
-		}else {
-			
-		}
+		ArticleManager am = ArticleManager.getInstance();
+		List<ArticleVendu> listeArticles = am.filtreManager(user, rechercheMotArt, categorie, choixRadio, checkbox1, checkbox2, checkbox3, checkbox4, checkbox5, checkbox6);
+		
+		
 		
 		
 	}

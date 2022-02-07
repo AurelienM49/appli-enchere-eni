@@ -184,4 +184,5 @@ public class UtilisateurManager {
 		user.updateUtilisateur(utilisateur);
 
 	}
+	
 }

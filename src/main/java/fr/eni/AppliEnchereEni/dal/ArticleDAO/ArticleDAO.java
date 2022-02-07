@@ -26,5 +26,8 @@ public interface ArticleDAO {
 //	//selectionne une liste d'articles par nom
 //	public List<ArticleVendu> selectByNom();
 	
+	public List<ArticleVendu> filtre (Utilisateur utilisateur, String rechercheMotArt, String categorie, String choixRadio,
+			String checkBoxFiltre1, String checkBoxFiltre2, String checkBoxFiltre3, String checkBoxFiltre4,
+			String checkBoxFiltre5, String checkBoxFiltre6);
 	
 }

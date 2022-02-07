@@ -12,12 +12,12 @@
             <div>
 
                 <!--Formulaire de recherche-->
-                <form action="" method="get">
+                <form action="${pageContext.request.contextPath}/filtre" method="get">
                     <div>
                         <input type="text" name="rechercheMotArt" placeholder="Le nom de l'article contient">
                     </div>
                     
-                    <!--Selection categorie-->
+                    <!--Selection categorie-->""
                     <div>
                         <label for="categorie">Categorie : </label>
                         <select name="categorie" id="categorie">
@@ -34,7 +34,7 @@
                         <!--Achat + checkbox pour approfondir filtre "Achat"-->
                         <div>
                             <label for="achats">Achats</label>
-                            <input type="radio" id="radioAchats" name="filtreSelectionne" value="Achats">
+                            <input type="radio" id="radioAchats" name="choixRadio" value="Achats">
 
                             <label for="encheresOuvertes">Enchères ouvertes</label>
                             <input type="checkbox" id="encheresOuvertes" name="checkBoxFiltre1" value="encheresOuvertes">
@@ -49,16 +49,16 @@
                         <!--Achat + checkbox pour approfondir filtre "Achat"-->
                         <div>
                             <label for="mesVentes">Mes ventes</label>
-                            <input type="radio" id="radioVentes" name="filtreSelectionne" value="Mes ventes">
+                            <input type="radio" id="radioVentes" name="choixRadio" value="Mes ventes">
 
                             <label for="mesVentesEnCours">Mes ventes en cours</label>
-                            <input type="checkbox" id="mesVentesEnCours" name="checkBoxFiltre" value="mesVentesEnCours">
+                            <input type="checkbox" id="mesVentesEnCours" name="checkBoxFiltre4" value="mesVentesEnCours">
 
                             <label for="ventesNonDebutees">Ventes non débutées</label>
-                            <input type="checkbox" id="ventesNonDebutees" name="checkBoxFiltre" value="ventesNonDebutees">
+                            <input type="checkbox" id="ventesNonDebutees" name="checkBoxFiltre5" value="ventesNonDebutees">
 
                             <label for="ventesTerminees">Ventes Terminées</label>
-                            <input type="checkbox" id="ventesTerminees" name="checkBoxFiltre" value="ventesTerminees">
+                            <input type="checkbox" id="ventesTerminees" name="checkBoxFiltre6" value="ventesTerminees">
                         </div>
                         
                     </div>
