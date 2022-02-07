@@ -26,6 +26,7 @@
         <jsp:param value="footer" name="footer"></jsp:param>
     </jsp:include>
 
+    <script src="./assets/js/accueil.js"></script>
 
 </body>
 </html>

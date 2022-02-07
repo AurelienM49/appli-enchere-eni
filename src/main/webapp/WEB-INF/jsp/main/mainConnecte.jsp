@@ -14,7 +14,7 @@
                 <!--Formulaire de recherche-->
                 <form action="" method="get">
                     <div>
-                        <input type="text" placeholder="Le nom de l'article contient">
+                        <input type="text" name="rechercheMotArt" placeholder="Le nom de l'article contient">
                     </div>
                     
                     <!--Selection categorie-->
@@ -24,7 +24,7 @@
                     	    <option value="informatique">Informatique</option>
                     	    <option value="ameublement">Ameublement</option>
                     	    <option value="vêtement">Vêtement</option>
-                    	    <option value="sport&Loisir">Sport&Loisirs</option>
+                    	    <option value="sport&loisirs">Sport&Loisirs</option>
                          </select>
                     </div>
 
@@ -34,31 +34,31 @@
                         <!--Achat + checkbox pour approfondir filtre "Achat"-->
                         <div>
                             <label for="achats">Achats</label>
-                            <input type="radio" id="achats" name="filtreSelectionne" value="Achats">
+                            <input type="radio" id="radioAchats" name="filtreSelectionne" value="Achats">
 
                             <label for="encheresOuvertes">Enchères ouvertes</label>
-                            <input type="checkbox" id="encheresOuvertes" name="achatFiltre" value="encheresOuvertes">
+                            <input type="checkbox" id="encheresOuvertes" name="checkBoxFiltre1" value="encheresOuvertes">
 
                             <label for="mesEncheresEnCours">Mes enchères en cours</label>
-                            <input type="checkbox" id="mesEncheresEnCours" name="achatFiltre" value="mesEncheresEnCours">
+                            <input type="checkbox" id="mesEncheresEnCours" name="checkBoxFiltre2" value="mesEncheresEnCours">
 
                             <label for="mesEncheresRemportees">Enchères ouvertes</label>
-                            <input type="checkbox" id="mesEncheresRemportees" name="achatFiltre" value="mesEncheresRemportees">
+                            <input type="checkbox" id="mesEncheresRemportees" name="checkBoxFiltre3" value="mesEncheresRemportees">
                         </div>
 
                         <!--Achat + checkbox pour approfondir filtre "Achat"-->
                         <div>
                             <label for="mesVentes">Mes ventes</label>
-                            <input type="radio" id="mesVentes" name="filtreSelectionne" value="Mes ventes">
+                            <input type="radio" id="radioVentes" name="filtreSelectionne" value="Mes ventes">
 
                             <label for="mesVentesEnCours">Mes ventes en cours</label>
-                            <input type="checkbox" id="mesVentesEnCours" name="achatFiltre" value="mesVentesEnCours">
+                            <input type="checkbox" id="mesVentesEnCours" name="checkBoxFiltre" value="mesVentesEnCours">
 
                             <label for="ventesNonDebutees">Ventes non débutées</label>
-                            <input type="checkbox" id="ventesNonDebutees" name="achatFiltre" value="ventesNonDebutees">
+                            <input type="checkbox" id="ventesNonDebutees" name="checkBoxFiltre" value="ventesNonDebutees">
 
                             <label for="ventesTerminees">Ventes Terminées</label>
-                            <input type="checkbox" id="ventesTerminees" name="achatFiltre" value="ventesTerminees">
+                            <input type="checkbox" id="ventesTerminees" name="checkBoxFiltre" value="ventesTerminees">
                         </div>
                         
                     </div>
@@ -85,7 +85,7 @@
                             <a href="${pageContext.request.contextPath}/DetailVente">${articleVendu.nom}</a>
                             <p>Prix : ${articleVendu.prix}</p>
                             <p>Fin de l'enchère : ${articleVendu.dateFinEnchere}</p>
-                            <p>Vendeur : <a href="${pageContext.request.contextPath}/profil">AaronSymon</a></p>
+                            <p>Vendeur : <a href="#"></a></p>
                         </div>
                         
 						
@@ -98,7 +98,6 @@
                             <img src="/temporaire/imgEnchereEnCours.png" alt="Image de l'enchere en cours">
                         </div>
                         <div>
-                            <a href="#">Lien de redirection vers annonce de l'enchere</a>
                             <p>Prix :</p>
                             <p>Fin de l'enchère :</p>
                             <p>Vendeur :</p>
@@ -112,7 +111,6 @@
                             <img src="/temporaire/imgEnchereEnCours.png" alt="Image de l'enchere en cours">
                         </div>
                         <div>
-                            <a href="#">Lien de redirection vers annonce de l'enchere</a>
                             <p>Prix :</p>
                             <p>Fin de l'enchère :</p>
                             <p>Vendeur :</p>
