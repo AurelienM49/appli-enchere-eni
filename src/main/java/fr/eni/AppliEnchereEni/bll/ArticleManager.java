@@ -1,10 +1,8 @@
 package fr.eni.AppliEnchereEni.bll;
 
 import fr.eni.AppliEnchereEni.bo.ArticleVendu;
-import fr.eni.AppliEnchereEni.bo.Utilisateur;
 import fr.eni.AppliEnchereEni.dal.DAOFactory;
 import fr.eni.AppliEnchereEni.dal.ArticleDAO.ArticleDAO;
-import fr.eni.AppliEnchereEni.dal.UtilisateurDAO.UtilisateurDAO;
 
 public class ArticleManager {
 
@@ -28,10 +26,10 @@ public class ArticleManager {
 	
 	//Fin du pattern Singleton
 	
-	public void ajouterArticle(ArticleVendu  articleVendu) {
+	public ArticleVendu ajouterArticle(ArticleVendu  articleVendu) {
 
 		ArticleDAO article = DAOFactory.createArticleDAOJbbcImpl();
 
-		article.insertArticle(articleVendu);
+		return article.insertArticle(articleVendu);
 	}
 }

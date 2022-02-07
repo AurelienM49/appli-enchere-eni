@@ -44,11 +44,30 @@
 
                 <!--Input pour selectionner la date du debut de l'enchère-->
                 <label for="dateDebutEnchere">L'enchère commencera le :</label>
-                <input type="date" id="dateDebutEnchere" name="dateDebutEnchere" min="2022-02-04" >
+                <input type="date" id="dateDebutEnchere" name="dateDebutEnchere" min="${dateMinEnchere}" >
 
                 <!--Input pour selectionner la date de fin de l'enchere-->
                 <label for="dateFinEnchere">L'enchère se terminera le :</label>
                 <input type="date" id="dateFinEnchere" name="dateFinEnchere" max="2099-12-31">
+                
+                <!-- Input pour selectionner l'adresse de retrait de l'enchère -->
+                
+                <div id="adresseDeRetrait">
+                	<p>Retrait</p>
+                	
+                	<!-- Input pour selectionner la rue de l'adresse de retrait -->
+                	<label for="rue"> Rue :</label>
+                	<input type="text" id="rue" name="rue" value="${user.rue}">
+                	
+                	<!-- Input pour selectionner le code postal de l'adresse de retrait -->
+                	<label for="codePostal"> Code postal :</label>
+                	<input type="text" id="codePostal" name="codePostal" value="${user.code_postal}">
+                	
+                	<!-- Input pour selectionner la ville de l'adresse de retrait -->
+                	<label for="ville"> Ville :</label>
+                	<input type="text" id="ville" name="ville" value="${user.ville}">
+                	
+                </div>
 
                 <!--Bouton submit pour confirmer la mise en vente-->
                 <button type="submit">Mettre en vente</button>

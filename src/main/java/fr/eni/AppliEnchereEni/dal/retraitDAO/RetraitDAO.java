@@ -5,5 +5,5 @@ import fr.eni.AppliEnchereEni.bo.Retrait;
 
 public interface RetraitDAO {
 
-	void insertRetrait(Retrait retrait);
+	public Retrait insertRetrait(Retrait retrait);
 }
