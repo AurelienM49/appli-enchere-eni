@@ -20,5 +20,11 @@ public interface ArticleDAO {
 	//selectionner une liste d'articles par categeorie
 	public List<ArticleVendu> selectByCategorie(Categorie categorie);
 	
+	//supprimer un article
+	public void delete(ArticleVendu articlevendu);
+	
+//	//selectionne une liste d'articles par nom
+//	public List<ArticleVendu> selectByNom();
+	
 	
 }

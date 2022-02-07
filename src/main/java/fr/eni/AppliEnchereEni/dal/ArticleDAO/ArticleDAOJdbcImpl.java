@@ -1,7 +1,5 @@
 package fr.eni.AppliEnchereEni.dal.ArticleDAO;
 
-
-
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -23,6 +21,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	private static final String SELECT_BY_ID="SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM Articles_vendus WHERE no_article = ?;";
 	private static final String SELECT_ALL="SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM Articles_vendus;";
 	private static final String SELECT_BY_CATEGORIE="SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM Articles_vendus WHERE no_categorie = ?;";
+	private static final String DELETE_ARTICLE="DELETE FROM ARTICLES_VENDUS WHERE no_article = ?;";
 	
 	@Override
 	public ArticleVendu insertArticle(ArticleVendu articleVendu) {
@@ -215,6 +214,29 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		}
 
 		return articles;
+	}
+
+
+	@Override
+	public void delete(ArticleVendu articleVendu) {
+		Connection cnx = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			cnx = ConnectionProvider.getConnection();
+			pstmt = cnx.prepareStatement(DELETE_ARTICLE);
+			
+			pstmt.setInt(1, articleVendu.getNo_article());
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}finally {
+			ConnectionProvider.closeConnection(cnx, pstmt);
+		}
+		
+		
 	}
 	
 	
