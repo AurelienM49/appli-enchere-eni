@@ -8,21 +8,32 @@ body{
 	background-color: #FAFAFF;
 }
 
+
+/**login form**/
+
+
 h1{
 	color: #1C1C1C;
-	margin-top: 30px;
+	margin-top: 21px;
 	text-align: center;
+	margin-bottom: 30px;
+}
+
+section#contact{
+    padding: 100px 0;
 }
 
 .center{
-	background-color: #F7B267;
-	width: 80%;
-    height: 60%;
-    margin: auto;
-    display: grid;
-    border-radius: 10px;
-    box-shadow: 6px 6px 2px 1px rgba(71, 71, 248, 0.2);
+	max-width: 900px;
+    margin: 0 auto;
+   flex-direction: column;
+   background-color: white;
+   padding: 40px 30px;
+   box-sizing: border-box;
+   border-radius: 15px;
+   box-shadow: 0px 10px 50px -10px #d6d6d6;
 }
+
 
 .both{
 	display: flex;
@@ -30,15 +41,23 @@ h1{
     margin: auto;
 }
 
-label{
-	display: inline-block;
-	text-align: initial;
-	width: 50%;
-}
+
 
 input { 
- 	display:inline-block;
- 	width: 50%; 
+  font-size: 16px;
+  display: block;
+  font-family: 'Rubik', sans-serif;
+  width: 100%;
+  padding: 10px 1px;
+  border: 0;
+  border-bottom: 2px solid#e4e4ec;
+  outline: none;
+  -webkit-transition: all .2s;
+  transition: all .2s;
+}
+
+section#contact .formulaire form input:hover {
+    border-bottom: 2px solid #ff7d1b;
 }
  
  .leftForm{
@@ -55,9 +74,8 @@ input {
     text-align: center;
  }
  
-.champ{
-	
-	margin: 5px;
+.champ{	
+	margin: 10px;
 }
 
 .erreur{
@@ -66,52 +84,76 @@ input {
 
 .buttons{
 	text-align: center;
+	margin-top: 30px;
+}
+
+.create{
+	margin-right: 100px;
 }
  
 button{
-  background-color: #008080;
-  border: none;
-  font-size: 15px;
-  color: #FFFFFF;
-  padding: 15px;
-  width: 80px;
-  text-align: center;
-  transition-duration: 0.4s;
-  text-decoration: none;
-  overflow: hidden;
-  cursor: pointer;
-  border-radius: 10px;
-  box-shadow: 0px 3px 5px black;
-  margin: 10px;
+    width: 150px;
+    height: 50px;
+    border-radius: 8px;
+    border: none;
+    background-color: #ff7d1b;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2em;
+    cursor: pointer;
+    margin-top: 30px;
+    outline: none;
+    margin: 0 auto;
+    
 } 
+
+/**responsive**/
+@media screen and (max-width: 1000px){
+	
+section#contact{
+    padding: 100px 0;
+}
+
+.center{
+	max-width: 800px;
+	height: 1300px;
+    margin: 0 auto;
+    flex-direction: column;
+    background-color: white;
+    padding: 40px 30px;
+    box-sizing: border-box;
+    border-radius: 15px;
+    box-shadow: 0px 10px 50px -10px #d6d6d6;
+}
+
+
+.both{
+	display: flex;
+    justify-content: space-around;
+    margin: auto;
+    flex-direction: column;
+}
+	
+input {
+    font-size: 20px;
+    display: block;
+    width: 700px;
+    padding: 28px 1px;
+    border: 0;
+    border-bottom: 2px solid#e4e4ec;
+    outline: none;
+    -webkit-transition: all .2s;
+    transition: all .2s;
+}
+	
+}
+
+
 
 /**style login**/
 
-.form-login{
-	border: 1px solid black;
-	height: 70vh;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content : center;
-}
 
-.btn-connexion{
-	width: 100px;
-	align-items: center;
-	justify-content : center;
-}
 
-.big-container-login{
-		align-items: center;
-	justify-content : center;
-
-	border: 1px solid black;
-}
-
-.form-box{
-	border: 1px solid black;
-}
 
 
 

@@ -5,36 +5,43 @@
 <!DOCTYPE>
 <html>
 <head>
-<link href="./assets/style.css" rel="stylesheet">
+<link href="./assets/formLogin.css" rel="stylesheet">
 
 <meta charset="UTF-8">
 <title></title>
 </head>
 <body>
-
-<form action="${pageContext.request.contextPath}/login" class="form-login" method="post">
-
-	<div class="form-box">
-		<div class="big-container-login">
-			<div class="container-login">
-				<div class="input-identifiant">
-					<label for="identifiant">Identifiant : </label>
-					<input type="text" name="identifiant" id="identifiant" class="form-item" required>
-				</div>	
-				<div class="input-mdp">
-					<label for="mdp">Mot de passe : </label>
-					<input type="password" name="mdp" id="mdp" class="form-item" required>
+<section id="contact">
+<div class="login-form">
+<form action="${pageContext.request.contextPath}/login"  method="post">
+    <h1>Login</h1>
+	<div class="content">
+		<div class="input-field">
+			<input type="text" name="identifiant" id="identifiant" placeholder="Email ou pseudo" class="form-item" required>
+		</div>	
+		<div class="input-field">
+			<input type="password" name="mdp" id="mdp" placeholder="Mot de passe"class="form-item" required>
+		</div>
 					<span class="erreur">${error}</span>
-				</div>
+		<div class="other">
+			<div class="remember">
+				<label for="seSouvenir">Se souvenir de moi</label>
+				<input type="checkbox" name="seSouvenir" id="seSouvenir" class="form-item">	
 			</div>	
-				<button type="submit" class="btn-connexion">Connexion</button>
-		</div>			
-					<label for="seSouvenir">Se souvenir de moi</label>
-					<input type="checkbox" name="seSouvenir" id="seSouvenir" class="form-item">
-					
-					<a href="<%=request.getContextPath()%>/motDePasseOublie">Mot de passe oublié</a>	
-					<a href="<%=request.getContextPath()%>/register">Créer un compte</a>
+		</div>
+				
+		<div class="action">
+			<button type="submit" class="btn-connexion">Connexion</button>
+			<div class="mdp-forgot">
+				<a href="<%=request.getContextPath()%>/motDePasseOublie" class="link">Mot de passe oublié</a>	
+			</div>	
+		</div>		
+		<div class="txt-account">
+			<span>Vous n'êtes pas membre ? </span><a href="<%=request.getContextPath()%>/register" class="create-account">Créer un compte</a>	
+		</div>	
 	</div>
 </form>
+</div>
+</section>
 </body>
 </html>
