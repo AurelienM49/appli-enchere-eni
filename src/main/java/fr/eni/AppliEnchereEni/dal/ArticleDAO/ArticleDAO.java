@@ -3,6 +3,7 @@ package fr.eni.AppliEnchereEni.dal.ArticleDAO;
 import java.util.List;
 
 import fr.eni.AppliEnchereEni.bo.ArticleVendu;
+import fr.eni.AppliEnchereEni.bo.Categorie;
 import fr.eni.AppliEnchereEni.bo.Utilisateur;
 
 public interface ArticleDAO {
@@ -17,6 +18,7 @@ public interface ArticleDAO {
 	public List<ArticleVendu> selectAll(); 
 	
 	//selectionner une liste d'articles par categeorie
-	public List<ArticleVendu> selectByCategorie();
+	public List<ArticleVendu> selectByCategorie(Categorie categorie);
+	
 	
 }
