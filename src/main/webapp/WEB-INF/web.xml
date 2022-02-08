@@ -5,13 +5,13 @@
 
 <!-- Déclaration de la jsp "acceuilLoged.jsp" -->
 <servlet>
-	<servlet-name>acceuilLoged</servlet-name>
-	<jsp-file>/WEB-INF/jsp/acceuilLoged.jsp</jsp-file>
+	<servlet-name>accueilLoged</servlet-name>
+	<jsp-file>/WEB-INF/jsp/accueilLoged.jsp</jsp-file>
 </servlet>
 
 <!-- Association de la jsp "acceuilLoged.jsp" à une url -->
 <servlet-mapping>
-		<servlet-name>acceuilLoged</servlet-name>
+		<servlet-name>accueilLoged</servlet-name>
 		<url-pattern>/Home</url-pattern>
 </servlet-mapping>
 
