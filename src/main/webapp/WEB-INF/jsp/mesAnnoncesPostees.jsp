@@ -6,38 +6,37 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Enchères</title>
+<title>Mes annonces postées</title>
 </head>
 <body>
 
+	
 	<!-- Header -->
     <jsp:include page="/WEB-INF/jsp/header/headerConnecte.jsp">
         <jsp:param value="headerDeconnecte" name="headerDeconnecte"></jsp:param>
     </jsp:include>
-    
-    <!-- Main -->
 
-    <main>
-        <div class=enchere id="mesEncheres">
-
-            <p>Mes enchères :</p>
-            <a href="${pageContext.request.contextPath}/mesAnnoncesPostees">Tout voir</a>
-
-        </div>
-
-        <div class=enchere id="enchereEnCours">
-
-            <p>Enchères en cours :</p>
-            <a href="#">Tout voir</a>
-
-        </div>
-    </main>
+	<!-- Main -->
+	<main>
 	
-	<!-- Footer -->
-
+		<div>
+			<c:forEach var="mesAnnonces" items="${listeDeMesAnnonces}" >
+			<c:out value="${mesAnnonces.nom_article}"></c:out><br>
+			<c:out value="${mesAnnonces.description}"></c:out><br>
+			<c:out value="${mesAnnonces.prix_initial}"></c:out><br>
+			<c:out value="${mesAnnonces.prix_vente}"></c:out><br>
+			<c:out value="${mesAnnonces.date_debut_encheres}"></c:out><br>
+			<c:out value="${mesAnnonces.date_fin_encheres}"></c:out><br><br>
+			</c:forEach>
+		</div>
+	
+	
+	</main>
+	
+	<!-- footer -->
     <jsp:include page="/WEB-INF/jsp/footer/footer.jsp">
         <jsp:param value="footer" name="footer"></jsp:param>
     </jsp:include>
-
+    
 </body>
 </html>

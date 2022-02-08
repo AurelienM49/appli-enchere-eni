@@ -9,15 +9,16 @@ import java.util.List;
 
 import fr.eni.AppliEnchereEni.bo.ArticleVendu;
 import fr.eni.AppliEnchereEni.bo.Categorie;
+import fr.eni.AppliEnchereEni.bo.Enchere;
 import fr.eni.AppliEnchereEni.bo.Utilisateur;
 import fr.eni.AppliEnchereEni.dal.bddTools.ConnectionProvider;
 
 public class EnchereDAOJdbcImpl implements EnchereDAO {
 	
-	private final static String SELECT_MESARTICLES = "SELECT * FROM ARTICLES_VENDUS WHERE no_utilisateur = ?;";
+	private final static String SELECT_MESANNONCES = "SELECT * FROM ARTICLES_VENDUS WHERE no_utilisateur = ?;";
 
 	@Override
-	public List<ArticleVendu> selectMesArticles(Utilisateur utilisateur) {
+	public List<ArticleVendu> selectMesAnnonces(Utilisateur utilisateur) {
 		
 		Connection cnx = null;
 		PreparedStatement pstmt = null;
@@ -29,7 +30,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		
 		try {
 			cnx = ConnectionProvider.getConnection();
-			pstmt = cnx.prepareStatement(SELECT_MESARTICLES);
+			pstmt = cnx.prepareStatement(SELECT_MESANNONCES);
 			
 			pstmt.setInt(1, utilisateur.getNo_utilisateur());
 			rs= pstmt.executeQuery();
@@ -64,6 +65,18 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		}
 		
 		return articles;
+	}
+
+	@Override
+	public Enchere insertEnchere() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Enchere UpdateEnchere() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
