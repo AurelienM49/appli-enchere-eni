@@ -10,7 +10,7 @@ public interface EnchereDAO {
 
 	public List<ArticleVendu> selectMesAnnonces(Utilisateur utilisateur);
 	
-	public Enchere insertEnchere();
+	public Enchere insertEnchere(Enchere enchere);
 	
-	public Enchere UpdateEnchere();
+	public Enchere UpdateEnchere(Enchere enchere);
 }
