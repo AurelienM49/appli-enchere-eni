@@ -22,6 +22,8 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			+ "SET date_enchere = ?, montant_enchere = ?\r\n"
 			+ "WHERE no_utilisateur = ? and no_article= ?";
 	
+	
+	
 
 	@Override
 	public List<ArticleVendu> selectMesAnnonces(Utilisateur utilisateur) {
