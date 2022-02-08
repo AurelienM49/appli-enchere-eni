@@ -30,6 +30,5 @@ public interface ArticleDAO {
 			String checkBoxFiltre1, String checkBoxFiltre2, String checkBoxFiltre3, String checkBoxFiltre4,
 			String checkBoxFiltre5, String checkBoxFiltre6);
 	
-	
 	public List<ArticleVendu> filtreDeconnected (String rechercheMotArt, String categorie);
 }
