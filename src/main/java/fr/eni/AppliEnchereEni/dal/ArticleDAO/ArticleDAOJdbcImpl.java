@@ -19,7 +19,8 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	private static final String INSERT_Article = "INSERT INTO ARTICLES_VENDUS (nom_article ,description ,date_debut_encheres ,date_fin_encheres ,prix_initial ,no_utilisateur ,no_categorie)"
 			+ "VALUES (?,?,?,?,?,?,?);";
 	private static final String SELECT_BY_ID = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM Articles_vendus WHERE no_article = ?;";
-	private static final String SELECT_ALL = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM Articles_vendus;";
+	private static final String SELECT_ALL = "SELECT TOP 10 no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM Articles_vendus;";
+	private static final String SELECT_TOP10 = "SELECT TOP 10 no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM Articles_vendus ORDER BY date_debut_encheres DESC;";
 	private static final String SELECT_BY_CATEGORIE = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM Articles_vendus WHERE no_categorie = ?;";
 	private static final String DELETE_ARTICLE = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ?;";
 
@@ -155,6 +156,57 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		}
 		return articles;
 	}
+	
+	@Override
+	public List<ArticleVendu> selectTop10() {
+		Connection cnx = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		List<ArticleVendu> articles = new ArrayList<ArticleVendu>();
+		ArticleVendu article = null;
+		Utilisateur user = null;
+		Categorie categorie = null;
+
+		try {
+			cnx = ConnectionProvider.getConnection();
+			stmt = cnx.createStatement();
+			rs = stmt.executeQuery(SELECT_ALL);
+
+			while (rs.next()) {
+				article = new ArticleVendu();
+				user = new Utilisateur();
+				categorie = new Categorie();
+
+				article.setNo_article(rs.getInt("no_article"));
+
+				article.setNom_article(rs.getString("nom_article"));
+				article.setDescription(rs.getString("description"));
+				article.setDate_debut_encheres(rs.getDate("date_debut_encheres").toLocalDate());
+				article.setDate_debut_encheres(rs.getDate("date_fin_encheres").toLocalDate());
+				article.setPrix_initial(rs.getInt("prix_initial"));
+
+				user.setNo_utilisateur(rs.getInt("no_utilisateur"));
+				article.setUtilisateur(user);
+
+				categorie.setNo_categorie(rs.getInt("no_categorie"));
+				article.setCategorie(categorie);
+
+				articles.add(article);
+
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		} finally {
+			ConnectionProvider.closeConnection(cnx, stmt);
+		}
+		return articles;
+	}
+
+	
+	
+	
 
 	@Override
 	public List<ArticleVendu> selectByCategorie(Categorie categorie) {

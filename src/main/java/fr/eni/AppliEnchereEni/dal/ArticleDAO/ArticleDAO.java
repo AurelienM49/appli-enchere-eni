@@ -31,4 +31,6 @@ public interface ArticleDAO {
 			String checkBoxFiltre5, String checkBoxFiltre6);
 	
 	public List<ArticleVendu> filtreDeconnected (String rechercheMotArt, String categorie);
+	
+	public List<ArticleVendu> selectTop10();
 }

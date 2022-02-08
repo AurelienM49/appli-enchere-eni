@@ -12,7 +12,7 @@
             <div>
 
                 <!--Formulaire de recherche-->
-                <form action="${pageContext.request.contextPath}/filtre" method="get">
+                <form action="${pageContext.request.contextPath}/HomeFiltre" method="get">
                     <div>
                         <input type="text" name="rechercheMotArt" placeholder="Le nom de l'article contient">
                     </div>
@@ -73,52 +73,28 @@
             
             <!--Liste encheres en cours-->
             <div>
-                <ul class="listeEnchereEnCours">
-                    
-                    
-                    <li class="annonceEnchereEnCours">
+
 
                         <!--image de l'annonce-->
                         <div>
                             <img src="/temporaire/imgEnchereEnCours.png" alt="Image de l'enchere en cours">
                         </div>
                         <div>
-                            <a href="${pageContext.request.contextPath}/DetailVente">${articleVendu.nom}</a>
-                            <p>Prix : ${articleVendu.prix}</p>
-                            <p>Fin de l'enchère : ${articleVendu.dateFinEnchere}</p>
-                            <p>Vendeur : <a href="#"></a></p>
+                        <c:forEach var="listeDesArticles" items="${articles}" >
+                        	<c:out value="${listeDesArticles.nom_article}"></c:out><br>
+                        	<c:out value="${listeDesArticles.prix_initial}"></c:out><br>
+                        	<c:out value="${listeDesArticles.date_fin_encheres}"></c:out><br><br>
+                        	
+                        </c:forEach>
+                            
                         </div>
                         
 						
-                    </li>
-                    
-                    <li class="annonceEnchereEnCours">
+<%--                             <a href="${pageContext.request.contextPath}/DetailVente">${articleVendu.nom}</a>
+                            <p>Prix : ${articleVendu.prix}</p>
+                            <p>Fin de l'enchère : ${articleVendu.dateFinEnchere}</p>
+                            <p>Vendeur : <a href="#"></a></p> --%>
 
-                        <!--image de l'annonce-->
-                        <div>
-                            <img src="/temporaire/imgEnchereEnCours.png" alt="Image de l'enchere en cours">
-                        </div>
-                        <div>
-                            <p>Prix :</p>
-                            <p>Fin de l'enchère :</p>
-                            <p>Vendeur :</p>
-                        </div>
-
-                    </li>
-                    <li class="annonceEnchereEnCours">
-
-                        <!--image de l'annonce-->
-                        <div>
-                            <img src="/temporaire/imgEnchereEnCours.png" alt="Image de l'enchere en cours">
-                        </div>
-                        <div>
-                            <p>Prix :</p>
-                            <p>Fin de l'enchère :</p>
-                            <p>Vendeur :</p>
-                        </div>
-
-                    </li>
-                </ul>
             </div>
 
             

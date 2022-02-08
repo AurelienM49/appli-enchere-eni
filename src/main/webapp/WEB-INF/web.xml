@@ -3,20 +3,10 @@
 
   <display-name>appli-enchere-eni</display-name>
 
-<!-- Déclaration de la jsp "acceuilLoged.jsp" -->
-<servlet>
-	<servlet-name>accueilLoged</servlet-name>
-	<jsp-file>/WEB-INF/jsp/accueilLoged.jsp</jsp-file>
-</servlet>
 
-<!-- Association de la jsp "acceuilLoged.jsp" à une url -->
-<servlet-mapping>
-		<servlet-name>accueilLoged</servlet-name>
-		<url-pattern>/Home</url-pattern>
-</servlet-mapping>
 
 
 <session-config>
-	<session-timeout>5</session-timeout>
+	<session-timeout>15</session-timeout>
 </session-config>
 </web-app>
