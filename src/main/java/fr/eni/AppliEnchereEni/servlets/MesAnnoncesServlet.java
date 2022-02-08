@@ -15,14 +15,14 @@ import fr.eni.AppliEnchereEni.bo.Utilisateur;
 /**
  * Servlet implementation class MesEncheres
  */
-@WebServlet("/MesEncheres")
-public class MesEncheres extends HttpServlet {
+@WebServlet("/mesAnnoncesPostees")
+public class MesAnnoncesServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MesEncheres() {
+    public MesAnnoncesServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -39,12 +39,12 @@ public class MesEncheres extends HttpServlet {
 		Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("utilisateur");
 		
 		EnchereManager enchereManager = EnchereManager.getInstance();
-		List <ArticleVendu> mesAnnonces = enchereManager.listerMesEncheres(utilisateur);
+		List <ArticleVendu> mesAnnonces = enchereManager.listerMesAnnonces(utilisateur);
 		
 		request.setAttribute("listeDeMesAnnonces",mesAnnonces);
-		request.getRequestDispatcher("WEB-INF/jsp/mesEncheres.jsp").forward(request, response);
+		request.getRequestDispatcher("WEB-INF/jsp/mesAnnoncesPostees.jsp").forward(request, response);
 		
-		System.out.println(enchereManager.listerMesEncheres(utilisateur));
+		System.out.println(enchereManager.listerMesAnnonces(utilisateur));
 		
 	}
 
@@ -52,11 +52,6 @@ public class MesEncheres extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setCharacterEncoding("UTF-8");
-		request.setCharacterEncoding("UTF-8");
-		
-		// TODO Auto-generated method stub
-		doGet(request, response);
 	}
 
 }

@@ -29,11 +29,11 @@ public class EnchereManager {
 	
 	//Fin du Pattern Singleton
 	
-	public List<ArticleVendu> listerMesEncheres (Utilisateur utilisateur) {
+	public List<ArticleVendu> listerMesAnnonces (Utilisateur utilisateur) {
 		
 		EnchereDAO enchereDAO = DAOFactory.createEnchereDaoJdbcImpl();
 		
-		return enchereDAO.selectMesArticles(utilisateur);		
+		return enchereDAO.selectMesAnnonces(utilisateur);		
 	}
 	
 }
