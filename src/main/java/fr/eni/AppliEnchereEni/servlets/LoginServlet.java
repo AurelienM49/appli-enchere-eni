@@ -60,7 +60,7 @@ public class LoginServlet extends HttpServlet {
 			utilisateur = um.loginUtilisateur(utilisateur);
 			utilisateur.setMot_de_passe(null);
 			session.setAttribute("utilisateur", utilisateur);
-			request.getRequestDispatcher("/HomeSansFiltre").forward(request, response);
+			request.getRequestDispatcher("/HomeSansFiltre").forward(request, response); 
 			
 		}else {
 			
