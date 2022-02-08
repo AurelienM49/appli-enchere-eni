@@ -20,7 +20,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			+ "VALUES (?, ?, ?, ?);";
 	private final static String UPDATE_ENCHERE = "UPDATE ENCHERES\r\n"
 			+ "SET date_enchere = ?, montant_enchere = ?\r\n"
-			+ "WHERE no_utilisateur = ? and no_article= ?";
+			+ "WHERE no_utilisateur = ? and no_article= ?"; 
 	
 	
 	
