@@ -47,6 +47,7 @@ public class FiltreRechercheServlet extends HttpServlet {
 		System.out.println(checkbox2);
 		System.out.println(checkbox6);
 
+		
 		Utilisateur user = (Utilisateur) request.getSession().getAttribute("utilisateur");		
 		
 		ArticleManager am = ArticleManager.getInstance();
