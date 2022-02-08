@@ -12,15 +12,16 @@
             <div>
 
                 <!--Formulaire de recherche-->
-                <form action="" method="get">
+                <form action="${pageContext.request.contextPath}/filtre" method="get">
                     <div>
-                        <input type="text" placeholder="Le nom de l'article contient">
+                        <input type="text" name="rechercheMotArt" placeholder="Le nom de l'article contient">
                     </div>
                     
                     <!--Selection categorie-->
                     <div>
                         <label for="categorie">Categorie : </label>
                         <select name="categorie" id="categorie">
+                            <option value="all">-- Tout les article --</option>
                     	    <option value="informatique">Informatique</option>
                     	    <option value="ameublement">Ameublement</option>
                     	    <option value="vêtement">Vêtement</option>

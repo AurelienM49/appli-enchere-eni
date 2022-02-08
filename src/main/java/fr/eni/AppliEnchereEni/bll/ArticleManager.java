@@ -34,14 +34,19 @@ public class ArticleManager {
 		return article.insertArticle(articleVendu);
 	}
 	
-	public List<ArticleVendu> filtreManager(Utilisateur utilisateur, String rechercheMotArt, String categorie, String choixRadio,
+	public List<ArticleVendu> filtreConnecte(Utilisateur utilisateur, String rechercheMotArt, String categorie, String choixRadio,
 			String checkBoxFiltre1, String checkBoxFiltre2, String checkBoxFiltre3, String checkBoxFiltre4,
 			String checkBoxFiltre5, String checkBoxFiltre6){
 		
 		ArticleDAO article = DAOFactory.createArticleDAOJbbcImpl();
-		return article.filtre(utilisateur, rechercheMotArt, categorie, choixRadio, checkBoxFiltre1, checkBoxFiltre2, checkBoxFiltre3, checkBoxFiltre4, checkBoxFiltre5, checkBoxFiltre6);
+		return article.filtreConnected(utilisateur, rechercheMotArt, categorie, choixRadio, checkBoxFiltre1, checkBoxFiltre2, checkBoxFiltre3, checkBoxFiltre4, checkBoxFiltre5, checkBoxFiltre6);	
+	}
+	
+	
+	public List<ArticleVendu> filtreDeconnecte(String rechercheMotArt, String categorie){
 		
-		
+		ArticleDAO article = DAOFactory.createArticleDAOJbbcImpl();
+		return article.filtreDeconnected(rechercheMotArt, categorie);	
 	}
 	
 }

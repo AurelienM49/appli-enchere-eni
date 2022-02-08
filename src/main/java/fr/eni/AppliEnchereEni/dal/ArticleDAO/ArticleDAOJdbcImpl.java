@@ -227,8 +227,11 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 	}
 
+	
+	
+	
 	@Override
-	public List<ArticleVendu> filtre(Utilisateur utilisateur, String rechercheMotArt, String categorie,
+	public List<ArticleVendu> filtreConnected(Utilisateur utilisateur, String rechercheMotArt, String categorie,
 			String choixRadio, String checkBoxFiltre1, String checkBoxFiltre2, String checkBoxFiltre3,
 			String checkBoxFiltre4, String checkBoxFiltre5, String checkBoxFiltre6) {
 
@@ -280,7 +283,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 				requêteSQL.append(venteDebutSQL);
 	
 				// filtre de recherche par mot clé
-				if (!rechercheMotArt.isEmpty()) {
+				if (!rechercheMotArt.equals("all")) {
 					requêteSQL.append(rechercheMotArtSQL);
 				}
 	
@@ -412,4 +415,78 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		
 		return listeArticles;
 	}
+	
+	@Override
+	public List<ArticleVendu> filtreDeconnected(String rechercheMotArt, String categorie) {
+
+		Connection cnx = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;		
+		List<ArticleVendu> listeArticles = new ArrayList<>();
+		ArticleVendu articleVendu = null;
+		Utilisateur user = null;
+		try {
+			
+			// requête principale
+			StringBuilder requêteSQL = new StringBuilder();
+			requêteSQL.append("SELECT "
+					+ " av.nom_article, prix_initial, date_debut_encheres,  date_fin_encheres, date_enchere, montant_enchere, pseudo, c.libelle\r\n"
+					+ "	FROM ARTICLES_VENDUS AS av\r\n"
+					+ "	INNER JOIN UTILISATEURS as u ON u.no_utilisateur = av.no_utilisateur\r\n"
+					+ "	INNER JOIN CATEGORIES AS c ON c.no_categorie = av.no_categorie 	\r\n"
+					+ "	LEFT JOIN ENCHERES e ON av.no_article = e.no_article \r\n" + "	WHERE 1 = 1");
+	
+			// choix catégorie
+			String choixCategorie = " AND c.libelle = :libele_categorie";
+	
+			// filtre mot clé et catégorie
+			String rechercheMotArtSQL = " AND av.nom_article LIKE :rechercheMotArt";
+
+	
+			// on vérifie si l'utilisateur à choisi une categorie pour filtrer
+			if (!categorie.equals("all")) {
+				requêteSQL.append(choixCategorie);
+			}
+	
+			if(rechercheMotArt!=null) {
+				requêteSQL.append(rechercheMotArtSQL);
+			}
+			
+			cnx = ConnectionProvider.getConnection();
+			pstmt = cnx.prepareStatement(requêteSQL.toString()
+					.replaceAll(":libele_categorie", "'" + categorie + "'")
+					.replaceAll(":rechercheMotArt",  "'%" + rechercheMotArt +  "%'")
+			);
+			
+			
+			
+			System.out.println(requêteSQL);		
+			rs = pstmt.executeQuery();
+
+			
+			
+			while (rs.next()) {
+				articleVendu = new ArticleVendu();
+				user = new Utilisateur();
+				
+				articleVendu.setNom_article(rs.getString("nom_article"));
+				articleVendu.setPrix_initial(rs.getInt("prix_initial"));
+				articleVendu.setDate_fin_encheres(rs.getDate("date_fin_encheres").toLocalDate());
+				
+				user.setPseudo(rs.getString("pseudo"));				
+				articleVendu.setUtilisateur(user);
+				
+				System.out.println(articleVendu.toString());
+				listeArticles.add(articleVendu);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return listeArticles;
+	}
+	
+	
 }

@@ -32,17 +32,30 @@ public class FiltreRechercheServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ArticleManager am = ArticleManager.getInstance();
+		List<ArticleVendu> listeArticles = null;
 		
-		String rechercheMotArt = request.getParameter("rechercheMotArt");
-		String categorie = request.getParameter("categorie");
-		String choixRadio = request.getParameter("choixRadio");
-		String checkbox1 = request.getParameter("checkBoxFiltre1");
-		String checkbox2 = request.getParameter("checkBoxFiltre2");
-		String checkbox3 = request.getParameter("checkBoxFiltre3");
-		String checkbox4 = request.getParameter("checkBoxFiltre4");
-		String checkbox5 = request.getParameter("checkBoxFiltre5");
-		String checkbox6 = request.getParameter("checkBoxFiltre6");
 		
+		if (request.getSession().getAttribute("utilisateur")==null) {
+			
+			String rechercheMotArt = request.getParameter("rechercheMotArt");
+			System.out.println("****************"+rechercheMotArt);
+			String categorie = request.getParameter("categorie");
+			
+			listeArticles = am.filtreDeconnecte(rechercheMotArt,categorie);
+			
+			
+		} else if(request.getSession().getAttribute("utilisateur")!=null) {
+			String rechercheMotArt = request.getParameter("rechercheMotArt");
+			String categorie = request.getParameter("categorie");
+			String choixRadio = request.getParameter("choixRadio");
+			String checkbox1 = request.getParameter("checkBoxFiltre1");
+			String checkbox2 = request.getParameter("checkBoxFiltre2");
+			String checkbox3 = request.getParameter("checkBoxFiltre3");
+			String checkbox4 = request.getParameter("checkBoxFiltre4");
+			String checkbox5 = request.getParameter("checkBoxFiltre5");
+			String checkbox6 = request.getParameter("checkBoxFiltre6");
+			
 		System.out.println(checkbox1);
 		System.out.println(checkbox2);
 		System.out.println(checkbox3);
@@ -50,11 +63,12 @@ public class FiltreRechercheServlet extends HttpServlet {
 		
 		Utilisateur user = (Utilisateur) request.getSession().getAttribute("utilisateur");		
 		
-		ArticleManager am = ArticleManager.getInstance();
-		List<ArticleVendu> listeArticles = am.filtreManager(user, rechercheMotArt, categorie, choixRadio, checkbox1, checkbox2, checkbox3, checkbox4, checkbox5, checkbox6);
+		listeArticles = am.filtreConnecte(user, rechercheMotArt, categorie, choixRadio, checkbox1, checkbox2, checkbox3, checkbox4, checkbox5, checkbox6);
 		
 		request.setAttribute("articles", listeArticles);
 		request.getRequestDispatcher("/WEB-INF/jsp/accueilLoged.jsp").forward(request, response);
+		}
+			
 
 		
 		
