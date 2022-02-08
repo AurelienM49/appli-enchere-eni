@@ -16,22 +16,19 @@ import fr.eni.AppliEnchereEni.dal.bddTools.ConnectionProvider;
 
 public class ArticleDAOJdbcImpl implements ArticleDAO {
 
-	private static final String INSERT_Article ="INSERT INTO ARTICLES_VENDUS (nom_article ,description ,date_debut_encheres ,date_fin_encheres ,prix_initial ,no_utilisateur ,no_categorie)"
+	private static final String INSERT_Article = "INSERT INTO ARTICLES_VENDUS (nom_article ,description ,date_debut_encheres ,date_fin_encheres ,prix_initial ,no_utilisateur ,no_categorie)"
 			+ "VALUES (?,?,?,?,?,?,?);";
-	private static final String SELECT_BY_ID="SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM Articles_vendus WHERE no_article = ?;";
-	private static final String SELECT_ALL="SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM Articles_vendus;";
-	private static final String SELECT_BY_CATEGORIE="SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM Articles_vendus WHERE no_categorie = ?;";
-	private static final String DELETE_ARTICLE="DELETE FROM ARTICLES_VENDUS WHERE no_article = ?;";
-	
-	
-	
+	private static final String SELECT_BY_ID = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM Articles_vendus WHERE no_article = ?;";
+	private static final String SELECT_ALL = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM Articles_vendus;";
+	private static final String SELECT_BY_CATEGORIE = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM Articles_vendus WHERE no_categorie = ?;";
+	private static final String DELETE_ARTICLE = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ?;";
+
 	@Override
 	public ArticleVendu insertArticle(ArticleVendu articleVendu) {
-		
+
 		Connection cnx = null;
-		PreparedStatement pstmt=null;
-		
-		
+		PreparedStatement pstmt = null;
+
 		try {
 			cnx = ConnectionProvider.getConnection();
 			pstmt = cnx.prepareStatement(INSERT_Article, Statement.RETURN_GENERATED_KEYS);
@@ -43,19 +40,18 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			pstmt.setInt(6, articleVendu.getUtilisateur().getNo_utilisateur());
 			pstmt.setInt(7, articleVendu.getNo_categorie());
 			int rowsNumber = pstmt.executeUpdate();
-			
-			
-			//Recuperer la generated key
+
+			// Recuperer la generated key
 			if (rowsNumber == 1) {
 				ResultSet rs = pstmt.getGeneratedKeys();
-				
+
 				if (rs.next()) {
-			
+
 					articleVendu.setNo_article(rs.getInt(1));
-					
+
 				}
-	
-		}
+
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -63,60 +59,55 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			ConnectionProvider.closeConnection(cnx, pstmt);
 		}
 		return articleVendu;
-		
-	}
 
+	}
 
 	@Override
 	public ArticleVendu SelectArticleVenduByID(ArticleVendu articleVendu) {
 		Connection cnx = null;
-		PreparedStatement pstmt= null;
-		ResultSet rs =null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		ArticleVendu article = null;
 		Utilisateur user = null;
 		Categorie categorie = null;
-		
+
 		try {
 			cnx = ConnectionProvider.getConnection();
 			pstmt = cnx.prepareStatement(SELECT_BY_ID);
 			pstmt.setInt(1, articleVendu.getNo_article());
-			
+
 			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				article = new ArticleVendu();
 				user = new Utilisateur();
 				categorie = new Categorie();
-				
-			
+
 				article.setNo_article(rs.getInt("no_article"));
-			
+
 				article.setNom_article(rs.getString("nom_article"));
 				article.setDescription(rs.getString("description"));
 				article.setDate_debut_encheres(rs.getDate("date_debut_encheres").toLocalDate());
 				article.setDate_debut_encheres(rs.getDate("date_fin_encheres").toLocalDate());
 				article.setPrix_initial(rs.getInt("prix_initial"));
-			
+
 				user.setNo_utilisateur(rs.getInt("no_utilisateur"));
 				article.setUtilisateur(user);
-				
+
 				categorie.setNo_categorie(rs.getInt("no_categorie"));
 				article.setCategorie(categorie);
 			}
-			
-			
+
 		} catch (SQLException e) {
 
 			e.printStackTrace();
 		} finally {
-			//fermeture de la connexion
+			// fermeture de la connexion
 			ConnectionProvider.closeConnection(cnx, pstmt);
 		}
-		
-		
+
 		return article;
 	}
-
 
 	@Override
 	public List<ArticleVendu> selectAll() {
@@ -127,46 +118,44 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		ArticleVendu article = null;
 		Utilisateur user = null;
 		Categorie categorie = null;
-		
+
 		try {
 			cnx = ConnectionProvider.getConnection();
 			stmt = cnx.createStatement();
 			rs = stmt.executeQuery(SELECT_ALL);
-			
-			while(rs.next()) {
+
+			while (rs.next()) {
 				article = new ArticleVendu();
 				user = new Utilisateur();
 				categorie = new Categorie();
-				
+
 				article.setNo_article(rs.getInt("no_article"));
-			
+
 				article.setNom_article(rs.getString("nom_article"));
 				article.setDescription(rs.getString("description"));
 				article.setDate_debut_encheres(rs.getDate("date_debut_encheres").toLocalDate());
 				article.setDate_debut_encheres(rs.getDate("date_fin_encheres").toLocalDate());
 				article.setPrix_initial(rs.getInt("prix_initial"));
-				
+
 				user.setNo_utilisateur(rs.getInt("no_utilisateur"));
 				article.setUtilisateur(user);
-				
+
 				categorie.setNo_categorie(rs.getInt("no_categorie"));
 				article.setCategorie(categorie);
-				
+
 				articles.add(article);
-				
+
 			}
-			
+
 		} catch (SQLException e) {
 
 			e.printStackTrace();
 		} finally {
 			ConnectionProvider.closeConnection(cnx, stmt);
-		}	
+		}
 		return articles;
 	}
-	
-	
-	
+
 	@Override
 	public List<ArticleVendu> selectByCategorie(Categorie categorie) {
 		Connection cnx = null;
@@ -176,38 +165,37 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		ArticleVendu article = null;
 		Utilisateur user = null;
 		Categorie c = null;
-		
+
 		try {
 			cnx = ConnectionProvider.getConnection();
 			pstmt = cnx.prepareStatement(SELECT_BY_CATEGORIE);
-			
+
 			pstmt.setInt(1, categorie.getNo_categorie());
 
 			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
+
+			while (rs.next()) {
 				article = new ArticleVendu();
 				user = new Utilisateur();
 				c = new Categorie();
-				
+
 				article.setNo_article(rs.getInt("no_article"));
-				
+
 				article.setNom_article(rs.getString("nom_article"));
 				article.setDescription(rs.getString("description"));
 				article.setDate_debut_encheres(rs.getDate("date_debut_encheres").toLocalDate());
 				article.setDate_fin_encheres(rs.getDate("date_fin_encheres").toLocalDate());
 				article.setPrix_initial(rs.getInt("prix_initial"));
-				
+
 				user.setNo_utilisateur(rs.getInt("no_utilisateur"));
 				article.setUtilisateur(user);
-				
+
 				c.setNo_categorie(rs.getInt("no_categorie"));
 				article.setCategorie(c);
-				
+
 				articles.add(article);
 			}
-			
-			
+
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -218,111 +206,205 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		return articles;
 	}
 
-
 	@Override
 	public void delete(ArticleVendu articleVendu) {
 		Connection cnx = null;
 		PreparedStatement pstmt = null;
-		
+
 		try {
 			cnx = ConnectionProvider.getConnection();
 			pstmt = cnx.prepareStatement(DELETE_ARTICLE);
-			
+
 			pstmt.setInt(1, articleVendu.getNo_article());
 			pstmt.executeUpdate();
-			
+
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-		}finally {
+		} finally {
 			ConnectionProvider.closeConnection(cnx, pstmt);
 		}
-		
-		
-	}
 
+	}
 
 	@Override
-	public List<ArticleVendu> filtre(Utilisateur utilisateur, String rechercheMotArt, String categorie, String choixRadio,
-			String checkBoxFiltre1, String checkBoxFiltre2, String checkBoxFiltre3, String checkBoxFiltre4,
-			String checkBoxFiltre5, String checkBoxFiltre6) {
+	public List<ArticleVendu> filtre(Utilisateur utilisateur, String rechercheMotArt, String categorie,
+			String choixRadio, String checkBoxFiltre1, String checkBoxFiltre2, String checkBoxFiltre3,
+			String checkBoxFiltre4, String checkBoxFiltre5, String checkBoxFiltre6) {
+
+		Connection cnx = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;		
+		List<ArticleVendu> listeArticles = new ArrayList<>();
+		ArticleVendu articleVendu = null;
+		Utilisateur user = null;
+		try {
+			
+			// requête principale
+			StringBuilder requêteSQL = new StringBuilder();
+			requêteSQL.append("SELECT "
+					+ " av.nom_article, prix_initial, date_debut_encheres,  date_fin_encheres, date_enchere, montant_enchere, pseudo, c.libelle\r\n"
+					+ "	FROM ARTICLES_VENDUS AS av\r\n"
+					+ "	INNER JOIN UTILISATEURS as u ON u.no_utilisateur = av.no_utilisateur\r\n"
+					+ "	INNER JOIN CATEGORIES AS c ON c.no_categorie = av.no_categorie 	\r\n"
+					+ "	LEFT JOIN ENCHERES e ON av.no_article = e.no_article \r\n" + "	WHERE 1 = 1");
 	
-		//variable que l'on remplace par "TOP 1" si l'utilisateur coche "Mes enchères remportées".
-		String top1 =" ";
-		
-		
-		//requête principale 
-		StringBuilder requêteSQL = new StringBuilder();		
-		requêteSQL.append("SELECT"+top1+"av.nom_article, prix_initial, date_debut_encheres, date_fin_encheres, pseudo\r\n"
-				+ "FROM ARTICLES_VENDUS AS av WHERE 1 = 1");
-
-		//choix radio 
-		String radioMesVentes = "INNER JOIN UTILISATEURS AS u ON u.no_utilisateur = ?";
-		String radioAchats = "INNER JOIN UTILISATEURS as u ON u.no_utilisateur = av.no_utilisateur\r\n"
-				+ "LEFT JOIN ENCHERES e ON av.no_article = e.no_article ";
-		
-		
-		//filtre mot clé et catégorie
-		String rechercheMotArtSQL = " AND av.nom_article LIKE ?";
-		String categorieSQL = " INNER JOIN CATEGORIES AS c ON c.libelle = ?";
-		
-		
-		//choix checkbox
-		String venteEnCoursSQL = " OR GETDATE() BETWEEN date_debut_encheres AND date_fin_encheres";
-		String ventesNonDebuteesSQL = " OR date_debut_encheres > GETDATE()";
-		String venteTermineesSQL = " OR GETDATE() > date_fin_encheres";
-		
-		String enchereOuverte = " OR GETDATE() > date_debut_encheres";
-		String mesEncheresEnCours= " OR e.no_utilisateur = ?";
-		String mesEncheresRemportees =" OR date_fin_encheres < GETDATE()\r\n"
-				+ "	ORDER BY montant_enchere DESC";
-		
-		//on vérifie si l'utilisateur à choisi une categorie pour filtrer
-		if (categorie!=null) {
-			requêteSQL.append(categorieSQL);
-		}
-
-		//on vérifie si l'utilisateur à choisit "Mes ventes"
-		if(choixRadio.equals("Mes ventes")) {
-			requêteSQL.append(radioMesVentes);
+			// choix catégorie
+			String choixCategorie = " AND c.libelle = :libele_categorie";
+	
+			// filtre mot clé et catégorie
+			String rechercheMotArtSQL = " AND av.nom_article LIKE :rechercheMotArt";
+	
+			// choix checkbox vente
+			String venteDebutSQL = " AND (1 = 1 ";
+			String venteEnCoursSQL = " AND ((GETDATE() BETWEEN date_debut_encheres AND date_fin_encheres) AND (u.no_utilisateur = :no_utilisateur)) ";
+			String ventesNonDebuteesSQL = " OR date_debut_encheres > GETDATE() ";
+			String venteTermineesSQL = " OR GETDATE() > date_fin_encheres ";
+			String venteFinSQL = ")";
+	
 			
-//TODO Finir les conditions de checkbox sur ArticleDAOJdcImpl
-			
-			
-			
-			
-			//condition si l'utilisateur à coché le checkbox1 on vérifie les deux autres
-			if(checkBoxFiltre1!=null) {	
-				requêteSQL.append(venteEnCoursSQL);	
-				if(checkBoxFiltre2!=null) {
-					requêteSQL.append(ventesNonDebuteesSQL);	
+			// choix checkbox achats
+			String achatsDebutSQL = "AND (1 = 1 ";
+			String enchereOuverte = " OR GETDATE() > date_debut_encheres";
+			String mesEncheresEnCours = " OR (u.no_utilisateur = :no_utilisateur AND (GETDATE() < date_fin_encheres) AND (date_enchere is not null))";
+			String mesEncheresRemportees = " OR (e.montant_enchere = (SELECT MAX(e2.montant_enchere) FROM ENCHERES e2 WHERE e2.no_article = av.no_article AND e2.no_utilisateur = :no_utilisateur AND date_fin_encheres < GETDATE()))";
+			String finAchatsSQL = ")";
+	
+			// on vérifie si l'utilisateur à choisi une categorie pour filtrer
+			if (!categorie.equals("all")) {
+				requêteSQL.append(choixCategorie);
+			}
+	
+			// on vérifie si l'utilisateur à choisit "Mes ventes"
+			if (choixRadio.equals("Mes ventes")) {
+				requêteSQL.append(venteDebutSQL);
+	
+				// filtre de recherche par mot clé
+				if (!rechercheMotArt.isEmpty()) {
+					requêteSQL.append(rechercheMotArtSQL);
 				}
-				if(checkBoxFiltre3!=null) {
-					requêteSQL.append(venteTermineesSQL);	
-				}	
+	
+				// MES VENTES
+				// si il n'y qu'un seul qui est coché
+	
+				if (checkBoxFiltre4 != null && checkBoxFiltre5 == null && checkBoxFiltre6 == null) {
+					requêteSQL.append(venteEnCoursSQL);
+				}
+	
+				if (checkBoxFiltre5 != null && checkBoxFiltre4 == null && checkBoxFiltre6 == null) {
+					requêteSQL.append(ventesNonDebuteesSQL);
+				}
+	
+				if (checkBoxFiltre6 != null && checkBoxFiltre4 == null && checkBoxFiltre5 == null) {
+					requêteSQL.append(venteTermineesSQL);
+				}
+	
+				// si y'en a deux qui sont cochés
+				if (checkBoxFiltre4 != null && checkBoxFiltre5 != null && checkBoxFiltre6 == null
+						|| checkBoxFiltre4 != null && checkBoxFiltre6 != null && checkBoxFiltre5 == null
+						|| checkBoxFiltre5 != null && checkBoxFiltre6 != null && checkBoxFiltre4 == null) {
+					if (checkBoxFiltre4 != null && checkBoxFiltre5 != null && checkBoxFiltre6 == null) {
+						requêteSQL.append(venteEnCoursSQL);
+						requêteSQL.append(ventesNonDebuteesSQL);
+					} else if (checkBoxFiltre4 != null && checkBoxFiltre6 != null && checkBoxFiltre5 == null) {
+						requêteSQL.append(venteEnCoursSQL);
+						requêteSQL.append(venteTermineesSQL);
+					} else if (checkBoxFiltre5 != null && checkBoxFiltre6 != null && checkBoxFiltre4 == null) {
+						requêteSQL.append(ventesNonDebuteesSQL);
+						requêteSQL.append(venteTermineesSQL);
+					}
+				}
+	
+				// si les trois sont cochés
+				if (checkBoxFiltre4 != null && checkBoxFiltre5 != null && checkBoxFiltre6 != null) {
+					requêteSQL.append(venteEnCoursSQL);
+					requêteSQL.append(ventesNonDebuteesSQL);
+					requêteSQL.append(venteTermineesSQL);
+				}
+	
+				requêteSQL.append(venteFinSQL);
+				
+				// ACHATS
+			} else {
+				requêteSQL.append(achatsDebutSQL);
+	
+				// filtre de recherche par mot clé
+				if (!rechercheMotArt.isEmpty()) {
+					requêteSQL.append(rechercheMotArtSQL);
+				}
+	
+				// si il n'y qu'un seul qui est coché
+				if (checkBoxFiltre1 != null && checkBoxFiltre2 == null && checkBoxFiltre3 == null) {
+					requêteSQL.append(enchereOuverte);
+				}
+	
+				if (checkBoxFiltre2 != null && checkBoxFiltre1 == null && checkBoxFiltre3 == null) {
+					requêteSQL.append(mesEncheresEnCours);
+				}
+	
+				if (checkBoxFiltre3 != null && checkBoxFiltre1 == null && checkBoxFiltre2 == null) {
+					requêteSQL.append(mesEncheresRemportees);
+					requêteSQL.append(finAchatsSQL);
+				}
+	
+				// si y'en a deux qui sont cochés
+				if (checkBoxFiltre1 != null && checkBoxFiltre2 != null && checkBoxFiltre3 == null || 
+						checkBoxFiltre1 != null && checkBoxFiltre3 != null && checkBoxFiltre2 == null
+						|| checkBoxFiltre2 != null && checkBoxFiltre3 != null && checkBoxFiltre1 == null) {
+					if (checkBoxFiltre1 != null && checkBoxFiltre2 != null && checkBoxFiltre3 == null) {
+						requêteSQL.append(enchereOuverte);
+						requêteSQL.append(mesEncheresEnCours);
+					} else if (checkBoxFiltre1 != null && checkBoxFiltre3 != null && checkBoxFiltre2 == null) {
+						requêteSQL.append(enchereOuverte);
+						requêteSQL.append(mesEncheresRemportees);
+					} else if (checkBoxFiltre2 != null && checkBoxFiltre3 != null && checkBoxFiltre1 == null) {
+						requêteSQL.append(mesEncheresEnCours);
+						requêteSQL.append(mesEncheresRemportees);
+						requêteSQL.append(finAchatsSQL);
+					}
+				}
+	
+				// si les trois sont cochés
+				if (checkBoxFiltre1 != null && checkBoxFiltre2 != null && checkBoxFiltre3 != null) {
+					requêteSQL.append(enchereOuverte);
+					requêteSQL.append(mesEncheresEnCours);
+					requêteSQL.append(mesEncheresRemportees);
+					requêteSQL.append(finAchatsSQL);
+				}
+	
+				if(checkBoxFiltre3 == null) {
+					requêteSQL.append(finAchatsSQL);
+				}
 			}
 			
+			cnx = ConnectionProvider.getConnection();
+			pstmt = cnx.prepareStatement(requêteSQL.toString()
+					.replaceAll(":libele_categorie", "'" + categorie + "'")
+					.replaceAll(":no_utilisateur", String.valueOf(utilisateur.getNo_utilisateur()))
+					.replaceAll(":rechercheMotArt",  "'%" + rechercheMotArt +  "%'")
+			);
+			
+			rs = pstmt.executeQuery();
 
+			while (rs.next()) {
+				articleVendu = new ArticleVendu();
+				user = new Utilisateur();
+				
+				articleVendu.setNom_article(rs.getString("nom_article"));
+				articleVendu.setPrix_initial(rs.getInt("prix_initial"));
+				articleVendu.setDate_fin_encheres(rs.getDate("date_fin_encheres").toLocalDate());
+				
+				user.setPseudo(rs.getString("pseudo"));				
+				articleVendu.setUtilisateur(user);
+				
+				listeArticles.add(articleVendu);
+			}
 			
-			
-		}else {
-			requêteSQL.append(radioAchats);
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		
-
-		if(!rechercheMotArt.isEmpty()) {
-			requêteSQL.append(rechercheMotArtSQL);
-		}
 		
-		
-		
-		
-		
-		
-		
-		
-		return null;
+		return listeArticles;
 	}
-	
-	
 }

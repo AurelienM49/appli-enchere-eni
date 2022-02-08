@@ -17,7 +17,7 @@
                         <input type="text" name="rechercheMotArt" placeholder="Le nom de l'article contient">
                     </div>
                     
-                    <!--Selection categorie-->""
+                    <!--Selection categorie-->
                     <div>
                         <label for="categorie">Categorie : </label>
                         <select name="categorie" id="categorie">
@@ -35,7 +35,7 @@
                         <!--Achat + checkbox pour approfondir filtre "Achat"-->
                         <div>
                             <label for="achats">Achats</label>
-                            <input type="radio" id="radioAchats" name="choixRadio" value="Achats">
+                            <input type="radio" id="radioAchats" name="choixRadio" value="Achats" checked="checked">
 
                             <label for="encheresOuvertes">Enchères ouvertes</label>
                             <input type="checkbox" id="encheresOuvertes" name="checkBoxFiltre1" value="encheresOuvertes">
@@ -43,7 +43,7 @@
                             <label for="mesEncheresEnCours">Mes enchères en cours</label>
                             <input type="checkbox" id="mesEncheresEnCours" name="checkBoxFiltre2" value="mesEncheresEnCours">
 
-                            <label for="mesEncheresRemportees">Enchères ouvertes</label>
+                            <label for="mesEncheresRemportees">Mes enchères remportées</label>
                             <input type="checkbox" id="mesEncheresRemportees" name="checkBoxFiltre3" value="mesEncheresRemportees">
                         </div>
 

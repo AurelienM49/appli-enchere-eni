@@ -116,5 +116,14 @@ public class ArticleVendu {
 	public void setRetrait(Retrait retrait) {
 		this.retrait = retrait;
 	}
+
+	@Override
+	public String toString() {
+		return "ArticleVendu [nom_article=" + nom_article + ", date_fin_encheres=" + date_fin_encheres
+				+ ", prix_initial=" + prix_initial + ", utilisateur=" + utilisateur.getPseudo() + "]";
+	}
+	
+	
+	
 	
 }

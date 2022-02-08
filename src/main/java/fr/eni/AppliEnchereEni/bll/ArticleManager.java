@@ -30,9 +30,7 @@ public class ArticleManager {
 	//Fin du pattern Singleton
 	
 	public ArticleVendu ajouterArticle(ArticleVendu  articleVendu) {
-
 		ArticleDAO article = DAOFactory.createArticleDAOJbbcImpl();
-
 		return article.insertArticle(articleVendu);
 	}
 	
