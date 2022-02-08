@@ -18,10 +18,17 @@
     <!-- Main -->
 
     <main>
+        <div class=enchere id="mesAnnoncesPostees">
+
+            <p>Mes annonces : </p>
+            <a href="${pageContext.request.contextPath}/mesAnnoncesPostees">Tout voir</a>
+
+        </div>
+        
         <div class=enchere id="mesEncheres">
 
-            <p>Mes enchères :</p>
-            <a href="${pageContext.request.contextPath}/mesAnnoncesPostees">Tout voir</a>
+            <p>Les enchères auxquelles je participe:</p>
+            <a href="#">Tout voir</a>
 
         </div>
 
