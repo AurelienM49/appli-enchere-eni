@@ -49,4 +49,10 @@ public class ArticleManager {
 		return article.filtreDeconnected(rechercheMotArt, categorie);	
 	}
 	
+	public List<ArticleVendu> afficher10Articles(){
+		ArticleDAO article = DAOFactory.createArticleDAOJbbcImpl();
+		return article.selectTop10();
+		
+	}
+	
 }

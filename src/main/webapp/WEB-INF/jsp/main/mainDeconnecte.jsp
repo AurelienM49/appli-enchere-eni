@@ -12,7 +12,7 @@
             <div>
 
                 <!--Formulaire de recherche-->
-                <form action="${pageContext.request.contextPath}/filtre" method="get">
+                <form action="${pageContext.request.contextPath}/HomeFiltre" method="get">
                     <div>
                         <input type="text" name="rechercheMotArt" placeholder="Le nom de l'article contient">
                     </div>

@@ -16,14 +16,14 @@ import fr.eni.AppliEnchereEni.bo.Utilisateur;
 /**
  * Servlet implementation class FiltreRechercheServlet
  */
-@WebServlet("/filtre")
-public class FiltreRechercheServlet extends HttpServlet {
+@WebServlet("/HomeFiltre")
+public class HomeFiltreServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FiltreRechercheServlet() {
+    public HomeFiltreServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -39,7 +39,6 @@ public class FiltreRechercheServlet extends HttpServlet {
 		if (request.getSession().getAttribute("utilisateur")==null) {
 			
 			String rechercheMotArt = request.getParameter("rechercheMotArt");
-			System.out.println("****************"+rechercheMotArt);
 			String categorie = request.getParameter("categorie");
 			
 			listeArticles = am.filtreDeconnecte(rechercheMotArt,categorie);
@@ -56,9 +55,7 @@ public class FiltreRechercheServlet extends HttpServlet {
 			String checkbox5 = request.getParameter("checkBoxFiltre5");
 			String checkbox6 = request.getParameter("checkBoxFiltre6");
 			
-		System.out.println(checkbox1);
-		System.out.println(checkbox2);
-		System.out.println(checkbox3);
+			
 
 		
 		Utilisateur user = (Utilisateur) request.getSession().getAttribute("utilisateur");		
