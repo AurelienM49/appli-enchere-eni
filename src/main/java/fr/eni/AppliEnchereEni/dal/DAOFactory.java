@@ -4,6 +4,8 @@ import fr.eni.AppliEnchereEni.dal.ArticleDAO.ArticleDAO;
 import fr.eni.AppliEnchereEni.dal.ArticleDAO.ArticleDAOJdbcImpl;
 import fr.eni.AppliEnchereEni.dal.CategorieDAO.CategorieDAO;
 import fr.eni.AppliEnchereEni.dal.CategorieDAO.CategorieDAOJdcImpl;
+import fr.eni.AppliEnchereEni.dal.EnchereDAO.EnchereDAO;
+import fr.eni.AppliEnchereEni.dal.EnchereDAO.EnchereDAOJdbcImpl;
 import fr.eni.AppliEnchereEni.dal.UtilisateurDAO.UtilisateurDAO;
 import fr.eni.AppliEnchereEni.dal.UtilisateurDAO.UtilisateurDAOJdbcImpl;
 import fr.eni.AppliEnchereEni.dal.retraitDAO.RetraitDAO;
@@ -34,6 +36,12 @@ public class DAOFactory {
 		CategorieDAO categorieDAO = new CategorieDAOJdcImpl();
 		
 		return categorieDAO;
+	}
+	
+	public static EnchereDAO createEnchereDaoJdbcImpl() {
+		EnchereDAO enchereDAO = new EnchereDAOJdbcImpl();
+		
+		return enchereDAO;
 	}
 	
 }

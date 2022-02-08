@@ -36,6 +36,9 @@ public class AjoutCategorie extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
+		
 		Categorie cat = new Categorie();
 		String libelle = request.getParameter("libelle");
 		cat.setLibelle(libelle);

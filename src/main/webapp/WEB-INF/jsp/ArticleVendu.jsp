@@ -35,7 +35,7 @@
  					 <option value="informatique">Informatique</option>
  					 <option value="Ameublement">Ameublement</option>
   					 <option value="vetement">Vêtement</option>
-					 <option value="sportLoisir"> Sport&Loisirs</option>
+					 <option value="sport&loisirs"> Sport&Loisirs</option>
 				</select>
 
                 <!--Input pour indiquer prix de mise en vente-->

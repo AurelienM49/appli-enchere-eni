@@ -21,7 +21,7 @@
         <div class=enchere id="mesEncheres">
 
             <p>Mes enchères :</p>
-            <a href=#>Tout voir</a>
+            <a href="${pageContext.request.contextPath}/MesEncheres">Tout voir</a>
 
         </div>
 

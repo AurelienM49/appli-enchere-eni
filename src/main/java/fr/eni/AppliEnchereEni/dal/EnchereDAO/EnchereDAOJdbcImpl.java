@@ -1,9 +1,9 @@
 package fr.eni.AppliEnchereEni.dal.EnchereDAO;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,10 +17,10 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	private final static String SELECT_MESARTICLES = "SELECT * FROM ARTICLES_VENDUS WHERE no_utilisateur = ?;";
 
 	@Override
-	public List<ArticleVendu> selectMesArticles() {
+	public List<ArticleVendu> selectMesArticles(Utilisateur utilisateur) {
 		
 		Connection cnx = null;
-		Statement stmt = null;
+		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		List<ArticleVendu> articles = new ArrayList<ArticleVendu>();
 		ArticleVendu article = null;
@@ -29,8 +29,10 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		
 		try {
 			cnx = ConnectionProvider.getConnection();
-			stmt = cnx.createStatement();
-			rs = stmt.executeQuery(SELECT_MESARTICLES);
+			pstmt = cnx.prepareStatement(SELECT_MESARTICLES);
+			
+			pstmt.setInt(1, utilisateur.getNo_utilisateur());
+			rs= pstmt.executeQuery();
 			
 			while(rs.next()) {
 				article = new ArticleVendu();
@@ -58,7 +60,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			ConnectionProvider.closeConnection(cnx, stmt);
+			ConnectionProvider.closeConnection(cnx, pstmt);
 		}
 		
 		return articles;
