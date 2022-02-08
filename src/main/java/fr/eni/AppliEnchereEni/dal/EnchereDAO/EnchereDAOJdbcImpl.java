@@ -16,6 +16,12 @@ import fr.eni.AppliEnchereEni.dal.bddTools.ConnectionProvider;
 public class EnchereDAOJdbcImpl implements EnchereDAO {
 	
 	private final static String SELECT_MESANNONCES = "SELECT * FROM ARTICLES_VENDUS WHERE no_utilisateur = ?;";
+	private final static String INSERT_ENCHERE = "INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere)\r\n"
+			+ "VALUES (?, ?, ?, ?);";
+	private final static String UPDATE_ENCHERE = "UPDATE ENCHERES\r\n"
+			+ "SET date_enchere = ?, montant_enchere = ?\r\n"
+			+ "WHERE no_utilisateur = ? and no_article= ?";
+	
 
 	@Override
 	public List<ArticleVendu> selectMesAnnonces(Utilisateur utilisateur) {
@@ -68,15 +74,52 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	}
 
 	@Override
-	public Enchere insertEnchere() {
-		// TODO Auto-generated method stub
-		return null;
+	public Enchere insertEnchere(Enchere enchere) {
+		Connection cnx = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			cnx = ConnectionProvider.getConnection();
+			pstmt = cnx.prepareStatement(INSERT_ENCHERE);
+			pstmt.setInt(1, enchere.getUtilisateur().getNo_utilisateur());
+			pstmt.setInt(2, enchere.getArticle().getNo_article());
+			pstmt.setDate(3, java.sql.Date.valueOf(enchere.getDate_enchere()));
+			pstmt.setInt(4, enchere.getMontant_enchere());
+			
+			pstmt.executeQuery();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			ConnectionProvider.closeConnection(cnx, pstmt);
+		}
+		
+		return enchere;
 	}
 
 	@Override
-	public Enchere UpdateEnchere() {
-		// TODO Auto-generated method stub
-		return null;
+	public Enchere UpdateEnchere(Enchere enchere) {
+		Connection cnx = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			cnx = ConnectionProvider.getConnection();
+			pstmt = cnx.prepareStatement(UPDATE_ENCHERE);
+			pstmt.setDate(1, java.sql.Date.valueOf(enchere.getDate_enchere()));
+			pstmt.setInt(2, enchere.getMontant_enchere());
+			pstmt.setInt(3, enchere.getUtilisateur().getNo_utilisateur());
+			pstmt.setInt(4, enchere.getArticle().getNo_article());
+
+			pstmt.executeQuery();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			ConnectionProvider.closeConnection(cnx, pstmt);
+		}
+		
+		return enchere;
 	}
 	
 }
