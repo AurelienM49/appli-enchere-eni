@@ -1,6 +1,8 @@
 package fr.eni.AppliEnchereEni.servlets;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.eni.AppliEnchereEni.bll.ArticleManager;
 import fr.eni.AppliEnchereEni.bll.UtilisateurManager;
+import fr.eni.AppliEnchereEni.bo.ArticleVendu;
 import fr.eni.AppliEnchereEni.bo.Utilisateur;
 import fr.eni.AppliEnchereEni.helpers.HashPassword;
 
@@ -60,7 +64,17 @@ public class LoginServlet extends HttpServlet {
 			utilisateur = um.loginUtilisateur(utilisateur);
 			utilisateur.setMot_de_passe(null);
 			session.setAttribute("utilisateur", utilisateur);
-			request.getRequestDispatcher("/HomeSansFiltre").forward(request, response); 
+	
+			ArticleManager am = ArticleManager.getInstance();
+			
+			List<ArticleVendu> ListeArticles = am.afficher10Articles();
+			request.setAttribute("ListeDesArticles", ListeArticles);
+			request.setAttribute("Utilisateur", utilisateur);
+			
+			request.getRequestDispatcher("/WEB-INF/jsp/accueilLoged.jsp").forward(request, response);
+			
+			
+			//request.getRequestDispatcher("/HomeSansFiltre").forward(request, response); 
 			
 		}else {
 			

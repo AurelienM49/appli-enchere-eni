@@ -19,8 +19,8 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	private static final String INSERT_Article = "INSERT INTO ARTICLES_VENDUS (nom_article ,description ,date_debut_encheres ,date_fin_encheres ,prix_initial ,no_utilisateur ,no_categorie)"
 			+ "VALUES (?,?,?,?,?,?,?);";
 	private static final String SELECT_BY_ID = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM Articles_vendus WHERE no_article = ?;";
-	private static final String SELECT_ALL = "SELECT TOP 10 no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM Articles_vendus;";
-	private static final String SELECT_TOP10 = "SELECT TOP 10 no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM Articles_vendus ORDER BY date_debut_encheres DESC;";
+	private static final String SELECT_ALL = "select nom_article, u.pseudo, av.prix_initial, av.date_fin_encheres from ARTICLES_VENDUS AS av inner join UTILISATEURS AS u ON av.no_utilisateur = u.no_utilisateur;";
+	private static final String SELECT_TOP10 = "select TOP 10 nom_article, u.pseudo, av.prix_initial, av.date_fin_encheres from ARTICLES_VENDUS AS av inner join UTILISATEURS AS u ON av.no_utilisateur = u.no_utilisateur ORDER BY av.date_fin_encheres ASC;";
 	private static final String SELECT_BY_CATEGORIE = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM Articles_vendus WHERE no_categorie = ?;";
 	private static final String DELETE_ARTICLE = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ?;";
 
@@ -118,7 +118,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		List<ArticleVendu> articles = new ArrayList<ArticleVendu>();
 		ArticleVendu article = null;
 		Utilisateur user = null;
-		Categorie categorie = null;
+	
 
 		try {
 			cnx = ConnectionProvider.getConnection();
@@ -128,21 +128,15 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			while (rs.next()) {
 				article = new ArticleVendu();
 				user = new Utilisateur();
-				categorie = new Categorie();
-
-				article.setNo_article(rs.getInt("no_article"));
+				
 
 				article.setNom_article(rs.getString("nom_article"));
-				article.setDescription(rs.getString("description"));
-				article.setDate_debut_encheres(rs.getDate("date_debut_encheres").toLocalDate());
-				article.setDate_debut_encheres(rs.getDate("date_fin_encheres").toLocalDate());
+				article.setDate_fin_encheres(rs.getDate("date_fin_encheres").toLocalDate());
 				article.setPrix_initial(rs.getInt("prix_initial"));
 
-				user.setNo_utilisateur(rs.getInt("no_utilisateur"));
+				user.setPseudo(rs.getString("pseudo"));
 				article.setUtilisateur(user);
 
-				categorie.setNo_categorie(rs.getInt("no_categorie"));
-				article.setCategorie(categorie);
 
 				articles.add(article);
 
@@ -165,31 +159,26 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		List<ArticleVendu> articles = new ArrayList<ArticleVendu>();
 		ArticleVendu article = null;
 		Utilisateur user = null;
-		Categorie categorie = null;
+	
 
 		try {
 			cnx = ConnectionProvider.getConnection();
 			stmt = cnx.createStatement();
-			rs = stmt.executeQuery(SELECT_ALL);
+			rs = stmt.executeQuery(SELECT_TOP10);
 
 			while (rs.next()) {
 				article = new ArticleVendu();
 				user = new Utilisateur();
-				categorie = new Categorie();
-
-				article.setNo_article(rs.getInt("no_article"));
+			
 
 				article.setNom_article(rs.getString("nom_article"));
-				article.setDescription(rs.getString("description"));
-				article.setDate_debut_encheres(rs.getDate("date_debut_encheres").toLocalDate());
-				article.setDate_debut_encheres(rs.getDate("date_fin_encheres").toLocalDate());
+				article.setDate_fin_encheres(rs.getDate("date_fin_encheres").toLocalDate());
 				article.setPrix_initial(rs.getInt("prix_initial"));
 
-				user.setNo_utilisateur(rs.getInt("no_utilisateur"));
+				user.setPseudo(rs.getString("pseudo"));
 				article.setUtilisateur(user);
 
-				categorie.setNo_categorie(rs.getInt("no_categorie"));
-				article.setCategorie(categorie);
+	
 
 				articles.add(article);
 
