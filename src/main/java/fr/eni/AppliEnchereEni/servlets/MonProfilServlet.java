@@ -48,31 +48,38 @@ public class MonProfilServlet extends HttpServlet {
 		Utilisateur user = (Utilisateur) request.getSession().getAttribute("utilisateur");
 		UtilisateurManager um = UtilisateurManager.getInstance();
 		
-		//on stocke le pseudo et l'email pour vérifier sur la BDD
-		//puisqu'on risque des les écraser par la suite
-		String currentPseudo = user.getPseudo();
-		String currentEmail = user.getEmail();
 		
 		//on créer une HashMap pour rentrer les erreurs
 		HashMap<String, String> listeErreurs = new HashMap<String, String>();
 
 		
+		//on stocke le pseudo et l'email pour vérifier sur la BDD
+		//puisqu'on risque des les écraser par la suite
+		String currentPseudo = user.getPseudo();
+		String currentEmail = user.getEmail();
+		if (!um.alphaNumVerif(currentPseudo)) {				
+			listeErreurs.put("pseudoCarSpeciaux", "Le pseudo ne doit pas comporter de caratères spéciaux");
+		}
+
+	
+		
+
+	
 		//on vérifie si le pseudo est vide
 		if (request.getParameter("pseudo") == null || request.getParameter("pseudo").isEmpty()) {
 			listeErreurs.put("emptyPseudo", "Le pseudo est vide");
 		}else {
 			// on vérifie si le pseudo est différent du pseudo actuel
 			if (!request.getParameter("pseudo").equals(currentPseudo)) {
-				
-				System.out.println(currentPseudo);
-				System.out.println(request.getParameter("pseudo"));
 				//si il est différent on vérifie si le nouveau pseudo ne contient pas caract spéciaux
 				if (!um.alphaNumVerif(request.getParameter("pseudo"))) {				
 					listeErreurs.put("pseudoCarSpeciaux", "Le pseudo ne doit pas comporter de caratères spéciaux");
 				}
 
+				
+				
 				//on vérifie si le nouveau est déjà existant
-				if (um.verifPseudo(request.getParameter("pseudo"))) {
+				if (um.verifPseudo(request.getParameter("pseudo"), user.getNo_utilisateur())) {
 					listeErreurs.put("existPseudo", "Le pseudo existe déjà ");
 				} else {
 					user.setPseudo(request.getParameter("pseudo"));
@@ -140,7 +147,7 @@ public class MonProfilServlet extends HttpServlet {
 			if (request.getParameter("cpo").length() > 5) {
 				listeErreurs.put("cpoInconnu", "Le code postal n'est pas reconnu");
 			}else {
-				user.setRue(request.getParameter("cpo"));
+				user.setCode_postal(request.getParameter("cpo"));
 			}		
 		}
 
@@ -167,6 +174,7 @@ public class MonProfilServlet extends HttpServlet {
 						if (!request.getParameter("nouveauMdp").equals(request.getParameter("confirmation"))) {
 							listeErreurs.put("mdpDifferents", "Les mots de passes sont différents");
 						} else {
+							System.out.println(request.getParameter("nouveauMdp"));
 							user.setMot_de_passe(HashPassword.hashpassword(request.getParameter("nouveauMdp")));
 						}
 					}

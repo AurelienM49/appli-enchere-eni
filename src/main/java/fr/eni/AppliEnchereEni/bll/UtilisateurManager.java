@@ -66,9 +66,9 @@ public class UtilisateurManager {
 
 	}
 	
-	public boolean verifPseudo(String pseudo) {
+	public boolean verifPseudo(String pseudo, int idUser) {
 		UtilisateurDAO user = DAOFactory.createUtilisateurDAOJdbcImpl();
-		return user.selectByPseudo(pseudo);
+		return user.selectByPseudo(pseudo, idUser);
 	}
 	
 	
@@ -128,7 +128,7 @@ public class UtilisateurManager {
 		if (!alphaNumVerif(utilisateur.getPseudo())) {
 			listeErreurs.put("pseudoCarSpeciaux", "Le pseudo ne doit pas comporter de caratères spéciaux");
 		}
-		if (user.selectByPseudo(utilisateur.getPseudo())) {
+		if (user.selectByPseudo(utilisateur.getPseudo(), utilisateur.getNo_utilisateur())) {
 			listeErreurs.put("existPseudo", "Le pseudo existe déjà ");
 		}
 		if (user.selectByEmail(utilisateur.getEmail())) {
