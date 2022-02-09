@@ -7,7 +7,9 @@
 <html>
 <head>
 <link href="./assets/headerAndFooter.css" rel="stylesheet">
+<link href="./assets/AffichageArticles.css" rel="stylesheet">
 
+<!-- Google Font -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">

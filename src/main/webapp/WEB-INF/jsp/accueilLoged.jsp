@@ -2,14 +2,7 @@
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
         <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<!DOCTYPE>
-<html>
-<head>
-<meta charset="UTF-8">
 
-<link href="./assets/style.css" rel="stylesheet">
-<title>Home</title>
-</head>
 <body>
 
 	<!-- Header -->
