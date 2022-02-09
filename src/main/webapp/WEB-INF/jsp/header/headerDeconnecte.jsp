@@ -7,7 +7,7 @@
 <html>
 <head>
 <link href="./assets/headerAndFooter.css" rel="stylesheet">
-<link href="./assets/AffichageArticles.css" rel="stylesheet">
+<link href="./assets/style.css" rel="stylesheet">
 
 <!-- Google font -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
