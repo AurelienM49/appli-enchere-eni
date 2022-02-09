@@ -20,10 +20,61 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			+ "VALUES (?,?,?,?,?,?,?);";
 	private static final String SELECT_BY_ID = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM Articles_vendus WHERE no_article = ?;";
 	private static final String SELECT_ALL = "select nom_article, u.pseudo, av.prix_initial, av.date_fin_encheres from ARTICLES_VENDUS AS av inner join UTILISATEURS AS u ON av.no_utilisateur = u.no_utilisateur;";
-	private static final String SELECT_TOP10 = "select TOP 10 nom_article, u.pseudo, av.prix_initial, av.date_fin_encheres from ARTICLES_VENDUS AS av inner join UTILISATEURS AS u ON av.no_utilisateur = u.no_utilisateur ORDER BY av.date_fin_encheres ASC;";
+	private static final String SELECT_TOP10 = "select TOP 10 no_article, nom_article, u.pseudo, av.prix_initial, av.date_fin_encheres from ARTICLES_VENDUS AS av inner join UTILISATEURS AS u ON av.no_utilisateur = u.no_utilisateur ORDER BY av.date_fin_encheres ASC;";
 	private static final String SELECT_BY_CATEGORIE = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM Articles_vendus WHERE no_categorie = ?;";
 	private static final String DELETE_ARTICLE = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ?;";
+	private static final String SELECT_BY_ID_TOP1 = "SELECT top 1 av.nom_article, description, c.libelle, e.montant_enchere, av.prix_initial, av.date_fin_encheres,av.no_utilisateur\r\n"
+			+ "FROM ARTICLES_VENDUS AS av\r\n"
+			+ "INNER JOIN CATEGORIES AS c ON c.no_categorie = av.no_categorie\r\n"
+			+ "INNER JOIN ENCHERES AS e ON e.no_article = av.no_article\r\n"
+			+ "WHERE av.no_article = ?;";
+	
+	
+	
+	public ArticleVendu selectArticleTop1(ArticleVendu articleVendu) {
+		
+		Connection cnx = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArticleVendu article = null;
 
+		
+		try {
+			cnx = ConnectionProvider.getConnection();
+			pstmt = cnx.prepareStatement(SELECT_BY_ID_TOP1);
+			
+			pstmt.setInt(1, articleVendu.getNo_article());
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				article = new ArticleVendu();
+				
+				
+				article.setNom_article(rs.getString("nom_article"));
+				article.setDescription(rs.getString("description"));
+				article.getCategorie().setLibelle(rs.getString("libelle"));
+				article.getEnchere().setMontant_enchere(rs.getInt("montant_enchere"));
+				article.setPrix_initial(rs.getInt("prix_initial"));
+				article.setDate_fin_encheres(rs.getDate("date_fin_encheres").toLocalDate());
+				article.getRetrait().setVille(rs.getString("ville"));
+				article.getUtilisateur().setPseudo(rs.getString("pseudo"));
+	
+			}
+			
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		} finally {
+			ConnectionProvider.closeConnection(cnx, pstmt);
+		}
+		
+		
+		return articleVendu;
+		
+	}
+	
+	
 	@Override
 	public ArticleVendu insertArticle(ArticleVendu articleVendu) {
 
@@ -170,7 +221,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 				article = new ArticleVendu();
 				user = new Utilisateur();
 			
-
+				article.setNo_article(rs.getInt("no_article"));
 				article.setNom_article(rs.getString("nom_article"));
 				article.setDate_fin_encheres(rs.getDate("date_fin_encheres").toLocalDate());
 				article.setPrix_initial(rs.getInt("prix_initial"));
@@ -287,7 +338,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			// requête principale
 			StringBuilder requêteSQL = new StringBuilder();
 			requêteSQL.append("SELECT "
-					+ " av.nom_article, prix_initial, date_debut_encheres,  date_fin_encheres, date_enchere, montant_enchere, pseudo, c.libelle\r\n"
+					+ " av.no_article, av.nom_article, prix_initial, date_debut_encheres,  date_fin_encheres, date_enchere, montant_enchere, pseudo, c.libelle\r\n"
 					+ "	FROM ARTICLES_VENDUS AS av\r\n"
 					+ "	INNER JOIN UTILISATEURS as u ON u.no_utilisateur = av.no_utilisateur\r\n"
 					+ "	INNER JOIN CATEGORIES AS c ON c.no_categorie = av.no_categorie 	\r\n"
@@ -439,6 +490,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 				articleVendu = new ArticleVendu();
 				user = new Utilisateur();
 				
+				articleVendu.setNo_article(rs.getInt("no_article"));
 				articleVendu.setNom_article(rs.getString("nom_article"));
 				articleVendu.setPrix_initial(rs.getInt("prix_initial"));
 				articleVendu.setDate_fin_encheres(rs.getDate("date_fin_encheres").toLocalDate());

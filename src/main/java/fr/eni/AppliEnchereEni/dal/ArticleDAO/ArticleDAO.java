@@ -33,4 +33,6 @@ public interface ArticleDAO {
 	public List<ArticleVendu> filtreDeconnected (String rechercheMotArt, String categorie);
 	
 	public List<ArticleVendu> selectTop10();
+	
+	public ArticleVendu selectArticleTop1(ArticleVendu articleVendu);
 }

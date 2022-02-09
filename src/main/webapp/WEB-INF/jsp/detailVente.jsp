@@ -15,9 +15,9 @@
 </div>
 
 
-<p>titre article</p>
-<p>Description : </p>
-<p>Catégorie : </p>
+<p>${article.nom_article}</p>
+<p>Description : ${article.description}</p>
+<p>Catégorie : ${categorie.libelle}</p>
 <p>Meilleur offre : </p>
 <p>Mise à prix : </p>
 <p>Fin de l'enchère : </p>

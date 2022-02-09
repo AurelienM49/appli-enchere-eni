@@ -12,6 +12,8 @@ public class ArticleVendu {
 	private Categorie categorie;
 	private Utilisateur utilisateur;
 	private Retrait retrait;
+	private Enchere enchere;
+	
 	
 
 
@@ -116,6 +118,12 @@ public class ArticleVendu {
 	public void setRetrait(Retrait retrait) {
 		this.retrait = retrait;
 	}
+	
+	public Enchere getEnchere() {
+		return enchere;
+	}
+
+
 
 	@Override
 	public String toString() {

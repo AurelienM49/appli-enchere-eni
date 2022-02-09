@@ -55,4 +55,13 @@ public class ArticleManager {
 		
 	}
 	
+	public ArticleVendu selectByID(ArticleVendu articleVendu){
+		ArticleDAO article = DAOFactory.createArticleDAOJbbcImpl();
+		return article.SelectArticleVenduByID(articleVendu);
+	}
+	
+	public ArticleVendu selectByIDTop1(ArticleVendu articleVendu) {
+		ArticleDAO article = DAOFactory.createArticleDAOJbbcImpl();
+		return article.selectArticleTop1(articleVendu);
+	}
 }

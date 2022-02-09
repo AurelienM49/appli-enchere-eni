@@ -3,7 +3,7 @@
 <!DOCTYPE>
 <html>
 <head>
-<link href="./assets/style.css" rel="stylesheet">
+<link href="./assets/register.css" rel="stylesheet">
 <meta charset="UTF-8">
 <title>Mon Profil</title>
 </head>

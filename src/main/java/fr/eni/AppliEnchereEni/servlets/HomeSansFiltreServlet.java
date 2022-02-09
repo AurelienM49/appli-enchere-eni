@@ -33,15 +33,15 @@ public class HomeSansFiltreServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("utilisateur");
-		
-		ArticleManager am = ArticleManager.getInstance();
-		
-		List<ArticleVendu> ListeArticles = am.afficher10Articles();
-		request.setAttribute("ListeDesArticles", ListeArticles);
-		request.setAttribute("Utilisateur", utilisateur);
-		
-		request.getRequestDispatcher("/WEB-INF/jsp/accueilLoged.jsp").forward(request, response);
+//		Utilisateur utilisateur = (Utilisateur) request.getSession().getAttribute("utilisateur");
+//		
+//		ArticleManager am = ArticleManager.getInstance();
+//		
+//		List<ArticleVendu> ListeArticles = am.afficher10Articles();
+//		request.setAttribute("ListeDesArticles", ListeArticles);
+//		request.setAttribute("Utilisateur", utilisateur);
+//		
+//		request.getRequestDispatcher("/WEB-INF/jsp/accueilLoged.jsp").forward(request, response);
 		
 	}
 
