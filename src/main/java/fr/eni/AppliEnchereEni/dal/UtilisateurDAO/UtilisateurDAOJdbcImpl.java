@@ -15,7 +15,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	
 	private static final String INSERT_UTILISATEUR = "INSERT INTO Utilisateurs (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit)"
 		   + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-	private static final String SELECT_BY_PSEUDO ="SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit "
+	private static final String SELECT_BY_PSEUDO ="SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit "
 			+ "FROM Utilisateurs WHERE pseudo = ?";
 	private static final String SELECT_BY_EMAIL ="SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit "
 			+ "FROM Utilisateurs WHERE email = ?";
@@ -23,7 +23,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String UPDATE_UTILISATEUR ="UPDATE UTILISATEURS SET pseudo=?, nom=?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=?, mot_de_passe=? WHERE no_utilisateur=?;";
 	private static final String SELECT_BY_IDENTIFIANT = "SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit FROM Utilisateurs WHERE email = ? or pseudo = ?;"; 
 	private static final String SELECT_BY_ID="SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit FROM Utilisateurs WHERE no_utilisateur=?;";
-	private static final String DELETE_UTILISATEUR = "{call deleteUtilisateur (?)}";
 
 	
 	/**Méthode permettant d'inserer un nouvel utilisateur dans la BDD
@@ -182,7 +181,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 */
 	
 	@Override
-	public boolean selectByPseudo(String pseudo) {
+	public boolean selectByPseudo(String pseudo, int idUser) {
 		Connection cnx = null;
 		PreparedStatement pstmt=null;
 		ResultSet rs =null;
@@ -201,7 +200,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			rs = pstmt.executeQuery();
 			
 			//si la requète est executée, la methode retourne true car ce pseudo est bien existant en BDD
-			if (rs.next()) {
+			if (rs.next() && rs.getInt("no_utilisateur")!=idUser) {
 				return true;
 			}
 			
@@ -347,29 +346,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 
 	
-	/**
-	 * Méthode pour supprimer un utilisateur 
-	 * @param Utilisateur
-	 */
-	@Override
-	public void deleteUtilisateur(Utilisateur utilisateur) {
-		Connection cnx = null;
-		CallableStatement callStmt= null;
-		
-		try {
-			cnx = ConnectionProvider.getConnection();
-			callStmt = cnx.prepareCall(DELETE_UTILISATEUR);
-			callStmt.setInt(1, utilisateur.getNo_utilisateur());
-			callStmt.execute();
-			cnx.commit();
-		} catch (SQLException e) {
-			try {
-				cnx.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-			e.printStackTrace();
-		}
 	}
 
 
@@ -377,4 +353,4 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	
 
-}
+

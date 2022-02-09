@@ -16,7 +16,7 @@ public interface UtilisateurDAO {
 	boolean selectByEmail(String email);
 	
 	//Selectionner un utlisateur par son pseudo
-	boolean selectByPseudo(String pseudo);
+	boolean selectByPseudo(String pseudo, int IdUser);
 	
 	//Mettre à jour les données d'un utlisateur
 	void updateUtilisateur(Utilisateur utilisateur);
@@ -26,9 +26,7 @@ public interface UtilisateurDAO {
 	
 	//Selectionner un Utilisateur par son ID
 	public Utilisateur selectByID(Utilisateur utilisateur);
-	
-	
-	//Supprimer un compte utilisateur
-	void deleteUtilisateur (Utilisateur utilisateur);
+
+
 	
 }
