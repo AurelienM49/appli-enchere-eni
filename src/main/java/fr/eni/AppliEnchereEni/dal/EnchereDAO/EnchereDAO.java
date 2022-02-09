@@ -16,4 +16,6 @@ public interface EnchereDAO {
 	
 	public Enchere UpdateEnchere(Enchere enchere);
 	
+	public Enchere selectById (int idUser, int idArticle);
+	
 }

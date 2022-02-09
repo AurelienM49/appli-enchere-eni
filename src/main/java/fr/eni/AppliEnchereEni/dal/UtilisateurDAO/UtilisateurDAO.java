@@ -13,7 +13,7 @@ public interface UtilisateurDAO {
 	Utilisateur selectByLogin (Utilisateur utilisateur);
 	
 	//Selectionner un utilisateur par son Email
-	boolean selectByEmail(String email);
+	boolean selectByEmail(String email, int idUser);
 	
 	//Selectionner un utlisateur par son pseudo
 	boolean selectByPseudo(String pseudo, int IdUser);

@@ -77,9 +77,9 @@ public class UtilisateurManager {
 	 * @param email
 	 * @return boolean
 	 */
-	public boolean verifEmail(String email) {
+	public boolean verifEmail(String email, int idUser) {
 		UtilisateurDAO user = DAOFactory.createUtilisateurDAOJdbcImpl();
-		return user.selectByEmail(email);
+		return user.selectByEmail(email, idUser);
 	}
 
 
@@ -131,7 +131,7 @@ public class UtilisateurManager {
 		if (user.selectByPseudo(utilisateur.getPseudo(), utilisateur.getNo_utilisateur())) {
 			listeErreurs.put("existPseudo", "Le pseudo existe déjà ");
 		}
-		if (user.selectByEmail(utilisateur.getEmail())) {
+		if (user.selectByEmail(utilisateur.getEmail(), utilisateur.getNo_utilisateur())) {
 			listeErreurs.put("existEmail", "L'email existe déjà ");
 		}
 		if (!utilisateur.getMot_de_passe().equals(utilisateur.getMot_de_passe_cofirm())) {

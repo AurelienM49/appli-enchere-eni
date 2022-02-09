@@ -222,7 +222,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	 * @finally Ferme les connexions ouvertes
 	 */
 	@Override
-	public boolean selectByEmail(String email) {
+	public boolean selectByEmail(String email, int idUser) {
 		Connection cnx = null;
 		PreparedStatement pstmt=null;
 		ResultSet rs =null;
@@ -240,7 +240,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			rs = pstmt.executeQuery();
 			
 			//si la requète est executée, la methode retourne true car cet email est bien existant en BDD
-			if (rs.next()) {
+			if (rs.next() && rs.getInt("no_utilisateur")!=idUser) {
 				return true;
 			}
 			

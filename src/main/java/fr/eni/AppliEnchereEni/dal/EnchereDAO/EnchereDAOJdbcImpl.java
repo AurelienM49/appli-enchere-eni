@@ -11,9 +11,13 @@ import fr.eni.AppliEnchereEni.bo.ArticleVendu;
 import fr.eni.AppliEnchereEni.bo.Categorie;
 import fr.eni.AppliEnchereEni.bo.Enchere;
 import fr.eni.AppliEnchereEni.bo.Utilisateur;
+import fr.eni.AppliEnchereEni.dal.DAOFactory;
+import fr.eni.AppliEnchereEni.dal.ArticleDAO.ArticleDAO;
+import fr.eni.AppliEnchereEni.dal.UtilisateurDAO.UtilisateurDAO;
 import fr.eni.AppliEnchereEni.dal.bddTools.ConnectionProvider;
 
 public class EnchereDAOJdbcImpl implements EnchereDAO {
+	
 	
 	private final static String SELECT_MES_ANNONCES = "SELECT * FROM ARTICLES_VENDUS WHERE no_utilisateur = ?;";
 	private final static String SELECT_ENCHERE_EN_COURS = "SELECT * FROM ARTICLES_VENDUS \r\n "
@@ -23,7 +27,8 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	private final static String UPDATE_ENCHERE = "UPDATE ENCHERES\r\n"
 			+ "SET date_enchere = ?, montant_enchere = ?\r\n"
 			+ "WHERE no_utilisateur = ? and no_article= ?;"; 
-	
+	private final static String SELECT_BY_IDUSER_IDARTICLE ="SELECT (no_utilisateur, no_article, date_enchere, montant_enchere) FROM ENCHERES "
+			+ "WHERE no_utilisateur = ? AND no_article = ?";
 	
 	
 
@@ -174,5 +179,37 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		return enchere;
 	}
 
-	
+	public Enchere selectById(int idUser, int idArticle) {
+		Connection cnx = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			cnx = ConnectionProvider.getConnection();
+			cnx = ConnectionProvider.getConnection();
+			pstmt = cnx.prepareStatement(SELECT_BY_IDUSER_IDARTICLE);
+			
+			pstmt.setInt(1, idUser);
+			pstmt.setInt(1, idArticle);
+			rs= pstmt.executeQuery();
+			Enchere enchere = new Enchere();
+
+			enchere.setDate_enchere(rs.getDate("date_enchere").toLocalDate());
+			enchere.setMontant_enchere(rs.getInt("montant_enchere"));
+			
+			UtilisateurDAO user = DAOFactory.createUtilisateurDAOJdbcImpl();
+			enchere.setUtilisateur(user.selectByID(rs.getInt("no_utilisateur")));
+			
+			ArticleDAO article = DAOFactory.createArticleDAOJbbcImpl();
+			ArticleVendu av = new ArticleVendu();
+			av.setNo_article(rs.getInt("no_article"));
+			enchere.setArticle(article.selectArticleTop1(av));
+			
+			return enchere;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

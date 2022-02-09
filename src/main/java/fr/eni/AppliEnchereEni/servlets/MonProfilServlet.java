@@ -60,6 +60,8 @@ public class MonProfilServlet extends HttpServlet {
 		if (!um.alphaNumVerif(currentPseudo)) {				
 			listeErreurs.put("pseudoCarSpeciaux", "Le pseudo ne doit pas comporter de caratères spéciaux");
 		}
+		
+		
 
 	
 		
@@ -97,7 +99,7 @@ public class MonProfilServlet extends HttpServlet {
 				
 				
 				//on vérifie si le nouveau est déjà existant
-				if (um.verifEmail(request.getParameter("email"))) {
+				if (um.verifEmail(request.getParameter("email"), user.getNo_utilisateur() )) {
 					listeErreurs.put("existEmail", "Le email existe déjà ");
 					
 					//sinon on l'ajoute dans 
