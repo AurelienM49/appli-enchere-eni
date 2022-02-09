@@ -29,7 +29,25 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
+		
+		if (request.getSession().getAttribute("utilisateur") != null) {
+			// ======= > pour afficher la liste en mode connecté sans les filtres 
+			
+						//appel a ArticleManager
+						ArticleManager am = ArticleManager.getInstance();
+						
+						//appel à la methode afficher10Article, les 10 articles dont les dates d'enchères sont les plus proches
+						List<ArticleVendu> listeArticles = am.afficher10Articles();
+						
+						
+						request.setAttribute("articles", listeArticles);
+						
+						// Affichage de la page Accueil en étant connecté
+						request.getRequestDispatcher("/WEB-INF/jsp/accueilLoged.jsp").forward(request, response);
+		} else {
+			request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);	
+		}
+		
 		
 	}
 

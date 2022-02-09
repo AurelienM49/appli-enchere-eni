@@ -22,7 +22,11 @@
 
 <header class="headerDeconnecte">
 
+
+
+
     <div>
+    	<a href="<%=request.getContextPath()%>/"><img src="./assets/img/logo_enchere_eni.png" alt="Logo_encheres_eni" width="100px"></a>
         <h1>ENI-Encheres</h1>
     </div>
 
