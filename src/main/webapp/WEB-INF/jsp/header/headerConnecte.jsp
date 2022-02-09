@@ -26,11 +26,6 @@
 		<a href="<%=request.getContextPath()%>/login"><img src="./assets/img/logo_enchere_eni.png" alt="Logo_encheres_eni" width="100px"></a>
         <h1>ENI-Encheres</h1>
     </div>
-    
-
-    <div>
-        <h2>Liste des enchères</h2>
-    </div>
 
     <div class="menuNavConnecte">
         <nav >

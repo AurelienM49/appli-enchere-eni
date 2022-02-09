@@ -65,6 +65,7 @@ public class LoginServlet extends HttpServlet {
 		//d'un Email / si indexof() retourne -1 c'est qu'il n'y pas d'@ dans l'identitifiant donc 
 		// il s'agit d'un pseudo
 		String logErr = null;
+		
 		int index = identifiant.indexOf('@');
 		if (index == -1) {
 			utilisateur.setPseudo(identifiant);
@@ -77,9 +78,21 @@ public class LoginServlet extends HttpServlet {
 	
 		
 		UtilisateurManager um = UtilisateurManager.getInstance();
+		
+		System.out.println("*************"+utilisateur.getPseudo());
+
 		if(um.loginUtilisateur(utilisateur)!=null) {
 			HttpSession session = request.getSession();
+			
+			System.out.println("*************"+utilisateur.getPseudo());
+
+			
 			utilisateur = um.loginUtilisateur(utilisateur);
+			
+			
+			
+			
+			
 			utilisateur.setMot_de_passe(null);
 			session.setAttribute("utilisateur", utilisateur);
 	

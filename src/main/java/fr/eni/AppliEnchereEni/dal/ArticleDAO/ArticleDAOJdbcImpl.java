@@ -51,6 +51,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			if (rs.next()) {
 				ArticleVendu article = new ArticleVendu();
 
+				article.setNo_article(rs.getInt("no_article"));
 				article.setNom_article(rs.getString("nom_article"));
 				article.setDescription(rs.getString("description"));
 				// article.getEnchere().setMontant_enchere(rs.getInt("montant_enchere"));
