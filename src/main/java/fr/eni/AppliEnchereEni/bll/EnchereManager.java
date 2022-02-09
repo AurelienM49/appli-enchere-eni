@@ -34,7 +34,14 @@ public class EnchereManager {
 		
 		EnchereDAO enchereDAO = DAOFactory.createEnchereDaoJdbcImpl();
 		
-		return enchereDAO.selectMesAnnonces(utilisateur);		
+		return enchereDAO.selectMesAnnonces(utilisateur);
+	}
+	
+	public List<ArticleVendu> listerEnchereEnCours (Utilisateur utilisateur){
+		
+		EnchereDAO enchereDAO = DAOFactory.createEnchereDaoJdbcImpl();
+		
+		return enchereDAO.selectEnchereEnCours(utilisateur);
 	}
 	
 	public Enchere InsererEnchere (Enchere enchere) {

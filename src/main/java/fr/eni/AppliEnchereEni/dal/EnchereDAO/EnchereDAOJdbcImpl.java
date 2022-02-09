@@ -15,12 +15,15 @@ import fr.eni.AppliEnchereEni.dal.bddTools.ConnectionProvider;
 
 public class EnchereDAOJdbcImpl implements EnchereDAO {
 	
-	private final static String SELECT_MESANNONCES = "SELECT * FROM ARTICLES_VENDUS WHERE no_utilisateur = ?;";
+	private final static String SELECT_MES_ANNONCES = "SELECT * FROM ARTICLES_VENDUS WHERE no_utilisateur = ?;";
+	private final static String SELECT_ENCHERE_EN_COURS = "SELECT * FROM ARTICLES_VENDUS \r\n "
+			+ "WHERE no_utilisateur <> ? AND GETDATE() BETWEEN date_debut_encheres AND date_fin_encheres;";
 	private final static String INSERT_ENCHERE = "INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere)\r\n"
 			+ "VALUES (?, ?, ?, ?);";
 	private final static String UPDATE_ENCHERE = "UPDATE ENCHERES\r\n"
 			+ "SET date_enchere = ?, montant_enchere = ?\r\n"
-			+ "WHERE no_utilisateur = ? and no_article= ?"; 
+			+ "WHERE no_utilisateur = ? and no_article= ?;"; 
+	
 	
 	
 	
@@ -38,7 +41,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		
 		try {
 			cnx = ConnectionProvider.getConnection();
-			pstmt = cnx.prepareStatement(SELECT_MESANNONCES);
+			pstmt = cnx.prepareStatement(SELECT_MES_ANNONCES);
 			
 			pstmt.setInt(1, utilisateur.getNo_utilisateur());
 			rs= pstmt.executeQuery();
@@ -74,6 +77,56 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		
 		return articles;
 	}
+	
+	@Override
+	public List<ArticleVendu> selectEnchereEnCours(Utilisateur utilisateur) {
+		Connection cnx = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<ArticleVendu> articles = new ArrayList<ArticleVendu>();
+		ArticleVendu article = null;
+		Utilisateur user = null;
+		Categorie categorie = null;
+		
+		try {
+			cnx = ConnectionProvider.getConnection();
+			pstmt = cnx.prepareStatement(SELECT_ENCHERE_EN_COURS);
+			
+			pstmt.setInt(1, utilisateur.getNo_utilisateur());
+			rs= pstmt.executeQuery();
+			
+			while(rs.next()) {
+				article = new ArticleVendu();
+				user = new Utilisateur();
+				categorie = new Categorie();
+				
+				article.setNo_article(rs.getInt("no_article"));
+			
+				article.setNom_article(rs.getString("nom_article"));
+				article.setDescription(rs.getString("description"));
+				article.setDate_debut_encheres(rs.getDate("date_debut_encheres").toLocalDate());
+				article.setDate_fin_encheres(rs.getDate("date_fin_encheres").toLocalDate());
+				article.setPrix_initial(rs.getInt("prix_initial"));
+				
+				user.setNo_utilisateur(rs.getInt("no_utilisateur"));
+				article.setUtilisateur(user);
+				
+				categorie.setNo_categorie(rs.getInt("no_categorie"));
+				article.setCategorie(categorie);
+				
+				articles.add(article);
+				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionProvider.closeConnection(cnx, pstmt);
+		}
+		
+		return articles;
+	}
+	
 
 	@Override
 	public Enchere insertEnchere(Enchere enchere) {
@@ -91,7 +144,6 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			pstmt.executeQuery();
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			ConnectionProvider.closeConnection(cnx, pstmt);
@@ -115,7 +167,6 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 
 			pstmt.executeQuery();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			ConnectionProvider.closeConnection(cnx, pstmt);

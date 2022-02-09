@@ -35,7 +35,7 @@
         <div class=enchere id="enchereEnCours">
 
             <p>Enchères en cours :</p>
-            <a href="#">Tout voir</a>
+            <a href="${pageContext.request.contextPath}/EnchereEnCours">Tout voir</a>
 
         </div>
     </main>
