@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.AppliEnchereEni.bll.UtilisateurManager;
+import fr.eni.AppliEnchereEni.bo.Utilisateur;
+
 /**
  * Servlet implementation class SupressionCompte
  */
@@ -26,17 +29,21 @@ public class SupressionCompte extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
-		
-		
-		
+
+		int no_user = Integer.valueOf(request.getParameter("no_utilisateur")) ;
+		Utilisateur user = new Utilisateur();
+		user.setNo_utilisateur(no_user);
+		UtilisateurManager um = UtilisateurManager.getInstance();	
+		System.out.println(user.getNo_utilisateur());
+		um.supprimerUser(user);			
+		response.sendRedirect("./");	
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		
 	}
 

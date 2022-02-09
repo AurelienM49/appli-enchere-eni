@@ -26,7 +26,6 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	
 	
 	
-	
 
 	@Override
 	public List<ArticleVendu> selectMesAnnonces(Utilisateur utilisateur) {
@@ -173,6 +172,12 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		}
 		
 		return enchere;
+	}
+
+	@Override
+	public void updateIdUser(int idUser) {
+		Connection cnx = null;
+		PreparedStatement pstmt = null;
 	}
 	
 }

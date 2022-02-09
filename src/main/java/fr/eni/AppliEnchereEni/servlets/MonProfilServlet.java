@@ -64,6 +64,8 @@ public class MonProfilServlet extends HttpServlet {
 			// on vérifie si le pseudo est différent du pseudo actuel
 			if (!request.getParameter("pseudo").equals(currentPseudo)) {
 				
+				System.out.println(currentPseudo);
+				System.out.println(request.getParameter("pseudo"));
 				//si il est différent on vérifie si le nouveau pseudo ne contient pas caract spéciaux
 				if (!um.alphaNumVerif(request.getParameter("pseudo"))) {				
 					listeErreurs.put("pseudoCarSpeciaux", "Le pseudo ne doit pas comporter de caratères spéciaux");
