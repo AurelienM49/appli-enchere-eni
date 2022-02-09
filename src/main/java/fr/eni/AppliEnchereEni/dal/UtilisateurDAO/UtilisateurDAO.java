@@ -26,7 +26,9 @@ public interface UtilisateurDAO {
 	
 	//Selectionner un Utilisateur par son ID
 	public Utilisateur selectByID(Utilisateur utilisateur);
+	public Utilisateur selectByID(int id);
 
-
+	//Supprimer un compte utilisateur
+	public void deleteUtilisateur (Utilisateur utilisateur);
 	
 }

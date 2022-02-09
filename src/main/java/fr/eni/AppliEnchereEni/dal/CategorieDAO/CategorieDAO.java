@@ -4,7 +4,8 @@ import fr.eni.AppliEnchereEni.bo.Categorie;
 
 public interface CategorieDAO {
 
-	Categorie selectByLibelle(Categorie categorie);
-	Categorie selectById (Categorie categorie);
-	void insertCategorie (Categorie categorie);
+	public Categorie selectByLibelle(Categorie categorie);
+	public Categorie selectById (Categorie categorie);
+	public Categorie selectByID(int id);
+	public void insertCategorie (Categorie categorie);
 }

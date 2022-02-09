@@ -14,7 +14,7 @@ public class CategorieDAOJdcImpl implements CategorieDAO{
 	
 	
 	private static final String SELECT_BY_LIBELLE ="SELECT no_categorie, libelle FROM Categories WHERE libelle = ?";
-	private static final String SELECT_BY_ID = "SELECT no_categorie, libelle FROM Categories WHERE libelle = ?";
+	private static final String SELECT_BY_ID = "SELECT no_categorie, libelle FROM Categories WHERE no_categorie = ?";
 	private static final String INSERT_CAT ="INSERT INTO Categories (libelle) VALUES (?);";
 	
 	/**
@@ -121,8 +121,45 @@ public class CategorieDAOJdcImpl implements CategorieDAO{
 		}
 		
 	}
+
+	@Override
+	public Categorie selectByID(int id) {
+		Connection cnx = null;
+		PreparedStatement pstmt= null;
+		ResultSet rs =null;
+				
+		try {
+			//ouverture de la connexion
+			cnx = ConnectionProvider.getConnection();
+			// création d'un prepareStatement (requete avec arguments)
+			pstmt = cnx.prepareStatement(SELECT_BY_ID);
+			
+			//recuperer les paramètres envoyés par la serlvet
+			pstmt.setInt(1, id);
+			
+			//executer la requête coté BDD
+			rs = pstmt.executeQuery();
+			
+			
+			Categorie categorie = new Categorie();
+			if (rs.next()) {
+				categorie.setNo_categorie(id);
+				categorie.setLibelle(rs.getString("libelle"));
+				
+				return categorie;
+			}
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}finally {
+			//fermeture de la connexion
+			ConnectionProvider.closeConnection(cnx, pstmt);
+		}	
 		
+		return null;
 	}
+}
 
 	
 	

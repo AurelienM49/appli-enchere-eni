@@ -23,6 +23,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String UPDATE_UTILISATEUR ="UPDATE UTILISATEURS SET pseudo=?, nom=?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=?, mot_de_passe=? WHERE no_utilisateur=?;";
 	private static final String SELECT_BY_IDENTIFIANT = "SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit FROM Utilisateurs WHERE email = ? or pseudo = ?;"; 
 	private static final String SELECT_BY_ID="SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit FROM Utilisateurs WHERE no_utilisateur=?;";
+	private static final String DELETE_UTILISATEUR = "{call deleteUtilisateur (?)}";
 
 	
 	/**Méthode permettant d'inserer un nouvel utilisateur dans la BDD
@@ -346,10 +347,90 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 
 	
+	
+
+
+	/** Methode permettant de selectionner un utlisateur par son id (numero utilisateur)
+	 * @param utilisateur
+	 * @return Utilisateur user
+	 * @throws
+	 * @catch
+	 * @finally Ferme les connexions ouvertes
+	 */
+	@Override
+	public Utilisateur selectByID(int id) {
+		Connection cnx = null;
+		PreparedStatement pstmt= null;
+		ResultSet rs =null;
+		
+				
+		try {
+			//ouverture de la connexion
+			cnx = ConnectionProvider.getConnection();
+			// création d'un prepareStatement (requete avec arguments)
+			pstmt = cnx.prepareStatement(SELECT_BY_ID);
+			
+			//recuperer les paramètres envoyés par la serlvet
+			pstmt.setInt(1, id);
+			
+			//executer la requête coté BDD
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				//creation d'un objet de type Utilisateur que à qui l'on attribu ces informations
+				Utilisateur user = new Utilisateur();
+				user.setNo_utilisateur(rs.getInt("no_utilisateur"));
+				user.setPseudo(rs.getString("pseudo"));
+				user.setNom(rs.getString("nom"));
+				user.setPrenom(rs.getString("prenom"));
+				user.setEmail(rs.getString("email"));
+				user.setTelephone(rs.getString("telephone"));
+				user.setRue(rs.getString("rue"));
+				user.setCode_postal(rs.getString("code_postal"));
+				user.setVille(rs.getString("ville"));
+				user.setMot_de_passe(rs.getString("mot_de_passe"));
+				
+				return user;
+			}
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}finally {
+			//fermeture de la connexion
+			ConnectionProvider.closeConnection(cnx, pstmt);
+		}	
+		
+		return null;
+	}
+
+	/**
+	 * Méthode pour supprimer un utilisateur 
+	 * @param Utilisateur
+	 */
+	@Override
+	public void deleteUtilisateur(Utilisateur utilisateur) {
+		Connection cnx = null;
+		CallableStatement callStmt= null;
+		
+		try {
+			cnx = ConnectionProvider.getConnection();
+			callStmt = cnx.prepareCall(DELETE_UTILISATEUR);
+			callStmt.setInt(1, utilisateur.getNo_utilisateur());
+			callStmt.execute();
+			cnx.commit();
+		} catch (SQLException e) {
+			try {
+				cnx.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}
 	}
 
 
-	
+	}
 
 	
 
