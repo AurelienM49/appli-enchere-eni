@@ -72,5 +72,6 @@ html body header div h2 {
 /*Footer*/
 
 footer {
+	border-top: solid, 1px;
 	text-align: center;
 }

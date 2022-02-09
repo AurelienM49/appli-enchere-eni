@@ -30,10 +30,6 @@
         <h1>ENI-Encheres</h1>
     </div>
 
-    <div>
-    <h2>Liste des enchères</h2>
-    </div>
-
     <div class="menuNavDeconnecte">
         <nav>
 

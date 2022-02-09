@@ -10,12 +10,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.AppliEnchereEni.bll.ArticleManager;
+import fr.eni.AppliEnchereEni.bll.EnchereManager;
 import fr.eni.AppliEnchereEni.bll.UtilisateurManager;
 import fr.eni.AppliEnchereEni.bo.ArticleVendu;
 import fr.eni.AppliEnchereEni.bo.Categorie;
 import fr.eni.AppliEnchereEni.bo.Enchere;
 import fr.eni.AppliEnchereEni.bo.Retrait;
 import fr.eni.AppliEnchereEni.bo.Utilisateur;
+import fr.eni.AppliEnchereEni.dal.UtilisateurDAO.UtilisateurDAO;
+import fr.eni.AppliEnchereEni.dal.UtilisateurDAO.UtilisateurDAOJdbcImpl;
 
 /**
  * Servlet implementation class DetailVenteServlet
@@ -38,6 +41,7 @@ public class DetailVenteServlet extends HttpServlet {
 		
 		ArticleVendu article = new ArticleVendu();
 		article.setNo_article(Integer.valueOf(request.getParameter("no_article")));
+
 		//article.setCategorie(request.getParameter(""));
 		
 	
@@ -63,8 +67,26 @@ public class DetailVenteServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		//Recupération des informations utilisateur à partir de la Session
+		Utilisateur  utilisateur = (Utilisateur) request.getSession().getAttribute("utilisateur");
+		
+		//Recuperation du numero de l'article dans les parametre de la requete
+		 ArticleVendu articlevendu = new ArticleVendu();
+		 articlevendu.setNo_article(Integer.valueOf(request.getParameter("no_article")));  
+		 
+		//Recuperation de prix propose dans la methode post
+		int maProposition =Integer.valueOf(request.getParameter("proposition"));
+		
+		EnchereManager enchereManager = EnchereManager.getInstance();
+		Enchere enchere = new Enchere();
+		enchere.setUtilisateur(utilisateur);
+		enchere.setArticle(articlevendu);
+		enchere.setDate_enchere(LocalDate.now());
+		enchere.setMontant_enchere(maProposition);
+		
+		enchereManager.InsererEnchere(enchere);
+		System.out.println("********************" + enchere);
+		
 	}
 
 }

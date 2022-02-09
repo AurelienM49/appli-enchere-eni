@@ -24,6 +24,13 @@
 <p>Retrait : ${article.retrait.ville}</p>
 <p>Vendeur : ${article.utilisateur.pseudo}</p>
 <p>Ma proposition : </p>
-<input type="number" name="proposition" class="form-item">
+
+<form action="${pageContext.request.contextPath}/DetailVente" method="post">
+	<input type="number" name="proposition" class="form-item">
+	<input type="hidden" name="no_article" value="${article.no_article}">
+	<button type="submit">Encherir</button>
+</form>
+
+
 </body>
 </html>
