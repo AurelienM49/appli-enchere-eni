@@ -8,6 +8,14 @@
 <title>Mon Profil</title>
 </head>
 <body>
+
+<!-- Header -->
+    <jsp:include page="/WEB-INF/jsp/header/headerConnecte.jsp">
+        <jsp:param value="headerDeconnecte" name="headerDeconnecte"></jsp:param>
+    </jsp:include>
+
+<!-- Main -->
+<main>
 <section id="contact">
 		<div class="formulaire">
 			<form action="${pageContext.request.contextPath}/monProfil"
@@ -111,5 +119,13 @@
 			</form>
 		</div>
 	</section>
+</main>
+
+<!-- Footer -->
+
+    <jsp:include page="/WEB-INF/jsp/footer/footer.jsp">
+        <jsp:param value="footer" name="footer"></jsp:param>
+    </jsp:include>
+
 </body>
 </html>

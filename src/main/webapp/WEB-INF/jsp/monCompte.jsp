@@ -11,6 +11,14 @@
     </head>
 
     <body>
+    
+    	<!-- Header -->
+    <jsp:include page="/WEB-INF/jsp/header/headerConnecte.jsp">
+        <jsp:param value="headerDeconnecte" name="headerDeconnecte"></jsp:param>
+    </jsp:include>
+    
+    <!-- Main -->
+    <main>
         <ul>
             <li>Pseudo : ${utilisateur.pseudo}</li>
             <li>Nom : ${utilisateur.nom}</li>
@@ -24,6 +32,13 @@
 	            <a href="${pageContext.request.contextPath}/monProfil"><button type="button">Modifier profil</button></a>
             </c:if>
         </ul>
+     </main>
+     
+     	<!-- Footer -->
+
+    <jsp:include page="/WEB-INF/jsp/footer/footer.jsp">
+        <jsp:param value="footer" name="footer"></jsp:param>
+    </jsp:include>
         
 
     </body>
