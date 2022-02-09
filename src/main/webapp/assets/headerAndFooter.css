@@ -1,0 +1,69 @@
+/*Gestion de la partie header Deconencter*/
+
+html body header div h1 {
+	text-align: center;
+	font-family: 'Bebas Neue', cursive;
+}
+
+/*Nav bar deconencté*/
+
+.menuNavDeconnecte {
+	list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: darkcyan;
+}
+
+.menuNavDeconnecte nav {
+	float: right;
+}
+
+.menuNavDeconnecte nav a {
+	display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.menuNavDeconnecte nav a:hover {
+	  background-color: cadetblue;
+	  font-size: 150%;
+}
+
+
+/*Gestion de la partie header Conencté*/
+
+/*Nav Bar Connecté*/
+
+.menuNavConnecte {
+	list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: darkcyan;
+}
+
+.menuNavConnecte nav {
+	float: right;
+}
+
+.menuNavConnecte nav a {
+	display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.menuNavConnecte nav a:hover {
+	  background-color: cadetblue;
+	  font-size: 150%;
+}
+
+/*Footer*/
+
+footer {
+	text-align: center;
+}
