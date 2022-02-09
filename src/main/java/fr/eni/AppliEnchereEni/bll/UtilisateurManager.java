@@ -186,9 +186,9 @@ public class UtilisateurManager {
 	}
 	
 	
-//	public void supprimerUser (Utilisateur utilisateur) {
-//		UtilisateurDAO user = DAOFactory.createUtilisateurDAOJdbcImpl();
-//		user.deleteUtilisateur(utilisateur);
-//	}
+	public void supprimerUser (Utilisateur utilisateur) {
+		UtilisateurDAO user = DAOFactory.createUtilisateurDAOJdbcImpl();
+		user.deleteUtilisateur(utilisateur);
+	}
 	
 }
