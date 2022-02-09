@@ -58,4 +58,8 @@ public class EnchereManager {
 		return enchereDAO.UpdateEnchere(enchere);
 	}
 	
+	public Enchere selectByID(int idArticle) {
+		EnchereDAO enchereDAO = DAOFactory.createEnchereDaoJdbcImpl();
+		return enchereDAO.selectById(idArticle, false);
+	}
 }

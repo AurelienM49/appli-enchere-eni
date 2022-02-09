@@ -122,8 +122,10 @@ public class ArticleVendu {
 	public Enchere getEnchere() {
 		return enchere;
 	}
-
-
+	
+	public void setEnchere(Enchere enchere) {
+		this.enchere = enchere;
+	}
 
 	@Override
 	public String toString() {

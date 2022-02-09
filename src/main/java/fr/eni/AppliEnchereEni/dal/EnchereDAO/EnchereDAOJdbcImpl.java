@@ -27,8 +27,8 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	private final static String UPDATE_ENCHERE = "UPDATE ENCHERES\r\n"
 			+ "SET date_enchere = ?, montant_enchere = ?\r\n"
 			+ "WHERE no_utilisateur = ? and no_article= ?;"; 
-	private final static String SELECT_BY_IDUSER_IDARTICLE ="SELECT (no_utilisateur, no_article, date_enchere, montant_enchere) FROM ENCHERES "
-			+ "WHERE no_utilisateur = ? AND no_article = ?";
+	private final static String SELECT_BY_IDUSER_IDARTICLE ="SELECT no_utilisateur, no_article, date_enchere, montant_enchere FROM ENCHERES "
+			+ "WHERE no_article = ?";
 	
 	
 
@@ -179,33 +179,40 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 		return enchere;
 	}
 
-	public Enchere selectById(int idUser, int idArticle) {
+	public Enchere selectById(int idArticle, boolean withArticle) {
 		Connection cnx = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
 		try {
 			cnx = ConnectionProvider.getConnection();
-			cnx = ConnectionProvider.getConnection();
 			pstmt = cnx.prepareStatement(SELECT_BY_IDUSER_IDARTICLE);
 			
-			pstmt.setInt(1, idUser);
 			pstmt.setInt(1, idArticle);
-			rs= pstmt.executeQuery();
-			Enchere enchere = new Enchere();
-
-			enchere.setDate_enchere(rs.getDate("date_enchere").toLocalDate());
-			enchere.setMontant_enchere(rs.getInt("montant_enchere"));
+			System.out.println("---------------");
+			rs = pstmt.executeQuery();
+			System.out.println("==============");
 			
-			UtilisateurDAO user = DAOFactory.createUtilisateurDAOJdbcImpl();
-			enchere.setUtilisateur(user.selectByID(rs.getInt("no_utilisateur")));
+			if(rs.next()) {
+				
+				Enchere enchere = new Enchere();
+	
+				enchere.setDate_enchere(rs.getDate("date_enchere").toLocalDate());
+				enchere.setMontant_enchere(rs.getInt("montant_enchere"));
+				
+//				UtilisateurDAO user = DAOFactory.createUtilisateurDAOJdbcImpl();
+//				enchere.setUtilisateur(user.selectByID(rs.getInt("no_utilisateur")));
+				
+				if (withArticle) {
+					ArticleDAO article = DAOFactory.createArticleDAOJbbcImpl();
+					ArticleVendu av = new ArticleVendu();
+					av.setNo_article(rs.getInt("no_article"));
+					enchere.setArticle(article.selectArticleTop1(av, false));
+				}
 			
-			ArticleDAO article = DAOFactory.createArticleDAOJbbcImpl();
-			ArticleVendu av = new ArticleVendu();
-			av.setNo_article(rs.getInt("no_article"));
-			enchere.setArticle(article.selectArticleTop1(av));
-			
-			return enchere;
+				System.out.println("---------------->"+enchere.getMontant_enchere());
+				return enchere;
+			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

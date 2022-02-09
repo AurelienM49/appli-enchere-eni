@@ -34,5 +34,11 @@ public class RetraitManager {
 
 			return retraitDAO.insertRetrait(retrait);
 		}
+		
+		
+		public Retrait selectParNumArticle(int noArticle) {
+			RetraitDAO retraitDAO = DAOFactory.createRetraitDaoJdbcImpl();
+			return retraitDAO.selectByNoArticle(noArticle);
+		}
 	
 }

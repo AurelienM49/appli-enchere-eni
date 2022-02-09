@@ -14,24 +14,28 @@ import fr.eni.AppliEnchereEni.bo.Categorie;
 import fr.eni.AppliEnchereEni.bo.Utilisateur;
 import fr.eni.AppliEnchereEni.dal.CategorieDAO.CategorieDAO;
 import fr.eni.AppliEnchereEni.dal.CategorieDAO.CategorieDAOJdcImpl;
+import fr.eni.AppliEnchereEni.dal.EnchereDAO.EnchereDAO;
+import fr.eni.AppliEnchereEni.dal.EnchereDAO.EnchereDAOJdbcImpl;
 import fr.eni.AppliEnchereEni.dal.UtilisateurDAO.UtilisateurDAO;
 import fr.eni.AppliEnchereEni.dal.UtilisateurDAO.UtilisateurDAOJdbcImpl;
 import fr.eni.AppliEnchereEni.dal.bddTools.ConnectionProvider;
+import fr.eni.AppliEnchereEni.dal.retraitDAO.RetraitDAO;
+import fr.eni.AppliEnchereEni.dal.retraitDAO.RetraitDAOJdbcImpl;
 
 public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 	private static final String INSERT_Article = "INSERT INTO ARTICLES_VENDUS (nom_article ,description ,date_debut_encheres ,date_fin_encheres ,prix_initial ,no_utilisateur ,no_categorie)"
 			+ "VALUES (?,?,?,?,?,?,?);";
-	private static final String SELECT_BY_ID = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM Articles_vendus WHERE no_article = ?;";
+	private static final String SELECT_BY_ID = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM ARTICLES_VENDUS WHERE no_article = ?;";
 	private static final String SELECT_ALL = "select nom_article, u.pseudo, av.prix_initial, av.date_fin_encheres from ARTICLES_VENDUS AS av inner join UTILISATEURS AS u ON av.no_utilisateur = u.no_utilisateur;";
 	private static final String SELECT_TOP10 = "select TOP 10 no_article, nom_article, u.pseudo, av.prix_initial, av.date_fin_encheres from ARTICLES_VENDUS AS av inner join UTILISATEURS AS u ON av.no_utilisateur = u.no_utilisateur ORDER BY av.date_fin_encheres ASC;";
 	private static final String SELECT_BY_CATEGORIE = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM Articles_vendus WHERE no_categorie = ?;";
 	private static final String DELETE_ARTICLE = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ?;";
-	private static final String SELECT_BY_ID_TOP1 = "SELECT top 1 av.nom_article, description, av.no_categorie, e.montant_enchere, av.prix_initial, av.date_fin_encheres,av.no_utilisateur\r\n"
-			+ "FROM ARTICLES_VENDUS AS av\r\n" + "LEFT JOIN ENCHERES AS e ON e.no_article = av.no_article\r\n"
-			+ "WHERE av.no_article = ?;";
+//	private static final String SELECT_BY_ID_TOP1 = "SELECT top 1 av.nom_article, description, av.no_categorie, e.montant_enchere, av.prix_initial, av.date_fin_encheres,av.no_utilisateur\r\n"
+//			+ "FROM ARTICLES_VENDUS AS av\r\n" + "LEFT JOIN ENCHERES AS e ON e.no_article = av.no_article\r\n"
+//			+ "WHERE av.no_article = ?;";
 
-	public ArticleVendu selectArticleTop1(ArticleVendu articleVendu) {
+	public ArticleVendu selectArticleTop1(ArticleVendu articleVendu, boolean withEncheres) {
 
 		Connection cnx = null;
 		PreparedStatement pstmt = null;
@@ -59,6 +63,15 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 				CategorieDAO categorieDAO = new CategorieDAOJdcImpl();
 				article.setCategorie(categorieDAO.selectByID(rs.getInt("no_categorie")));
+				
+				RetraitDAO retraitDAO = new RetraitDAOJdbcImpl();
+				article.setRetrait(retraitDAO.selectByNoArticle(rs.getInt("no_article")));
+				
+				if (withEncheres) {
+					EnchereDAO enchereDAO = new EnchereDAOJdbcImpl();
+					article.setEnchere(enchereDAO.selectById(rs.getInt("no_article"), false));
+				}
+	
 
 				return article;
 			}

@@ -62,6 +62,6 @@ public class ArticleManager {
 	
 	public ArticleVendu selectByIDTop1(ArticleVendu articleVendu) {
 		ArticleDAO article = DAOFactory.createArticleDAOJbbcImpl();
-		return article.selectArticleTop1(articleVendu);
+		return article.selectArticleTop1(articleVendu, true);
 	}
 }

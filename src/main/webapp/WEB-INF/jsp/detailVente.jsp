@@ -17,12 +17,12 @@
 
 <p>${article.nom_article}</p>
 <p>Description : ${article.description}</p>
-<p>Catégorie : ${categorie.libelle}</p>
-<p>Meilleur offre : </p>
-<p>Mise à prix : </p>
-<p>Fin de l'enchère : </p>
-<p>Retrait : </p>
-<p>Vendeur : </p>
+<p>Catégorie : ${article.categorie.libelle}</p>
+<p>Meilleur offre :${article.enchere.montant_enchere}</p>
+<p>Mise à prix : ${article.prix_initial}</p>
+<p>Fin de l'enchère :${article.date_fin_encheres} </p>
+<p>Retrait : ${article.retrait.ville}</p>
+<p>Vendeur : ${article.utilisateur.pseudo}</p>
 <p>Ma proposition : </p>
 <input type="number" name="proposition" class="form-item">
 </body>
