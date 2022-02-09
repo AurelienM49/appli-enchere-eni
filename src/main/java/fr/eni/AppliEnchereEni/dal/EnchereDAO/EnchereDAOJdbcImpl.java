@@ -177,7 +177,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	@Override
 	public void updateIdUser(int idUser) {
 		Connection cnx = null;
-		PreparedStatement pstmt = null;
+		PreparedStatement pstmt = null; 
 	}
 	
 }
