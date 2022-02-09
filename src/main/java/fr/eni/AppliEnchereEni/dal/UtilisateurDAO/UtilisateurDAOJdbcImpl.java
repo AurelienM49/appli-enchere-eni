@@ -17,7 +17,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		   + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 	private static final String SELECT_BY_PSEUDO ="SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit "
 			+ "FROM Utilisateurs WHERE pseudo = ?";
-	private static final String SELECT_BY_EMAIL ="SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit "
+	private static final String SELECT_BY_EMAIL ="SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit "
 			+ "FROM Utilisateurs WHERE email = ?";
 	private static final String SELECT_BY_LOGIN = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit FROM Utilisateurs WHERE email = ? or pseudo = ? and mot_de_passe = ?;";
 	private static final String UPDATE_UTILISATEUR ="UPDATE UTILISATEURS SET pseudo=?, nom=?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=?, mot_de_passe=? WHERE no_utilisateur=?;";

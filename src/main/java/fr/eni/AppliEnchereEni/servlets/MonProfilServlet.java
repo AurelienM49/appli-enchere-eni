@@ -92,7 +92,7 @@ public class MonProfilServlet extends HttpServlet {
 		}
 		
 		if (request.getParameter("email") == null || request.getParameter("email").isEmpty()) {
-			listeErreurs.put("emptyemail", "Le email est vide");
+			listeErreurs.put("emptyemail", "L'email est vide");
 		}else {
 			// on vérifie si le mail est différent du pseudo actuel
 			if (!request.getParameter("email").equals(currentEmail)) {
@@ -100,7 +100,7 @@ public class MonProfilServlet extends HttpServlet {
 				
 				//on vérifie si le nouveau est déjà existant
 				if (um.verifEmail(request.getParameter("email"), user.getNo_utilisateur() )) {
-					listeErreurs.put("existEmail", "Le email existe déjà ");
+					listeErreurs.put("existEmail", "L'email existe déjà ");
 					
 					//sinon on l'ajoute dans 
 				} else {
@@ -136,14 +136,14 @@ public class MonProfilServlet extends HttpServlet {
 		}
 		
 		if (request.getParameter("rue")==null || request.getParameter("rue").isEmpty()) {
-			listeErreurs.put("emptyRue", "Le rue est vide");
+			listeErreurs.put("emptyRue", "La rue est vide");
 		
 		} else {
 			user.setRue(request.getParameter("rue"));
 		}
 		
 		if (request.getParameter("cpo")==null || request.getParameter("cpo").isEmpty()) {
-			listeErreurs.put("cpoInconnu", "Le cpo est vide");
+			listeErreurs.put("cpoInconnu", "Le code postal est vide");
 		
 		} else {
 			if (request.getParameter("cpo").length() > 5) {
@@ -166,7 +166,7 @@ public class MonProfilServlet extends HttpServlet {
 		Utilisateur user1 = (Utilisateur) um.identifiantUtilisateur(user);
 
 		//condition (un peu longue :D) pour vérifier les mots de passe
-		if (HashPassword.hashpassword(request.getParameter("mdpActuel")) != null
+		if (HashPassword.hashpassword(request.getParameter("mdpActuel")) != null && HashPassword.hashpassword(request.getParameter("mdpActuel")).isEmpty()
 				|| HashPassword.hashpassword(request.getParameter("mdpActuel"))
 						.equals(HashPassword.hashpassword(user1.getMot_de_passe()))) {
 			if (HashPassword.hashpassword(request.getParameter("nouveauMdp")) != null) {
