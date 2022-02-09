@@ -36,53 +36,27 @@
                 </form>
             </div>
             
-            <!--Liste encheres en cours-->
-            <div>
-                <ul class="listeEnchereEnCours">
-                    <li class="annonceEnchereEnCours">
 
+                
                         <!--image de l'annonce-->
-                        <div>
-                            <img src="/temporaire/imgEnchereEnCours.png" alt="Image de l'enchere en cours">
-                        </div>
-                        <div>
-                            <a href="#">Lien de redirection vers annonce de l'enchere</a>
-                            <p>Prix :</p>
-                            <p>Fin de l'enchère :</p>
-                            <p>Vendeur :</p>
-                        </div>
+                  
+                        	<div class="articlesContainer">
+                            <c:forEach var="listeDesArticles" items="${articles}">
+                            		<div class="article">
+                            			<img class="imageArticle" src="./assets/img/imgEnchere.png" alt="Image de l'enchere en cours"/>
+                        				<div class="texteContainer">
+                        				<div class="texteArticle">
+                        					<c:out value="${listeDesArticles.nom_article}"></c:out><br>
+                        					Prix : <c:out value="${listeDesArticles.prix_initial}"></c:out><br>
+                        					Fin de l'enchère : <c:out value="${listeDesArticles.date_fin_encheres}"></c:out><br><br>
+                        				</div>
+                        				</div>
+                        			</div>
+                        	</c:forEach>
+                        	</div>
 
-                    </li>
-                    <li class="annonceEnchereEnCours">
 
-                        <!--image de l'annonce-->
-                        <div>
-                            <img src="/temporaire/imgEnchereEnCours.png" alt="Image de l'enchere en cours">
-                        </div>
-                        <div>
-                            <a href="#">Lien de redirection vers annonce de l'enchere</a>
-                            <p>Prix :</p>
-                            <p>Fin de l'enchère :</p>
-                            <p>Vendeur :</p>
-                        </div>
-
-                    </li>
-                    <li class="annonceEnchereEnCours">
-
-                        <!--image de l'annonce-->
-                        <div>
-                            <img src="/temporaire/imgEnchereEnCours.png" alt="Image de l'enchere en cours">
-                        </div>
-                        <div>
-                            <a href="#">Lien de redirection vers annonce de l'enchere</a>
-                            <p>Prix :</p>
-                            <p>Fin de l'enchère :</p>
-                            <p>Vendeur :</p>
-                        </div>
-
-                    </li>
-                </ul>
-            </div>
+           
 
             
         </div>

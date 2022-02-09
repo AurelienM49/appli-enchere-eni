@@ -6,6 +6,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
+<link href="./assets/AffichageArticles.css" rel="stylesheet">
 <title>Home</title>
 </head>
 <body>

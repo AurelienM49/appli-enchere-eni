@@ -56,7 +56,7 @@ public class HomeFiltreServlet extends HttpServlet {
 			String checkbox6 = request.getParameter("checkBoxFiltre6");
 			
 			
-
+		// ======= > pour afficher la liste en mode connecté avec les filtres 		
 		
 		Utilisateur user = (Utilisateur) request.getSession().getAttribute("utilisateur");		
 		

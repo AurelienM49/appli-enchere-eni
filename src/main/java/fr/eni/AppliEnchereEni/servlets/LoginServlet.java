@@ -65,16 +65,25 @@ public class LoginServlet extends HttpServlet {
 			utilisateur.setMot_de_passe(null);
 			session.setAttribute("utilisateur", utilisateur);
 	
+			
+			
+			// ======= > pour afficher la liste en mode connecté sans les filtres 
+			
+			//appel a ArticleManager
 			ArticleManager am = ArticleManager.getInstance();
 			
-			List<ArticleVendu> ListeArticles = am.afficher10Articles();
-			request.setAttribute("ListeDesArticles", ListeArticles);
+			//appel à la methode afficher10Article, les 10 articles dont les dates d'enchères sont les plus proches
+			List<ArticleVendu> listeArticles = am.afficher10Articles();
+			
+			
+			request.setAttribute("articles", listeArticles);
 			request.setAttribute("Utilisateur", utilisateur);
 			
+			// Affichage de la page Accueil en étant connecté
 			request.getRequestDispatcher("/WEB-INF/jsp/accueilLoged.jsp").forward(request, response);
 			
 			
-			//request.getRequestDispatcher("/HomeSansFiltre").forward(request, response); 
+	
 			
 		}else {
 			
