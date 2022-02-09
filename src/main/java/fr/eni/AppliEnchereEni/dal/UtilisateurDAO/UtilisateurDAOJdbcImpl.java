@@ -1,5 +1,6 @@
  package fr.eni.AppliEnchereEni.dal.UtilisateurDAO;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,7 +23,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String UPDATE_UTILISATEUR ="UPDATE UTILISATEURS SET pseudo=?, nom=?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=?, mot_de_passe=? WHERE no_utilisateur=?;";
 	private static final String SELECT_BY_IDENTIFIANT = "SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit FROM Utilisateurs WHERE email = ? or pseudo = ?;"; 
 	private static final String SELECT_BY_ID="SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit FROM Utilisateurs WHERE no_utilisateur=?;";
-	
+	private static final String DELETE_UTILISATEUR = "{call deleteUtilisateur (?)}";
 
 	
 	/**Méthode permettant d'inserer un nouvel utilisateur dans la BDD
@@ -344,6 +345,32 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		return user;
 	}
 
+
+	
+	/**
+	 * Méthode pour supprimer un utilisateur 
+	 * @param Utilisateur
+	 */
+	@Override
+	public void deleteUtilisateur(Utilisateur utilisateur) {
+		Connection cnx = null;
+		CallableStatement callStmt= null;
+		
+		try {
+			cnx = ConnectionProvider.getConnection();
+			callStmt = cnx.prepareCall(DELETE_UTILISATEUR);
+			callStmt.setInt(1, utilisateur.getNo_utilisateur());
+			callStmt.execute();
+			cnx.commit();
+		} catch (SQLException e) {
+			try {
+				cnx.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}
+	}
 
 
 	

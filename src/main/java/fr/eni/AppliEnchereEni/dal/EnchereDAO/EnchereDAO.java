@@ -13,4 +13,6 @@ public interface EnchereDAO {
 	public Enchere insertEnchere(Enchere enchere);
 	
 	public Enchere UpdateEnchere(Enchere enchere);
+	
+	public void updateIdUser(int idUser);
 }
