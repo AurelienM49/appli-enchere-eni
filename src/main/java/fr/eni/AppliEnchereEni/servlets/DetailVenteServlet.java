@@ -40,10 +40,15 @@ public class DetailVenteServlet extends HttpServlet {
 		article.setNo_article(Integer.valueOf(request.getParameter("no_article")));
 		
 		
+	
+		
 		
 		
 		ArticleManager am = ArticleManager.getInstance();
 		article = am.selectByIDTop1(article);
+		System.out.println(article.getUtilisateur());
+		System.out.println(article.getUtilisateur().getVille());
+		
 		//article.getCategorie().setLibelle(request.getParameter("libelle"));
 		request.setAttribute("article", article);
 		

@@ -373,6 +373,61 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	}
 
 
+	/** Methode permettant de selectionner un utlisateur par son id (numero utilisateur)
+	 * @param utilisateur
+	 * @return Utilisateur user
+	 * @throws
+	 * @catch
+	 * @finally Ferme les connexions ouvertes
+	 */
+	@Override
+	public Utilisateur selectByID(int id) {
+		Connection cnx = null;
+		PreparedStatement pstmt= null;
+		ResultSet rs =null;
+		
+				
+		try {
+			//ouverture de la connexion
+			cnx = ConnectionProvider.getConnection();
+			// création d'un prepareStatement (requete avec arguments)
+			pstmt = cnx.prepareStatement(SELECT_BY_ID);
+			
+			//recuperer les paramètres envoyés par la serlvet
+			pstmt.setInt(1, id);
+			
+			//executer la requête coté BDD
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				//creation d'un objet de type Utilisateur que à qui l'on attribu ces informations
+				Utilisateur user = new Utilisateur();
+				user.setNo_utilisateur(rs.getInt("no_utilisateur"));
+				user.setPseudo(rs.getString("pseudo"));
+				user.setNom(rs.getString("nom"));
+				user.setPrenom(rs.getString("prenom"));
+				user.setEmail(rs.getString("email"));
+				user.setTelephone(rs.getString("telephone"));
+				user.setRue(rs.getString("rue"));
+				user.setCode_postal(rs.getString("code_postal"));
+				user.setVille(rs.getString("ville"));
+				user.setMot_de_passe(rs.getString("mot_de_passe"));
+				
+				return user;
+			}
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}finally {
+			//fermeture de la connexion
+			ConnectionProvider.closeConnection(cnx, pstmt);
+		}	
+		
+		return null;
+	}
+
+
 	
 
 	

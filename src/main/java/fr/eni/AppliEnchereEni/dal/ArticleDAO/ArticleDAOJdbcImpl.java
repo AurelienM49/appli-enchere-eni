@@ -12,6 +12,10 @@ import java.util.List;
 import fr.eni.AppliEnchereEni.bo.ArticleVendu;
 import fr.eni.AppliEnchereEni.bo.Categorie;
 import fr.eni.AppliEnchereEni.bo.Utilisateur;
+import fr.eni.AppliEnchereEni.dal.CategorieDAO.CategorieDAO;
+import fr.eni.AppliEnchereEni.dal.CategorieDAO.CategorieDAOJdcImpl;
+import fr.eni.AppliEnchereEni.dal.UtilisateurDAO.UtilisateurDAO;
+import fr.eni.AppliEnchereEni.dal.UtilisateurDAO.UtilisateurDAOJdbcImpl;
 import fr.eni.AppliEnchereEni.dal.bddTools.ConnectionProvider;
 
 public class ArticleDAOJdbcImpl implements ArticleDAO {
@@ -23,58 +27,52 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 	private static final String SELECT_TOP10 = "select TOP 10 no_article, nom_article, u.pseudo, av.prix_initial, av.date_fin_encheres from ARTICLES_VENDUS AS av inner join UTILISATEURS AS u ON av.no_utilisateur = u.no_utilisateur ORDER BY av.date_fin_encheres ASC;";
 	private static final String SELECT_BY_CATEGORIE = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie FROM Articles_vendus WHERE no_categorie = ?;";
 	private static final String DELETE_ARTICLE = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ?;";
-	private static final String SELECT_BY_ID_TOP1 = "SELECT top 1 av.nom_article, description, c.libelle, e.montant_enchere, av.prix_initial, av.date_fin_encheres,av.no_utilisateur\r\n"
-			+ "FROM ARTICLES_VENDUS AS av\r\n"
-			+ "INNER JOIN CATEGORIES AS c ON c.no_categorie = av.no_categorie\r\n"
-			+ "INNER JOIN ENCHERES AS e ON e.no_article = av.no_article\r\n"
+	private static final String SELECT_BY_ID_TOP1 = "SELECT top 1 av.nom_article, description, av.no_categorie, e.montant_enchere, av.prix_initial, av.date_fin_encheres,av.no_utilisateur\r\n"
+			+ "FROM ARTICLES_VENDUS AS av\r\n" + "LEFT JOIN ENCHERES AS e ON e.no_article = av.no_article\r\n"
 			+ "WHERE av.no_article = ?;";
-	
-	
-	
+
 	public ArticleVendu selectArticleTop1(ArticleVendu articleVendu) {
-		
+
 		Connection cnx = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		ArticleVendu article = null;
 
-		
 		try {
 			cnx = ConnectionProvider.getConnection();
-			pstmt = cnx.prepareStatement(SELECT_BY_ID_TOP1);
-			
+			pstmt = cnx.prepareStatement(SELECT_BY_ID);
+
 			pstmt.setInt(1, articleVendu.getNo_article());
 			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				article = new ArticleVendu();
-				
-				
+
+			if (rs.next()) {
+				ArticleVendu article = new ArticleVendu();
+
 				article.setNom_article(rs.getString("nom_article"));
 				article.setDescription(rs.getString("description"));
-				article.getCategorie().setLibelle(rs.getString("libelle"));
-				article.getEnchere().setMontant_enchere(rs.getInt("montant_enchere"));
+				// article.getEnchere().setMontant_enchere(rs.getInt("montant_enchere"));
 				article.setPrix_initial(rs.getInt("prix_initial"));
 				article.setDate_fin_encheres(rs.getDate("date_fin_encheres").toLocalDate());
-				article.getRetrait().setVille(rs.getString("ville"));
-				article.getUtilisateur().setPseudo(rs.getString("pseudo"));
-	
-			}
-			
-			
-		} catch (SQLException e) {
+				// article.getRetrait().setVille(rs.getString("ville"));
 
+				UtilisateurDAO utilisateurDAO = new UtilisateurDAOJdbcImpl();
+				article.setUtilisateur(utilisateurDAO.selectByID(rs.getInt("no_utilisateur")));
+
+				CategorieDAO categorieDAO = new CategorieDAOJdcImpl();
+				article.setCategorie(categorieDAO.selectByID(rs.getInt("no_categorie")));
+
+				return article;
+			}
+
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			ConnectionProvider.closeConnection(cnx, pstmt);
 		}
-		
-		
-		return articleVendu;
-		
+
+		return null;
+
 	}
-	
-	
+
 	@Override
 	public ArticleVendu insertArticle(ArticleVendu articleVendu) {
 
@@ -169,7 +167,6 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		List<ArticleVendu> articles = new ArrayList<ArticleVendu>();
 		ArticleVendu article = null;
 		Utilisateur user = null;
-	
 
 		try {
 			cnx = ConnectionProvider.getConnection();
@@ -179,7 +176,6 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			while (rs.next()) {
 				article = new ArticleVendu();
 				user = new Utilisateur();
-				
 
 				article.setNom_article(rs.getString("nom_article"));
 				article.setDate_fin_encheres(rs.getDate("date_fin_encheres").toLocalDate());
@@ -187,7 +183,6 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 				user.setPseudo(rs.getString("pseudo"));
 				article.setUtilisateur(user);
-
 
 				articles.add(article);
 
@@ -201,7 +196,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		}
 		return articles;
 	}
-	
+
 	@Override
 	public List<ArticleVendu> selectTop10() {
 		Connection cnx = null;
@@ -210,7 +205,6 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		List<ArticleVendu> articles = new ArrayList<ArticleVendu>();
 		ArticleVendu article = null;
 		Utilisateur user = null;
-	
 
 		try {
 			cnx = ConnectionProvider.getConnection();
@@ -220,7 +214,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			while (rs.next()) {
 				article = new ArticleVendu();
 				user = new Utilisateur();
-			
+
 				article.setNo_article(rs.getInt("no_article"));
 				article.setNom_article(rs.getString("nom_article"));
 				article.setDate_fin_encheres(rs.getDate("date_fin_encheres").toLocalDate());
@@ -228,8 +222,6 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 				user.setPseudo(rs.getString("pseudo"));
 				article.setUtilisateur(user);
-
-	
 
 				articles.add(article);
 
@@ -243,10 +235,6 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 		}
 		return articles;
 	}
-
-	
-	
-	
 
 	@Override
 	public List<ArticleVendu> selectByCategorie(Categorie categorie) {
@@ -319,9 +307,6 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 	}
 
-	
-	
-	
 	@Override
 	public List<ArticleVendu> filtreConnected(Utilisateur utilisateur, String rechercheMotArt, String categorie,
 			String choixRadio, String checkBoxFiltre1, String checkBoxFiltre2, String checkBoxFiltre3,
@@ -329,12 +314,12 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 
 		Connection cnx = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;		
+		ResultSet rs = null;
 		List<ArticleVendu> listeArticles = new ArrayList<>();
 		ArticleVendu articleVendu = null;
 		Utilisateur user = null;
 		try {
-			
+
 			// requête principale
 			StringBuilder requêteSQL = new StringBuilder();
 			requêteSQL.append("SELECT "
@@ -343,57 +328,56 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 					+ "	INNER JOIN UTILISATEURS as u ON u.no_utilisateur = av.no_utilisateur\r\n"
 					+ "	INNER JOIN CATEGORIES AS c ON c.no_categorie = av.no_categorie 	\r\n"
 					+ "	LEFT JOIN ENCHERES e ON av.no_article = e.no_article \r\n" + "	WHERE 1 = 1");
-	
+
 			// choix catégorie
 			String choixCategorie = " AND c.libelle = :libele_categorie";
-	
+
 			// filtre mot clé et catégorie
 			String rechercheMotArtSQL = " AND av.nom_article LIKE :rechercheMotArt";
-	
+
 			// choix checkbox vente
 			String venteDebutSQL = " AND (1 = 1 ";
 			String venteEnCoursSQL = " AND ((GETDATE() BETWEEN date_debut_encheres AND date_fin_encheres) AND (u.no_utilisateur = :no_utilisateur)) ";
 			String ventesNonDebuteesSQL = " OR date_debut_encheres > GETDATE() ";
 			String venteTermineesSQL = " OR GETDATE() > date_fin_encheres ";
 			String venteFinSQL = ")";
-	
-			
+
 			// choix checkbox achats
 			String achatsDebutSQL = " AND (1 = 1 ";
 			String enchereOuverte = " OR GETDATE() > date_debut_encheres";
 			String mesEncheresEnCours = " OR (u.no_utilisateur = :no_utilisateur AND (GETDATE() < date_fin_encheres) AND (date_enchere is not null))";
 			String mesEncheresRemportees = " OR (e.montant_enchere = (SELECT MAX(e2.montant_enchere) FROM ENCHERES e2 WHERE e2.no_article = av.no_article AND e2.no_utilisateur = :no_utilisateur AND date_fin_encheres < GETDATE())))";
 			String finAchatsSQL = ")";
-	
+
 			// on vérifie si l'utilisateur à choisi une categorie pour filtrer
 			if (!categorie.equals("all")) {
 				requêteSQL.append(choixCategorie);
 			}
-	
+
 			// on vérifie si l'utilisateur à choisit "Mes ventes"
 			if (choixRadio.equals("Mes ventes")) {
 				requêteSQL.append(venteDebutSQL);
-	
+
 				// filtre de recherche par mot clé
 				if (!rechercheMotArt.equals("all")) {
 					requêteSQL.append(rechercheMotArtSQL);
 				}
-	
+
 				// MES VENTES
 				// si il n'y qu'un seul qui est coché
-	
+
 				if (checkBoxFiltre4 != null && checkBoxFiltre5 == null && checkBoxFiltre6 == null) {
 					requêteSQL.append(venteEnCoursSQL);
 				}
-	
+
 				if (checkBoxFiltre5 != null && checkBoxFiltre4 == null && checkBoxFiltre6 == null) {
 					requêteSQL.append(ventesNonDebuteesSQL);
 				}
-	
+
 				if (checkBoxFiltre6 != null && checkBoxFiltre4 == null && checkBoxFiltre5 == null) {
 					requêteSQL.append(venteTermineesSQL);
 				}
-	
+
 				// si y'en a deux qui sont cochés
 				if (checkBoxFiltre4 != null && checkBoxFiltre5 != null && checkBoxFiltre6 == null
 						|| checkBoxFiltre4 != null && checkBoxFiltre6 != null && checkBoxFiltre5 == null
@@ -409,42 +393,42 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 						requêteSQL.append(venteTermineesSQL);
 					}
 				}
-	
+
 				// si les trois sont cochés
 				if (checkBoxFiltre4 != null && checkBoxFiltre5 != null && checkBoxFiltre6 != null) {
 					requêteSQL.append(venteEnCoursSQL);
 					requêteSQL.append(ventesNonDebuteesSQL);
 					requêteSQL.append(venteTermineesSQL);
 				}
-	
+
 				requêteSQL.append(venteFinSQL);
-				
+
 				// ACHATS
 			} else {
 				requêteSQL.append(achatsDebutSQL);
-	
+
 				// filtre de recherche par mot clé
 				if (!rechercheMotArt.isEmpty()) {
 					requêteSQL.append(rechercheMotArtSQL);
 				}
-	
+
 				// si il n'y qu'un seul qui est coché
 				if (checkBoxFiltre1 != null && checkBoxFiltre2 == null && checkBoxFiltre3 == null) {
 					requêteSQL.append(enchereOuverte);
 				}
-	
+
 				if (checkBoxFiltre2 != null && checkBoxFiltre1 == null && checkBoxFiltre3 == null) {
 					requêteSQL.append(mesEncheresEnCours);
 				}
-	
+
 				if (checkBoxFiltre3 != null && checkBoxFiltre1 == null && checkBoxFiltre2 == null) {
 					requêteSQL.append(mesEncheresRemportees);
 					requêteSQL.append(finAchatsSQL);
 				}
-	
+
 				// si y'en a deux qui sont cochés
-				if (checkBoxFiltre1 != null && checkBoxFiltre2 != null && checkBoxFiltre3 == null || 
-						checkBoxFiltre1 != null && checkBoxFiltre3 != null && checkBoxFiltre2 == null
+				if (checkBoxFiltre1 != null && checkBoxFiltre2 != null && checkBoxFiltre3 == null
+						|| checkBoxFiltre1 != null && checkBoxFiltre3 != null && checkBoxFiltre2 == null
 						|| checkBoxFiltre2 != null && checkBoxFiltre3 != null && checkBoxFiltre1 == null) {
 					if (checkBoxFiltre1 != null && checkBoxFiltre2 != null && checkBoxFiltre3 == null) {
 						requêteSQL.append(enchereOuverte);
@@ -458,7 +442,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 						requêteSQL.append(finAchatsSQL);
 					}
 				}
-	
+
 				// si les trois sont cochés
 				if (checkBoxFiltre1 != null && checkBoxFiltre2 != null && checkBoxFiltre3 != null) {
 					requêteSQL.append(enchereOuverte);
@@ -466,60 +450,53 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 					requêteSQL.append(mesEncheresRemportees);
 					requêteSQL.append(finAchatsSQL);
 				}
-	
-				if(checkBoxFiltre3 == null) {
+
+				if (checkBoxFiltre3 == null) {
 					requêteSQL.append(finAchatsSQL);
 				}
 			}
-			
+
 			cnx = ConnectionProvider.getConnection();
-			pstmt = cnx.prepareStatement(requêteSQL.toString()
-					.replaceAll(":libele_categorie", "'" + categorie + "'")
+			pstmt = cnx.prepareStatement(requêteSQL.toString().replaceAll(":libele_categorie", "'" + categorie + "'")
 					.replaceAll(":no_utilisateur", String.valueOf(utilisateur.getNo_utilisateur()))
-					.replaceAll(":rechercheMotArt",  "'%" + rechercheMotArt +  "%'")
-			);
-			
-			
-			
-			System.out.println(requêteSQL);		
+					.replaceAll(":rechercheMotArt", "'%" + rechercheMotArt + "%'"));
+
+			System.out.println(requêteSQL);
 			rs = pstmt.executeQuery();
 
-			
-			
 			while (rs.next()) {
 				articleVendu = new ArticleVendu();
 				user = new Utilisateur();
-				
+
 				articleVendu.setNo_article(rs.getInt("no_article"));
 				articleVendu.setNom_article(rs.getString("nom_article"));
 				articleVendu.setPrix_initial(rs.getInt("prix_initial"));
 				articleVendu.setDate_fin_encheres(rs.getDate("date_fin_encheres").toLocalDate());
-				
-				user.setPseudo(rs.getString("pseudo"));				
+
+				user.setPseudo(rs.getString("pseudo"));
 				articleVendu.setUtilisateur(user);
-				
+
 				listeArticles.add(articleVendu);
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		
+
 		return listeArticles;
 	}
-	
+
 	@Override
 	public List<ArticleVendu> filtreDeconnected(String rechercheMotArt, String categorie) {
 
 		Connection cnx = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;		
+		ResultSet rs = null;
 		List<ArticleVendu> listeArticles = new ArrayList<>();
 		ArticleVendu articleVendu = null;
 		Utilisateur user = null;
 		try {
-			
+
 			// requête principale
 			StringBuilder requêteSQL = new StringBuilder();
 			requêteSQL.append("SELECT "
@@ -528,58 +505,49 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 					+ "	INNER JOIN UTILISATEURS as u ON u.no_utilisateur = av.no_utilisateur\r\n"
 					+ "	INNER JOIN CATEGORIES AS c ON c.no_categorie = av.no_categorie 	\r\n"
 					+ "	LEFT JOIN ENCHERES e ON av.no_article = e.no_article \r\n" + "	WHERE 1 = 1");
-	
+
 			// choix catégorie
 			String choixCategorie = " AND c.libelle = :libele_categorie";
-	
+
 			// filtre mot clé et catégorie
 			String rechercheMotArtSQL = " AND av.nom_article LIKE :rechercheMotArt";
 
-	
 			// on vérifie si l'utilisateur à choisi une categorie pour filtrer
 			if (!categorie.equals("all")) {
 				requêteSQL.append(choixCategorie);
 			}
-	
-			if(rechercheMotArt!=null) {
+
+			if (rechercheMotArt != null) {
 				requêteSQL.append(rechercheMotArtSQL);
 			}
-			
+
 			cnx = ConnectionProvider.getConnection();
-			pstmt = cnx.prepareStatement(requêteSQL.toString()
-					.replaceAll(":libele_categorie", "'" + categorie + "'")
-					.replaceAll(":rechercheMotArt",  "'%" + rechercheMotArt +  "%'")
-			);
-			
-			
-			
-			System.out.println(requêteSQL);		
+			pstmt = cnx.prepareStatement(requêteSQL.toString().replaceAll(":libele_categorie", "'" + categorie + "'")
+					.replaceAll(":rechercheMotArt", "'%" + rechercheMotArt + "%'"));
+
+			System.out.println(requêteSQL);
 			rs = pstmt.executeQuery();
 
-			
-			
 			while (rs.next()) {
 				articleVendu = new ArticleVendu();
 				user = new Utilisateur();
-				
+
 				articleVendu.setNom_article(rs.getString("nom_article"));
 				articleVendu.setPrix_initial(rs.getInt("prix_initial"));
 				articleVendu.setDate_fin_encheres(rs.getDate("date_fin_encheres").toLocalDate());
-				
-				user.setPseudo(rs.getString("pseudo"));				
+
+				user.setPseudo(rs.getString("pseudo"));
 				articleVendu.setUtilisateur(user);
-				
+
 				System.out.println(articleVendu.toString());
 				listeArticles.add(articleVendu);
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		
+
 		return listeArticles;
 	}
-	
-	
+
 }
