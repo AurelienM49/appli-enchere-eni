@@ -5,6 +5,8 @@
 <!DOCTYPE>
 <html>
 <head>
+<link href="./assets/headerAndFooter.css" rel="stylesheet">
+<link href="./assets/style.css" rel="stylesheet">
 <meta charset="UTF-8">
 <title>Mes annonces postées</title>
 </head>
@@ -19,14 +21,16 @@
 	<!-- Main -->
 	<main>
 	
-		<div>
+		<div class="articlesContainer">
 			<c:forEach var="mesAnnonces" items="${listeDeMesAnnonces}" >
-			<c:out value="${mesAnnonces.nom_article}"></c:out><br>
-			<c:out value="${mesAnnonces.description}"></c:out><br>
-			<c:out value="${mesAnnonces.prix_initial}"></c:out><br>
-			<c:out value="${mesAnnonces.prix_vente}"></c:out><br>
-			<c:out value="${mesAnnonces.date_debut_encheres}"></c:out><br>
-			<c:out value="${mesAnnonces.date_fin_encheres}"></c:out><br><br>
+				<div class="article">
+					<c:out value="${mesAnnonces.nom_article}"></c:out><br>
+					<c:out value="${mesAnnonces.description}"></c:out><br>
+					<c:out value="${mesAnnonces.prix_initial}"></c:out><br>
+					<c:out value="${mesAnnonces.prix_vente}"></c:out><br>
+					<c:out value="${mesAnnonces.date_debut_encheres}"></c:out><br>
+					<c:out value="${mesAnnonces.date_fin_encheres}"></c:out><br><br>
+				</div>
 			</c:forEach>
 		</div>
 	

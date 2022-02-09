@@ -145,7 +145,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			pstmt.setDate(3, java.sql.Date.valueOf(enchere.getDate_enchere()));
 			pstmt.setInt(4, enchere.getMontant_enchere());
 			
-			pstmt.executeQuery();
+			pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

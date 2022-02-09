@@ -13,9 +13,11 @@ import javax.servlet.http.HttpSession;
 
 import fr.eni.AppliEnchereEni.bll.ArticleManager;
 import fr.eni.AppliEnchereEni.bll.CategorieManager;
+import fr.eni.AppliEnchereEni.bll.EnchereManager;
 import fr.eni.AppliEnchereEni.bll.RetraitManager;
 import fr.eni.AppliEnchereEni.bo.ArticleVendu;
 import fr.eni.AppliEnchereEni.bo.Categorie;
+import fr.eni.AppliEnchereEni.bo.Enchere;
 import fr.eni.AppliEnchereEni.bo.Retrait;
 import fr.eni.AppliEnchereEni.bo.Utilisateur;
 
@@ -114,6 +116,17 @@ public class ArticleVenduServlet extends HttpServlet {
 		
 		RetraitManager retraitManager = RetraitManager.getInstance();
 		retraitManager.ajouterRetrait(retrait);
+		
+		//creation d'une enchère au moment de la creation d'un article
+		Enchere enchere = new Enchere();
+		enchere.setArticle(articleVendu);
+		enchere.setDate_enchere(LocalDate.now());
+		enchere.setMontant_enchere(articleVendu.getPrix_initial());
+		enchere.setUtilisateur(utilisateur);
+		
+		EnchereManager enchereManager = EnchereManager.getInstance();
+		enchereManager.InsererEnchere(enchere);
+		
 		
 		response.sendRedirect(request.getContextPath()+"/ArticleVendu");
 		
