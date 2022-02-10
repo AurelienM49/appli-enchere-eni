@@ -22,6 +22,7 @@
         <ul>
     <!-- Si le numero d'utilisateur dans le profil est le même que celui en session, on affiche le profil complet -->
             <c:if test="${profil.no_utilisateur == utilisateur.no_utilisateur}">
+            	
             	<li>Pseudo : ${profil.pseudo}</li>
             	<li>Nom : ${profil.nom}</li>
             	<li>Prenom : ${profil.prenom}</li>
@@ -34,6 +35,7 @@
             </c:if>
      <!-- Si le numero d'utilisateur dans le profil est différent que celui en session, on affiche que certaines info du profil-->
             <c:if test="${profil.no_utilisateur != utilisateur.no_utilisateur}">
+            	<li>Id : ${profil.no_utilisateur}</li>
             	<li>Pseudo : ${profil.pseudo}</li>
             	<li>Nom : ${profil.nom}</li>
             	<li>Prenom : ${profil.prenom}</li>
