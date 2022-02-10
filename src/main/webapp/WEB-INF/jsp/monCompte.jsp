@@ -20,7 +20,7 @@
     <!-- Main -->
     <main>
         <ul>
-    
+    <!-- Si le numero d'utilisateur dans le profil est le même que celui en session, on affiche le profil complet -->
             <c:if test="${profil.no_utilisateur == utilisateur.no_utilisateur}">
             	<li>Pseudo : ${profil.pseudo}</li>
             	<li>Nom : ${profil.nom}</li>
@@ -32,6 +32,7 @@
 	            <li>Ville : ${profil.ville}</li>
 	            <a href="${pageContext.request.contextPath}/monProfil"><button type="button">Modifier profil</button></a>
             </c:if>
+     <!-- Si le numero d'utilisateur dans le profil est différent que celui en session, on affiche que certaines info du profil-->
             <c:if test="${profil.no_utilisateur != utilisateur.no_utilisateur}">
             	<li>Pseudo : ${profil.pseudo}</li>
             	<li>Nom : ${profil.nom}</li>

@@ -24,17 +24,25 @@ public class MonCompteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		
+		//recuperer l'utilisateur en session
 		Utilisateur user = (Utilisateur) session.getAttribute("utilisateur");
 		String pseudo = request.getParameter("pseudo");
+		
+		//Si le pseudo passé en parametre de la requête est null ou avec un espace vide
+		//On recupère le pseudo de l'utilisateur de la session et on peut donc afficher son profil perso
 		if (pseudo == null || pseudo.isBlank()) {
 			pseudo = user.getPseudo();
 		}
 
+		// appel au manager qui va lui faire appel à la BDD et chercher les info d'un utilisateur par son pseudo
 		UtilisateurManager um = UtilisateurManager.getInstance();
 		Utilisateur profil = um.selectByPseudo2(pseudo);
 		
+		//2 possibilités : soit on set les info du User qui est en session, ou bien les infos du vendeur (profil) 
 		request.setAttribute("profil", profil);
 		request.setAttribute("utilisateur", user);
+		//On delegue ensuite à monCompte.jsp
 		request.getRequestDispatcher("/WEB-INF/jsp/monCompte.jsp").forward(request, response);
 	
 	}
