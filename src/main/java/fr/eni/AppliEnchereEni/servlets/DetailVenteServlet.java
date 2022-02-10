@@ -75,14 +75,14 @@ public class DetailVenteServlet extends HttpServlet {
 		enchere.setUtilisateur(utilisateur);
 		enchere.setArticle(articleVendu);
 		enchere.setDate_enchere(LocalDate.now());
-		enchere.setMontant_enchere(maProposition);
+		enchere.setMontant_enchere(maProposition); 
 		
 		ArticleManager am = ArticleManager.getInstance();
 		articleVendu = am.selectByIDTop1(articleVendu);
 		
 		
 		int currentProposition = articleVendu.getEnchere().getMontant_enchere();
-		
+		int currentIdUserEnchere = Integer.valueOf(request .getParameter("no_utilisateur_before"));
 		
 		if (currentProposition > maProposition) {
 			request.setAttribute("propositionInf", "La proposition est inférieur à la plus grosse offre");		

@@ -28,7 +28,10 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			+ "WHERE no_article = ? ORDER BY montant_enchere DESC;";
 	private final static String SELECT_BY_IDARTICLE_ID_UTILISATEUR = "SELECT no_utilisateur, no_article, date_enchere, montant_enchere FROM ENCHERES "
 			+ "WHERE no_article = ? AND no_utilisateur = ?;";
-
+	
+	
+	
+	
 	@Override
 	public List<ArticleVendu> selectMesAnnonces(Utilisateur utilisateur) {
 

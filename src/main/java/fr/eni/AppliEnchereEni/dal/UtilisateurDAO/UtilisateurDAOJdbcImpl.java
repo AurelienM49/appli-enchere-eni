@@ -490,7 +490,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			cnx = ConnectionProvider.getConnection();
 			//creation d'un prepareStatement (requete avec arguments)
 			pstmt = cnx.prepareStatement(UPDATE_MONTANT);
-			//recupère les paramètres envoyés par la servlet
+			//recupère les paramètres envoyés  par la servlet
 			pstmt.setInt(1, proposition);
 			pstmt.setInt(2, idUser);
 			pstmt.executeUpdate();
