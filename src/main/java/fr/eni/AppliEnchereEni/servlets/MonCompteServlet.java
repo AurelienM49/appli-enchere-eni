@@ -28,10 +28,9 @@ public class MonCompteServlet extends HttpServlet {
 		boolean verifCnx;
 		
 
-		
 		request.setAttribute("utilisateur", user);
 		
-		request.setAttribute("verifCnx", user.equals(pseudo));
+		request.setAttribute("verifCnx", verifCnx);
 
 		
 		request.getRequestDispatcher("/WEB-INF/jsp/monCompte.jsp").forward(request, response);
