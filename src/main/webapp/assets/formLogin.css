@@ -11,7 +11,14 @@ body {
   	background: #FAFAFF;
 	font-family: 'Roboto', sans-serif;	
 }
+.title{
+  text-align: center;
+}
 
+.vente-article
+{
+  margin-top: 60px;
+}
 
 section{
     margin-top: 100px;
@@ -140,4 +147,8 @@ section{
 .login-form .txt-account span{
 	margin-right: 3px;
 	color: #808080;
+}
+
+h2{
+  padding: 25px;
 }
