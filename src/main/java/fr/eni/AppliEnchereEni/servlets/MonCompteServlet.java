@@ -23,9 +23,18 @@ public class MonCompteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		Utilisateur user = (Utilisateur) session.getAttribute("utilisateur");				
+		Utilisateur user = (Utilisateur) session.getAttribute("utilisateur");
+		String pseudo = request.getParameter("utilisateurPseudo");
+		boolean verifCnx;
+		
+		if(user.equals(pseudo)){
+			 verifCnx = true;
+		}else{
+			 verifCnx = false;
+		}
+		
 		request.setAttribute("utilisateur", user);
-		boolean verifCnx = true;
+		
 		request.setAttribute("verifCnx", verifCnx);
 
 		
