@@ -196,9 +196,11 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			if (rs.next()) {
 
 				Enchere enchere = new Enchere();
-
+				Utilisateur user = new Utilisateur();
+				user.setNo_utilisateur(rs.getInt("no_utilisateur"));
 				enchere.setDate_enchere(rs.getDate("date_enchere").toLocalDate());
 				enchere.setMontant_enchere(rs.getInt("montant_enchere"));
+				enchere.setUtilisateur(user);
 
 //				UtilisateurDAO user = DAOFactory.createUtilisateurDAOJdbcImpl();
 //				enchere.setUtilisateur(user.selectByID(rs.getInt("no_utilisateur")));

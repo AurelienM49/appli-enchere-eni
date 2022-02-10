@@ -30,6 +30,11 @@ public class UtilisateurManager {
 
 	// fin Singleton
 
+	public Utilisateur rechercheParId(int idUser) {
+		UtilisateurDAO user = DAOFactory.createUtilisateurDAOJdbcImpl();
+
+		return user.selectByID(idUser);
+	}
 	
 	/**
 	 * Méthode pour ajouter un utilisateur qui s'inscrit sur le site
@@ -202,4 +207,6 @@ public class UtilisateurManager {
 		UtilisateurDAO user = DAOFactory.createUtilisateurDAOJdbcImpl();
 		return user.selectByPseudo2(pseudo);
 	}
+	
+	
 }

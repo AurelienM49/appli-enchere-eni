@@ -47,7 +47,6 @@ public class DetailVenteServlet extends HttpServlet {
 		article = am.selectByIDTop1(article);
 		
 		
-		
 		//article.getCategorie().setLibelle(request.getParameter("libelle"));
 		request.setAttribute("article", article);
 		request.getRequestDispatcher("/WEB-INF/jsp/detailVente.jsp").forward(request, response);
@@ -70,6 +69,7 @@ public class DetailVenteServlet extends HttpServlet {
 		//Recuperation de prix propose dans la methode post
 		int maProposition =Integer.valueOf(request.getParameter("proposition"));
 		
+		//on récupère les infos de l'enchère qui est en train d'être effetuée
 		EnchereManager enchereManager = EnchereManager.getInstance();
 		Enchere enchere = new Enchere();
 		enchere.setUtilisateur(utilisateur);
@@ -77,12 +77,20 @@ public class DetailVenteServlet extends HttpServlet {
 		enchere.setDate_enchere(LocalDate.now());
 		enchere.setMontant_enchere(maProposition); 
 		
+		//on récupère les infos de l'article en question avec la meilleure enchère
 		ArticleManager am = ArticleManager.getInstance();
 		articleVendu = am.selectByIDTop1(articleVendu);
 		
-		
+		//on récupère la valeur de l'ancienne enchère, et l'id de l'utilisateur qui a enchérit
 		int currentProposition = articleVendu.getEnchere().getMontant_enchere();
-		int currentIdUserEnchere = Integer.valueOf(request .getParameter("no_utilisateur_before"));
+		int currentIdUserEnchere = Integer.valueOf(request.getParameter("no_utilisateur_before"));
+		
+		UtilisateurManager um = UtilisateurManager.getInstance(); 
+		Utilisateur currentUser = um.rechercheParId(currentIdUserEnchere);
+
+		
+		
+		
 		
 		if (currentProposition > maProposition) {
 			request.setAttribute("propositionInf", "La proposition est inférieur à la plus grosse offre");		
@@ -90,22 +98,33 @@ public class DetailVenteServlet extends HttpServlet {
 			request.getRequestDispatcher("WEB-INF/jsp/detailVente.jsp").forward(request, response);
 		}else {
 			
+			//on update maintenant le credit du current user avec son ancienne proposition + son credit actuel
+			if (currentIdUserEnchere==utilisateur.getNo_utilisateur()) {
+				utilisateur.setCredit((currentUser.getCredit()+currentProposition)-maProposition);
+				um.updateCreditUser(currentIdUserEnchere, utilisateur.getCredit());			
+			}else {
+				currentUser.setCredit(currentProposition + currentUser.getCredit());
+				um.updateCreditUser(currentIdUserEnchere, currentUser.getCredit());
+				
+				
+				//on enlève le credit du user qui fait la nouvelle proposition
+				utilisateur.setCredit(utilisateur.getCredit()-maProposition);			
+				um.updateCreditUser(utilisateur.getNo_utilisateur(), utilisateur.getCredit());		
+			}
+			
+			
+			//on update l'enchère
 			if (enchereManager.selectByIdArticleIdUtilisateur(articleVendu.getNo_article(),utilisateur.getNo_utilisateur()) == null) {
-				enchereManager.InsererEnchere(enchere);
-				//article.getCategorie().setLibelle(request.getParameter("libelle"));
-				
-				
-				
-				request.setAttribute("article", articleVendu);
-				request.getRequestDispatcher("WEB-INF/jsp/detailVente.jsp").forward(request, response);
+				enchereManager.InsererEnchere(enchere);			
+				response.sendRedirect("./login");
 			
 			} else {
 				enchereManager.UpdateEnchere(enchere);			
-				//article.getCategorie().setLibelle(request.getParameter("libelle"));
 				articleVendu = am.selectByIDTop1(articleVendu);
-				request.setAttribute("article", articleVendu);
-				request.getRequestDispatcher("WEB-INF/jsp/detailVente.jsp").forward(request, response);
+				response.sendRedirect("./login");
+
 			}
+		
 		}
 
 		
