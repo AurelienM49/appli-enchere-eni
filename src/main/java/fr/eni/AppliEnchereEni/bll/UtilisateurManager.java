@@ -193,13 +193,11 @@ public class UtilisateurManager {
 	
 	
 	public void updateCreditUser(int idUser, int proposition) {
-
 		UtilisateurDAO user = DAOFactory.createUtilisateurDAOJdbcImpl();
 		user.updateCredit(idUser,proposition);
 
 	}
 	
-
 	public Utilisateur selectByPseudo2(String pseudo) {
 		UtilisateurDAO user = DAOFactory.createUtilisateurDAOJdbcImpl();
 		return user.selectByPseudo2(pseudo);

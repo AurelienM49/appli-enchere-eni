@@ -80,19 +80,22 @@ public class DetailVenteServlet extends HttpServlet {
 		ArticleManager am = ArticleManager.getInstance();
 		articleVendu = am.selectByIDTop1(articleVendu);
 		
-		if (articleVendu.getEnchere().getMontant_enchere() > maProposition) {
+		
+		int currentProposition = articleVendu.getEnchere().getMontant_enchere();
+		
+		
+		if (currentProposition > maProposition) {
 			request.setAttribute("propositionInf", "La proposition est inférieur à la plus grosse offre");		
 			request.setAttribute("article", articleVendu);
 			request.getRequestDispatcher("WEB-INF/jsp/detailVente.jsp").forward(request, response);
 		}else {
-
-			
-			
 			
 			if (enchereManager.selectByIdArticleIdUtilisateur(articleVendu.getNo_article(),utilisateur.getNo_utilisateur()) == null) {
 				enchereManager.InsererEnchere(enchere);
 				//article.getCategorie().setLibelle(request.getParameter("libelle"));
-				articleVendu = am.selectByIDTop1(articleVendu);
+				
+				
+				
 				request.setAttribute("article", articleVendu);
 				request.getRequestDispatcher("WEB-INF/jsp/detailVente.jsp").forward(request, response);
 			
