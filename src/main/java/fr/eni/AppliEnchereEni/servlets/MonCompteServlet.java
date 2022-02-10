@@ -27,15 +27,11 @@ public class MonCompteServlet extends HttpServlet {
 		String pseudo = request.getParameter("utilisateurPseudo");
 		boolean verifCnx;
 		
-		if(user.equals(pseudo)){
-			 verifCnx = true;
-		}else{
-			 verifCnx = false;
-		}
+
 		
 		request.setAttribute("utilisateur", user);
 		
-		request.setAttribute("verifCnx", verifCnx);
+		request.setAttribute("verifCnx", user.equals(pseudo));
 
 		
 		request.getRequestDispatcher("/WEB-INF/jsp/monCompte.jsp").forward(request, response);
