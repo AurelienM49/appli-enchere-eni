@@ -164,19 +164,28 @@ public class MonProfilServlet extends HttpServlet {
 		//on vient récupèrer le user dans la BDD pour récupérer le mot de passe afin de vérifier 
 		//avec le mot de passe rentrer dans l'input : "mot de passe actuel"
 		Utilisateur user1 = (Utilisateur) um.identifiantUtilisateur(user);
-
+		
+		//***
+		//String pass = HashPassword.hashpassword(request.getParameter("password"));
+		//***
 		//condition (un peu longue :D) pour vérifier les mots de passe
-		if (HashPassword.hashpassword(request.getParameter("mdpActuel")) != null && HashPassword.hashpassword(request.getParameter("mdpActuel")).isEmpty()
+		if (HashPassword.hashpassword(request.getParameter("mdpActuel")) != null && 
+				!HashPassword.hashpassword(request.getParameter("mdpActuel")).isBlank()
 				|| HashPassword.hashpassword(request.getParameter("mdpActuel"))
 						.equals(HashPassword.hashpassword(user1.getMot_de_passe()))) {
-			if (HashPassword.hashpassword(request.getParameter("nouveauMdp")) != null) {
+						
+			if (HashPassword.hashpassword(request.getParameter("nouveauMdp")) != null && 
+					!HashPassword.hashpassword(request.getParameter("nouveauMdp")).isBlank()) {
+							
 				if (HashPassword.hashpassword(request.getParameter("mdpActuel")) != HashPassword
 						.hashpassword(request.getParameter("nouveauMdp"))) {
+										
 					if (HashPassword.hashpassword(request.getParameter("confirmation")) != null) {
+											
 						if (!request.getParameter("nouveauMdp").equals(request.getParameter("confirmation"))) {
-							listeErreurs.put("mdpDifferents", "Les mots de passes sont différents");
+							
+								listeErreurs.put("mdpDifferents", "Les mots de passes sont différents");
 						} else {
-							System.out.println(request.getParameter("nouveauMdp"));
 							user.setMot_de_passe(HashPassword.hashpassword(request.getParameter("nouveauMdp")));
 						}
 					}

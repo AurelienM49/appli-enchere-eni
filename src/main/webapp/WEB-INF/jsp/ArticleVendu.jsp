@@ -46,8 +46,8 @@
                                     <div class="input-field">
                                     <select name="categorie" id="categorie">
                                         <option value="informatique">Informatique</option>
-                                        <option value="Ameublement">Ameublement</option>
-                                        <option value="vetement">Vêtement</option>
+                                        <option value="ameublement">Ameublement</option>
+                                        <option value="vêtement">Vêtement</option>
                                         <option value="sport&loisirs"> Sport&Loisirs</option>
                                     </select><br><br>
                                     </div>

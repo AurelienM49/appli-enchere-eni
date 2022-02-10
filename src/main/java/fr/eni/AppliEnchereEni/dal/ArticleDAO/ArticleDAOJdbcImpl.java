@@ -359,8 +359,8 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 			// choix checkbox achats
 			String achatsDebutSQL = " AND (1 = 1 ";
 			String enchereOuverte = " OR GETDATE() > date_debut_encheres";
-			String mesEncheresEnCours = " OR (u.no_utilisateur = :no_utilisateur AND (GETDATE() < date_fin_encheres) AND (date_enchere is not null))";
-			String mesEncheresRemportees = " OR (e.montant_enchere = (SELECT MAX(e2.montant_enchere) FROM ENCHERES e2 WHERE e2.no_article = av.no_article AND e2.no_utilisateur = :no_utilisateur AND date_fin_encheres < GETDATE())))";
+			String mesEncheresEnCours = " AND (u.no_utilisateur = :no_utilisateur AND (GETDATE() < date_fin_encheres) AND (date_enchere is not null))";
+			String mesEncheresRemportees = " AND (e.montant_enchere = (SELECT MAX(e2.montant_enchere) FROM ENCHERES e2 WHERE e2.no_article = av.no_article AND e2.no_utilisateur = :no_utilisateur AND date_fin_encheres < GETDATE()))";
 			String finAchatsSQL = ")";
 
 			// on vérifie si l'utilisateur à choisi une categorie pour filtrer
@@ -373,7 +373,7 @@ public class ArticleDAOJdbcImpl implements ArticleDAO {
 				requêteSQL.append(venteDebutSQL);
 
 				// filtre de recherche par mot clé
-				if (!rechercheMotArt.equals("all")) {
+				if (!rechercheMotArt.isBlank()) {
 					requêteSQL.append(rechercheMotArtSQL);
 				}
 
