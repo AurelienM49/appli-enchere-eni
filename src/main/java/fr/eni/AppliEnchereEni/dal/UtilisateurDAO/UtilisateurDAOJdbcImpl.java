@@ -213,6 +213,53 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		}
 		return false;
 	}
+	
+	
+	@Override
+	public Utilisateur selectByPseudo2(String pseudo) {
+		Connection cnx = null;
+		PreparedStatement pstmt=null;
+		ResultSet rs =null;
+		Utilisateur user = null;
+		
+		try {
+			// ouverture de la connexion
+			cnx = ConnectionProvider.getConnection();
+			
+			//creation d'un prepareStatement (requete avec arguments)
+			pstmt = cnx.prepareStatement(SELECT_BY_PSEUDO);
+			
+			//recupère les paramètres envoyés par la servlet
+			pstmt.setString(1, pseudo);
+			
+			//exectute la requete coté BDD
+			rs = pstmt.executeQuery();
+			
+			//si la requète est executée, la methode retourne true car ce pseudo est bien existant en BDD
+			if (rs.next()){
+				user = new Utilisateur();
+				user.setNo_utilisateur(rs.getInt("no_utilisateur"));
+				user.setPseudo(pseudo);
+				user.setNom(rs.getString("nom"));
+				user.setPrenom(rs.getString("prenom"));
+				user.setEmail(rs.getString("email"));
+				user.setTelephone(rs.getString("telephone"));
+				user.setRue(rs.getString("rue"));
+				user.setCode_postal(rs.getString("code_postal"));
+				user.setVille(rs.getString("ville"));
+				user.setCredit(rs.getInt("credit"));
+				
+				return user;
+			}
+			
+			} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			//fermeture de la connexion
+			ConnectionProvider.closeConnection(cnx, pstmt);
+		}
+		return null;
+	}
 
 	/**Methode permettant de selectionner un Utilisateur par son email
 	 * @param email

@@ -199,4 +199,9 @@ public class UtilisateurManager {
 
 	}
 	
+
+	public Utilisateur selectByPseudo2(String pseudo) {
+		UtilisateurDAO user = DAOFactory.createUtilisateurDAOJdbcImpl();
+		return user.selectByPseudo2(pseudo);
+	}
 }

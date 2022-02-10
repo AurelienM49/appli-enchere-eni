@@ -35,14 +35,8 @@ public class AutresProfils extends HttpServlet {
 		//faire passer un attribut de type boolean à la JSP profil 
 		//pour savoir si le profil est connecté ou pas
 		boolean verifCnx = false;
-		request.setAttribute("verifCnx",verifCnx);
-		
-		
-		UtilisateurManager um = UtilisateurManager.getInstance();		
-
-		
-		
-		
+		request.setAttribute("verifCnx",verifCnx);	
+		UtilisateurManager um = UtilisateurManager.getInstance();			
 		request.getRequestDispatcher("/WEB-INF/jsp/monCompte.jsp").forward(request, response);
 
 		

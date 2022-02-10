@@ -32,5 +32,7 @@ public interface UtilisateurDAO {
 	public void deleteUtilisateur (Utilisateur utilisateur);
 	
 	public void updateCredit (int idUqer, int proposition);
+	//selectionner utilisateur par son pseudo
+	public Utilisateur selectByPseudo2(String pseudo);
 	
 }

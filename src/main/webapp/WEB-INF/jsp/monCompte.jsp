@@ -20,17 +20,25 @@
     <!-- Main -->
     <main>
         <ul>
-            <li>Pseudo : ${utilisateur.pseudo}</li>
-            <li>Nom : ${utilisateur.nom}</li>
-            <li>Prenom : ${utilisateur.prenom}</li>
-            <c:if test="${verifCnx}">
-	            <li>Email : ${utilisateur.email}</li>
-	            <li>Telephone : ${utilisateur.telephone}</li>
-	            <li>Rue : ${utilisateur.rue}</li>
-	            <li>Code postal : ${utilisateur.code_postal}</li>
-	            <li>Ville : ${utilisateur.ville}</li>
+    
+            <c:if test="${profil.no_utilisateur == utilisateur.no_utilisateur}">
+            	<li>Pseudo : ${profil.pseudo}</li>
+            	<li>Nom : ${profil.nom}</li>
+            	<li>Prenom : ${profil.prenom}</li>
+	            <li>Email : ${profil.email}</li>
+	            <li>Telephone : ${profil.telephone}</li>
+	            <li>Rue : ${profil.rue}</li>
+	            <li>Code postal : ${profil.code_postal}</li>
+	            <li>Ville : ${profil.ville}</li>
 	            <a href="${pageContext.request.contextPath}/monProfil"><button type="button">Modifier profil</button></a>
             </c:if>
+            <c:if test="${profil.no_utilisateur != utilisateur.no_utilisateur}">
+            	<li>Pseudo : ${profil.pseudo}</li>
+            	<li>Nom : ${profil.nom}</li>
+            	<li>Prenom : ${profil.prenom}</li>
+	            <li>Email : ${profil.email}</li>
+            </c:if>
+            
         </ul>
      </main>
      
