@@ -47,6 +47,7 @@ public class HomeFiltreServlet extends HttpServlet {
 			request.getRequestDispatcher("/WEB-INF/jsp/index.jsp").forward(request, response);
 
 			
+			
 		} else if(request.getSession().getAttribute("utilisateur")!=null) {
 			String rechercheMotArt = request.getParameter("rechercheMotArt");
 			String categorie = request.getParameter("categorie");
