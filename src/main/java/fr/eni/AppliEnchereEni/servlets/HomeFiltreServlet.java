@@ -34,15 +34,18 @@ public class HomeFiltreServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArticleManager am = ArticleManager.getInstance();
 		List<ArticleVendu> listeArticles = null;
-		
+		List<ArticleVendu> articles = null;
+
 		
 		if (request.getSession().getAttribute("utilisateur")==null) {
 			
 			String rechercheMotArt = request.getParameter("rechercheMotArt");
 			String categorie = request.getParameter("categorie");
 			
-			listeArticles = am.filtreDeconnecte(rechercheMotArt,categorie);
-			
+			articles = am.filtreDeconnecte(rechercheMotArt,categorie);
+			request.setAttribute("articles", articles);
+			request.getRequestDispatcher("/WEB-INF/jsp/index.jsp").forward(request, response);
+
 			
 		} else if(request.getSession().getAttribute("utilisateur")!=null) {
 			String rechercheMotArt = request.getParameter("rechercheMotArt");
