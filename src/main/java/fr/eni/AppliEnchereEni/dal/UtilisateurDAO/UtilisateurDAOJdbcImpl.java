@@ -19,7 +19,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			+ "FROM Utilisateurs WHERE pseudo = ?";
 	private static final String SELECT_BY_EMAIL ="SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit "
 			+ "FROM Utilisateurs WHERE email = ?";
-	private static final String SELECT_BY_LOGIN = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit FROM Utilisateurs WHERE email = ? or pseudo = ? and mot_de_passe = ?;";
+	private static final String SELECT_BY_LOGIN = "SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit FROM Utilisateurs WHERE (email = ? or pseudo = ?) and mot_de_passe = ?;";
 	private static final String UPDATE_UTILISATEUR ="UPDATE UTILISATEURS SET pseudo=?, nom=?, prenom=?, email=?, telephone=?, rue=?, code_postal=?, ville=?, mot_de_passe=? WHERE no_utilisateur=?;";
 	private static final String SELECT_BY_IDENTIFIANT = "SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit FROM Utilisateurs WHERE email = ? or pseudo = ?;"; 
 	private static final String SELECT_BY_ID="SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit FROM Utilisateurs WHERE no_utilisateur=?;";
@@ -141,8 +141,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			//creation d'un prepareStatement (requete avec arguments)
 			pstmt = cnx.prepareStatement(SELECT_BY_LOGIN);
 			
+			System.out.println("################ " + utilisateur.getEmail() + utilisateur.getPseudo() + utilisateur.getMot_de_passe());
 			//recupère les paramètres envoyés par la servlet
-			pstmt.setString(1,utilisateur.getEmail() );
+			pstmt.setString(1, utilisateur.getEmail());
 			pstmt.setString(2, utilisateur.getPseudo());
 			pstmt.setString(3, utilisateur.getMot_de_passe());
 			//exectute la requete coté BDD
@@ -150,6 +151,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			
 			//si la requète est executée, les données sont insérées en BDD et attribuées au user
 			if (rs.next()) {
+				
 				user = new Utilisateur();
 				user.setNo_utilisateur(rs.getInt("no_utilisateur"));
 				user.setPseudo(rs.getString("pseudo"));
@@ -161,6 +163,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				user.setCode_postal(rs.getString("code_postal"));
 				user.setVille(rs.getString("ville"));
 				user.setCredit(rs.getInt("credit"));
+				System.out.println("utilisateur = "+user);
 			}
 			} catch (SQLException e) {
 			e.printStackTrace();
