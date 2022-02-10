@@ -68,9 +68,11 @@ public class LoginServlet extends HttpServlet {
 		
 		int index = identifiant.indexOf('@');
 		if (index == -1) {
+
 			utilisateur.setPseudo(identifiant);
 			logErr = utilisateur.getPseudo();
 		} else {
+
 			utilisateur.setEmail(identifiant);
 			logErr = utilisateur.getEmail();
 		}
@@ -79,12 +81,10 @@ public class LoginServlet extends HttpServlet {
 		
 		UtilisateurManager um = UtilisateurManager.getInstance();
 		
-		System.out.println("*************"+utilisateur.getPseudo());
 
 		if(um.loginUtilisateur(utilisateur)!=null) {
 			HttpSession session = request.getSession();
 			
-			System.out.println("*************"+utilisateur.getPseudo());
 
 			
 			utilisateur = um.loginUtilisateur(utilisateur);
