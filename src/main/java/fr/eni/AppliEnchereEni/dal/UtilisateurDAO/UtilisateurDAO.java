@@ -31,4 +31,7 @@ public interface UtilisateurDAO {
 	//Supprimer un compte utilisateur
 	public void deleteUtilisateur (Utilisateur utilisateur);
 	
+	//selectionner utilisateur par son pseudo
+	public Utilisateur selectByPseudo2(String pseudo);
+	
 }

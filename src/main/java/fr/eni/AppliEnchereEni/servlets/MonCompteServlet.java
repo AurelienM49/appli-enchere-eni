@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.eni.AppliEnchereEni.bll.UtilisateurManager;
 import fr.eni.AppliEnchereEni.bo.Utilisateur;
 
 /**
@@ -24,17 +25,18 @@ public class MonCompteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		Utilisateur user = (Utilisateur) session.getAttribute("utilisateur");
-		String pseudo = request.getParameter("utilisateurPseudo");
-		boolean verifCnx;
-		
+		String pseudo = request.getParameter("pseudo");
+		if (pseudo == null || pseudo.isBlank()) {
+			pseudo = user.getPseudo();
+		}
 
+		UtilisateurManager um = UtilisateurManager.getInstance();
+		Utilisateur profil = um.selectByPseudo2(pseudo);
 		
+		request.setAttribute("profil", profil);
 		request.setAttribute("utilisateur", user);
-		
-		request.setAttribute("verifCnx", user.equals(pseudo));
-
-		
 		request.getRequestDispatcher("/WEB-INF/jsp/monCompte.jsp").forward(request, response);
+	
 	}
 
 	/**

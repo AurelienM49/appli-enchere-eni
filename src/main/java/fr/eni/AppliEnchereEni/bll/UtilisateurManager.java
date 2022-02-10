@@ -191,4 +191,8 @@ public class UtilisateurManager {
 		user.deleteUtilisateur(utilisateur);
 	}
 	
+	public Utilisateur selectByPseudo2(String pseudo) {
+		UtilisateurDAO user = DAOFactory.createUtilisateurDAOJdbcImpl();
+		return user.selectByPseudo2(pseudo);
+	}
 }

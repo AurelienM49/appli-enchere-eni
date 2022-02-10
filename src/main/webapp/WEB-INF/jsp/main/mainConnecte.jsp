@@ -82,10 +82,10 @@
                             			<img class="imageArticle" src="./assets/img/imgEnchere.png" alt="Image de l'enchere en cours"/>
                         				<div class="texteContainer">
                         				<div class="texteArticle">
-                        					<a href="${pageContext.request.contextPath}/DetailVente?no_article=${listeDesArticles.no_article}"><c:out value="${listeDesArticles.nom_article}"></c:out><br></a>
+                        					<a href="${pageContext.request.contextPath}/DetailVente?no_article=${listeDesArticles.no_article}"><c:out value="${listeDesArticles.nom_article}"></c:out></a><br>
                         					Prix : <c:out value="${listeDesArticles.prix_initial}"></c:out><br>
                         					Fin de l'enchère : <c:out value="${listeDesArticles.date_fin_encheres}"></c:out><br><br>
-                        					Vendeur :<c:out value="${listeDesArticles.utilisateur.pseudo}"></c:out><br><br>
+                        					Vendeur :<a href="${pageContext.request.contextPath}/monCompte?pseudo=${listeDesArticles.utilisateur.pseudo}"><c:out value="${listeDesArticles.utilisateur.pseudo}"></c:out></a><br><br>
                         				</div>
                         				</div>
                         			</div>
