@@ -49,7 +49,7 @@
 
                         <!--Achat + checkbox pour approfondir filtre "Achat"-->
                         <div>
-                            <label for="mesVentes">Mes ventes</label>
+                            <label for="mesVentes">Ventes</label>
                             <input type="radio" id="radioVentes" name="choixRadio" value="Mes ventes">
 
                             <label for="mesVentesEnCours">Mes ventes en cours</label>
