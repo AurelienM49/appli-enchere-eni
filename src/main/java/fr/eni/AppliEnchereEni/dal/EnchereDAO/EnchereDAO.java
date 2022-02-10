@@ -18,4 +18,6 @@ public interface EnchereDAO {
 	
 	public Enchere selectById (int idArticle, boolean withArticle);
 	
+	public Enchere  selectByidArticleIdUtilisateur (int idArticle, int idUtilisateur );
+	
 }

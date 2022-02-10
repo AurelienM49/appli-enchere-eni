@@ -43,20 +43,13 @@ public class DetailVenteServlet extends HttpServlet {
 		article.setNo_article(Integer.valueOf(request.getParameter("no_article")));
 
 		//article.setCategorie(request.getParameter(""));
-		
-	
-		
-		
-		
 		ArticleManager am = ArticleManager.getInstance();
 		article = am.selectByIDTop1(article);
-		System.out.println(article.getUtilisateur());
-		System.out.println(article.getEnchere().getMontant_enchere());
-		System.out.println(article.getUtilisateur().getVille());
+		
+		
 		
 		//article.getCategorie().setLibelle(request.getParameter("libelle"));
 		request.setAttribute("article", article);
-		
 		request.getRequestDispatcher("/WEB-INF/jsp/detailVente.jsp").forward(request, response);
 	}
 
@@ -71,8 +64,8 @@ public class DetailVenteServlet extends HttpServlet {
 		Utilisateur  utilisateur = (Utilisateur) request.getSession().getAttribute("utilisateur");
 		
 		//Recuperation du numero de l'article dans les parametre de la requete
-		 ArticleVendu articlevendu = new ArticleVendu();
-		 articlevendu.setNo_article(Integer.valueOf(request.getParameter("no_article")));  
+		 ArticleVendu articleVendu = new ArticleVendu();
+		 articleVendu.setNo_article(Integer.valueOf(request.getParameter("no_article")));  
 		 
 		//Recuperation de prix propose dans la methode post
 		int maProposition =Integer.valueOf(request.getParameter("proposition"));
@@ -80,12 +73,42 @@ public class DetailVenteServlet extends HttpServlet {
 		EnchereManager enchereManager = EnchereManager.getInstance();
 		Enchere enchere = new Enchere();
 		enchere.setUtilisateur(utilisateur);
-		enchere.setArticle(articlevendu);
+		enchere.setArticle(articleVendu);
 		enchere.setDate_enchere(LocalDate.now());
 		enchere.setMontant_enchere(maProposition);
 		
-		enchereManager.InsererEnchere(enchere);
-		System.out.println("********************" + enchere);
+		ArticleManager am = ArticleManager.getInstance();
+		articleVendu = am.selectByIDTop1(articleVendu);
+		
+		if (articleVendu.getEnchere().getMontant_enchere() > maProposition) {
+			request.setAttribute("propositionInf", "La proposition est inférieur à la plus grosse offre");		
+			request.setAttribute("article", articleVendu);
+			request.getRequestDispatcher("WEB-INF/jsp/detailVente.jsp").forward(request, response);
+		}else {
+
+			
+			
+			
+			if (enchereManager.selectByIdArticleIdUtilisateur(articleVendu.getNo_article(),utilisateur.getNo_utilisateur()) == null) {
+				enchereManager.InsererEnchere(enchere);
+				//article.getCategorie().setLibelle(request.getParameter("libelle"));
+				articleVendu = am.selectByIDTop1(articleVendu);
+				request.setAttribute("article", articleVendu);
+				request.getRequestDispatcher("WEB-INF/jsp/detailVente.jsp").forward(request, response);
+			
+			} else {
+				enchereManager.UpdateEnchere(enchere);			
+				//article.getCategorie().setLibelle(request.getParameter("libelle"));
+				articleVendu = am.selectByIDTop1(articleVendu);
+				request.setAttribute("article", articleVendu);
+				request.getRequestDispatcher("WEB-INF/jsp/detailVente.jsp").forward(request, response);
+			}
+		}
+
+		
+		
+
+		
 		
 	}
 

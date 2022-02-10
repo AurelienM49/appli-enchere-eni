@@ -191,4 +191,12 @@ public class UtilisateurManager {
 		user.deleteUtilisateur(utilisateur);
 	}
 	
+	
+	public void updateCreditUser(int idUser, int proposition) {
+
+		UtilisateurDAO user = DAOFactory.createUtilisateurDAOJdbcImpl();
+		user.updateCredit(idUser,proposition);
+
+	}
+	
 }

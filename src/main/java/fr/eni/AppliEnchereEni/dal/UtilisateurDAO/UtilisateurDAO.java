@@ -31,4 +31,6 @@ public interface UtilisateurDAO {
 	//Supprimer un compte utilisateur
 	public void deleteUtilisateur (Utilisateur utilisateur);
 	
+	public void updateCredit (int idUqer, int proposition);
+	
 }

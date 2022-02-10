@@ -24,7 +24,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String SELECT_BY_IDENTIFIANT = "SELECT pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit FROM Utilisateurs WHERE email = ? or pseudo = ?;"; 
 	private static final String SELECT_BY_ID="SELECT no_utilisateur, pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit FROM Utilisateurs WHERE no_utilisateur=?;";
 	private static final String DELETE_UTILISATEUR = "{call deleteUtilisateur (?)}";
-
+	private static final String UPDATE_MONTANT ="UPDATE UTILISATEURS SET credit = ? WHERE no_utilisateur = ?;";
 	
 	/**Méthode permettant d'inserer un nouvel utilisateur dans la BDD
 	 * @param utilisateur
@@ -427,6 +427,30 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			}
 			e.printStackTrace();
 		}
+	}
+
+
+	@Override
+	public void updateCredit(int idUser, int proposition) {
+		Connection cnx = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			// ouverture de la connexion
+			cnx = ConnectionProvider.getConnection();
+			//creation d'un prepareStatement (requete avec arguments)
+			pstmt = cnx.prepareStatement(UPDATE_MONTANT);
+			//recupère les paramètres envoyés par la servlet
+			pstmt.setInt(1, proposition);
+			pstmt.setInt(2, idUser);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			//fermeture de la connexion
+			ConnectionProvider.closeConnection(cnx, pstmt);
+		}
+		
 	}
 
 

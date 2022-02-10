@@ -27,6 +27,7 @@
 
 <form action="${pageContext.request.contextPath}/DetailVente" method="post">
 	<input type="number" name="proposition" class="form-item">
+	<span class="erreur">${propositionInf}</span>
 	<input type="hidden" name="no_article" value="${article.no_article}">
 	<button type="submit">Encherir</button>
 </form>
