@@ -13,12 +13,9 @@ import fr.eni.AppliEnchereEni.bll.ArticleManager;
 import fr.eni.AppliEnchereEni.bll.EnchereManager;
 import fr.eni.AppliEnchereEni.bll.UtilisateurManager;
 import fr.eni.AppliEnchereEni.bo.ArticleVendu;
-import fr.eni.AppliEnchereEni.bo.Categorie;
 import fr.eni.AppliEnchereEni.bo.Enchere;
 import fr.eni.AppliEnchereEni.bo.Retrait;
 import fr.eni.AppliEnchereEni.bo.Utilisateur;
-import fr.eni.AppliEnchereEni.dal.UtilisateurDAO.UtilisateurDAO;
-import fr.eni.AppliEnchereEni.dal.UtilisateurDAO.UtilisateurDAOJdbcImpl;
 
 /**
  * Servlet implementation class DetailVenteServlet
@@ -90,42 +87,56 @@ public class DetailVenteServlet extends HttpServlet {
 
 		
 		
-		
-		
-		if (currentProposition > maProposition) {
-			request.setAttribute("propositionInf", "La proposition est inférieur à la plus grosse offre");		
+		if (utilisateur.getCredit() < maProposition) {
+			request.setAttribute("creditInsuffisant", "Votre offre depasse votre solde de credits");
 			request.setAttribute("article", articleVendu);
 			request.getRequestDispatcher("WEB-INF/jsp/detailVente.jsp").forward(request, response);
 		}else {
-			
-			//on update maintenant le credit du current user avec son ancienne proposition + son credit actuel
-			if (currentIdUserEnchere==utilisateur.getNo_utilisateur()) {
-				utilisateur.setCredit((currentUser.getCredit()+currentProposition)-maProposition);
-				um.updateCreditUser(currentIdUserEnchere, utilisateur.getCredit());			
-			}else {
-				currentUser.setCredit(currentProposition + currentUser.getCredit());
-				um.updateCreditUser(currentIdUserEnchere, currentUser.getCredit());
-				
-				
-				//on enlève le credit du user qui fait la nouvelle proposition
-				utilisateur.setCredit(utilisateur.getCredit()-maProposition);			
-				um.updateCreditUser(utilisateur.getNo_utilisateur(), utilisateur.getCredit());		
-			}
-			
-			
-			//on update l'enchère
-			if (enchereManager.selectByIdArticleIdUtilisateur(articleVendu.getNo_article(),utilisateur.getNo_utilisateur()) == null) {
-				enchereManager.InsererEnchere(enchere);			
-				response.sendRedirect("./login");
-			
-			} else {
-				enchereManager.UpdateEnchere(enchere);			
-				articleVendu = am.selectByIDTop1(articleVendu);
-				response.sendRedirect("./login");
-
-			}
 		
+			if (maProposition < 0) {
+				request.setAttribute("nombrePositif", "Votre propistion ne peut être inférieur à 0");
+				request.setAttribute("article", articleVendu);
+				request.getRequestDispatcher("WEB-INF/jsp/detailVente.jsp").forward(request, response);
+			}else {
+				if (currentProposition > maProposition) {
+					request.setAttribute("propositionInf", "La proposition est inférieur à la plus grosse offre");		
+					request.setAttribute("article", articleVendu);
+					request.getRequestDispatcher("WEB-INF/jsp/detailVente.jsp").forward(request, response);
+				}else {
+					
+					//on update maintenant le credit du current user avec son ancienne proposition + son credit actuel
+					if (currentIdUserEnchere==utilisateur.getNo_utilisateur()) {
+						utilisateur.setCredit((currentUser.getCredit()+currentProposition)-maProposition);
+						um.updateCreditUser(currentIdUserEnchere, utilisateur.getCredit());			
+					}else {
+						currentUser.setCredit(currentProposition + currentUser.getCredit());
+						um.updateCreditUser(currentIdUserEnchere, currentUser.getCredit());
+						
+						
+						//on enlève le credit du user qui fait la nouvelle proposition
+						utilisateur.setCredit(utilisateur.getCredit()-maProposition);			
+						um.updateCreditUser(utilisateur.getNo_utilisateur(), utilisateur.getCredit());		
+					}
+					
+					
+					//on update l'enchère
+					if (enchereManager.selectByIdArticleIdUtilisateur(articleVendu.getNo_article(),utilisateur.getNo_utilisateur()) == null) {
+						enchereManager.InsererEnchere(enchere);			
+						response.sendRedirect("./login");
+					
+					} else {
+						enchereManager.UpdateEnchere(enchere);			
+						articleVendu = am.selectByIDTop1(articleVendu);
+						response.sendRedirect("./login");
+
+					}
+				
+				}
+			}
+			
 		}
+		
+		
 
 		
 		

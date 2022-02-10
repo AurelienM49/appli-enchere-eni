@@ -27,6 +27,8 @@
 
 <form action="${pageContext.request.contextPath}/DetailVente" method="post">
 	<input type="number" name="proposition" class="form-item">
+	<span class="erreur">${creditInsuffisant}</span>
+	<span class="erreur">${nombrePositif}</span>
 	<span class="erreur">${propositionInf}</span>
 	<input type="hidden" name="no_article" value="${article.no_article}">
 	<input type="hidden" name="no_utilisateur_before" value="${article.enchere.utilisateur.no_utilisateur}"> 
