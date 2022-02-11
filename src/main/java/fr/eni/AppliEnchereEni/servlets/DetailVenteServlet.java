@@ -30,21 +30,22 @@ public class DetailVenteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		Retrait retrait = new Retrait();
+		//Retrait retrait = new Retrait();
 		
-		Enchere enchere = new Enchere();
+		//Enchere enchere = new Enchere();
 		
 		
 		
 		ArticleVendu article = new ArticleVendu();
-		article.setNo_article(Integer.valueOf(request.getParameter("no_article")));
-
-		//article.setCategorie(request.getParameter(""));
 		ArticleManager am = ArticleManager.getInstance();
+
+		//On recupère le no d'article passé en paramètre de la requète
+		//on converti ce no en int, on va ensuite attribuer ce no à notre objet article
+		article.setNo_article(Integer.valueOf(request.getParameter("no_article")));
+		//On fait appel au manager qui appel la BDD
 		article = am.selectByIDTop1(article);
 		
 		
-		//article.getCategorie().setLibelle(request.getParameter("libelle"));
 		request.setAttribute("article", article);
 		request.getRequestDispatcher("/WEB-INF/jsp/detailVente.jsp").forward(request, response);
 	}

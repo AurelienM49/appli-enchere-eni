@@ -13,26 +13,29 @@
 
                 <!--Formulaire de recherche-->
                 <form action="${pageContext.request.contextPath}/HomeFiltre" method="get">
-                    <div>
-                        <input type="text" name="rechercheMotArt" placeholder="Le nom de l'article contient">
-                    </div>
+                   <div class="container-filtre">
+                        <div class="rechercheEtCategories">
+                            <div class="rechercher">
+                                    <input type="text" name="rechercheMotArt" placeholder="Le nom de l'article contient">
+                            </div>
+                            
+                            <!--Selection categorie-->
+                            <div class="categories">
+                                <label for="categorie">Categorie : </label>
+                                <select name="categorie" id="categorie">
+                                    <option value="all">-- Tous les articles --</option>
+                                    <option value="informatique">Informatique</option>
+                                    <option value="ameublement">Ameublement</option>
+                                    <option value="vêtement">Vêtement</option>
+                                    <option value="sport&Loisir">Sport&Loisirs</option>
+                                </select>
+                            </div>
+                        </div>
+                            <!--Boutton "submit" recherche-->
+                            <div>
+                                <button type="submit" class="bouton-rechercher">Rechercher</button>
+                            </div>
                     
-                    <!--Selection categorie-->
-                    <div>
-                        <label for="categorie">Categorie : </label>
-                        <select name="categorie" id="categorie">
-                            <option value="all">-- Tout les article --</option>
-                    	    <option value="informatique">Informatique</option>
-                    	    <option value="ameublement">Ameublement</option>
-                    	    <option value="vêtement">Vêtement</option>
-                    	    <option value="sport&Loisir">Sport&Loisirs</option>
-                         </select>
-                    </div>
-                    
-                    <!--Boutton "submit" recherche-->
-                    <div>
-                        <button type="submit">Rechercher</button>
-                    </div>
                 </form>
             </div>
             

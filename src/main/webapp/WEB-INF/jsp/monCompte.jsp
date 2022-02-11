@@ -6,6 +6,7 @@
     <html>
 
     <head>
+    	<link href="./assets/style.css" rel="stylesheet">
         <meta charset="UTF-8">
         <title>MonCompte</title>
     </head>
@@ -19,30 +20,31 @@
     
     <!-- Main -->
     <main>
-        <ul>
-    <!-- Si le numero d'utilisateur dans le profil est le même que celui en session, on affiche le profil complet -->
-            <c:if test="${profil.no_utilisateur == utilisateur.no_utilisateur}">
-            	
-            	<li>Pseudo : ${profil.pseudo}</li>
-            	<li>Nom : ${profil.nom}</li>
-            	<li>Prenom : ${profil.prenom}</li>
-	            <li>Email : ${profil.email}</li>
-	            <li>Telephone : ${profil.telephone}</li>
-	            <li>Rue : ${profil.rue}</li>
-	            <li>Code postal : ${profil.code_postal}</li>
-	            <li>Ville : ${profil.ville}</li>
-	            <a href="${pageContext.request.contextPath}/monProfil"><button type="button">Modifier profil</button></a>
-            </c:if>
-     <!-- Si le numero d'utilisateur dans le profil est différent que celui en session, on affiche que certaines info du profil-->
-            <c:if test="${profil.no_utilisateur != utilisateur.no_utilisateur}">
-            	<li>Id : ${profil.no_utilisateur}</li>
-            	<li>Pseudo : ${profil.pseudo}</li>
-            	<li>Nom : ${profil.nom}</li>
-            	<li>Prenom : ${profil.prenom}</li>
-	            <li>Email : ${profil.email}</li>
-            </c:if>
-            
-        </ul>
+    	<section class="mon-compte">
+	        <ul class="detail-monCompte">
+	    <!-- Si le numero d'utilisateur dans le profil est le même que celui en session, on affiche le profil complet -->
+	            <c:if test="${profil.no_utilisateur == utilisateur.no_utilisateur}">
+	            	
+	            	<li>Pseudo : ${profil.pseudo}</li>
+	            	<li>Nom : ${profil.nom}</li>
+	            	<li>Prenom : ${profil.prenom}</li>
+		            <li>Email : ${profil.email}</li>
+		            <li>Telephone : ${profil.telephone}</li>
+		            <li>Rue : ${profil.rue}</li>
+		            <li>Code postal : ${profil.code_postal}</li>
+		            <li>Ville : ${profil.ville}</li>
+		            <a href="${pageContext.request.contextPath}/monProfil"><button type="button" class="bouton-monCompte">Modifier profil</button></a>
+	            </c:if>
+	     <!-- Si le numero d'utilisateur dans le profil est différent que celui en session, on affiche que certaines info du profil-->
+	            <c:if test="${profil.no_utilisateur != utilisateur.no_utilisateur}">
+	            	<li>Pseudo : ${profil.pseudo}</li>
+	            	<li>Nom : ${profil.nom}</li>
+	            	<li>Prenom : ${profil.prenom}</li>
+		            <li>Email : ${profil.email}</li>
+	            </c:if>
+	            
+	        </ul>
+        </section>
      </main>
      
      	<!-- Footer -->

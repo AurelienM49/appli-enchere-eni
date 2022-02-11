@@ -58,5 +58,77 @@ a:hover{
 	color: #008b8b85;
 }
 
+.detail-vente{
+	border: 1px solid;
+	display: flex;
+	width: 70%;
+    margin: auto;
+    border-radius: 5px;
+    margin-top: 71px;
+    background-color: rgb(247 199 146);
+    box-shadow: 0px 0px 20px 1px rgb(149 144 140);
+    border: 2px solid rgb(249 175 92);
+}
+
+.container{
+	display: table;
+}
 
 
+.detail-article{
+	display:table-cell;
+	vertical-align: middle;
+	padding: 30px;
+}
+
+h1{
+	text-align: center;
+	margin-top: 30px
+}
+
+ul{
+	margin: 0;
+	padding: 0;
+}
+
+li{
+	list-style: none;
+	margin-left: 228px;
+	padding: 5px;
+}
+
+.mon-compte{
+	margin-top: 40px;
+	margin-bottom: 100px;
+}
+
+.detail-monCompte{
+	margin: auto;
+	padding: 20px;
+    width: 50%;
+    border-radius: 5px;
+    background-color: rgb(247 199 146);
+    box-shadow: 0px 0px 20px 1px rgb(149 144 140);
+    border: 2px solid rgb(249 175 92);
+}
+
+.bouton-monCompte{
+	margin-top: 10px;
+	display: block;
+	margin: auto;
+	margin-top: 10px;
+}
+
+.container-filtre{
+	display: flex;
+	justify-content: space-evenly;
+	
+}
+
+.bouton-rechercher{
+	
+	margin-top: 10px;
+	display: block;
+	margin: auto;
+	margin-top: 10px;
+}

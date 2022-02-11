@@ -40,7 +40,7 @@ public class MonCompteServlet extends HttpServlet {
 		UtilisateurManager um = UtilisateurManager.getInstance();
 		Utilisateur profil = um.selectByPseudo2(pseudo);
 		
-		//2 possibilités : soit on set les info du User qui est en session, ou bien les infos du vendeur (profil) 
+		//On set les infos de notre utilisateur en session et et de notre vendeur (profil) 
 		request.setAttribute("profil", profil);
 		request.setAttribute("utilisateur", user);
 		//On delegue ensuite à monCompte.jsp

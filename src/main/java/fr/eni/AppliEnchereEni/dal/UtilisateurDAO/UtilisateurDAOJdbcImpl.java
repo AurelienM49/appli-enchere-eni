@@ -238,7 +238,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			//exectute la requete coté BDD
 			rs = pstmt.executeQuery();
 			
-			//si la requète est executée, la methode retourne true car ce pseudo est bien existant en BDD
+			//creation d'un utilisateur avec les données recupérées en BDD ou en paramètre de la methode ( pour le pseudo)
 			if (rs.next()){
 				user = new Utilisateur();
 				user.setNo_utilisateur(rs.getInt("no_utilisateur"));
